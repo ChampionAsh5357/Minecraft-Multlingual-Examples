@@ -1,0 +1,109 @@
+// Add plugins
+plugins {
+    id 'java-conventions'
+    id 'license-manager'
+    id 'net.minecraftforge.gradle' version '5.1.+'
+}
+
+// Set project information
+classifier.id = project.projectForgeJava
+classifier.version = project.forgeJavaVersion
+classifier.implFromSpec { "$project.minecraftVersion-$it" }
+def capitalizedId = splitCapitalizeAndJoin(project.projectForgeJava, '-', '')
+def moduleId = "${project.projectBaseName.replaceAll('-', '_')}.${project.projectForgeJava.replaceAll('-', '_')}"
+
+// Include resources from data generators
+sourceSets {
+    generated {}
+    main.resources {
+        srcDirs sourceSets.generated.resources.srcDirs
+    }
+}
+
+// Include MinecraftForge as a dependency
+dependencies {
+    minecraft group: 'net.minecraftforge', name: 'forge', version: "$project.minecraftVersion-$project.forgeVersion"
+}
+
+minecraft {
+    // The mappings can be changed at any time, and must be in the following format:
+    // Channel:   Version:
+    // snapshot   YYYYMMDD   Snapshot are built nightly
+    // stable     #          Stables are built at the discretion of the MCP team
+    // official   MCVersion  Official field/method names from Mojang mapping files
+    //
+    // You must be aware of the Mojang license when using the 'official' mappings
+    // See more information here: https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md
+    //
+    // Use non-defaultW mappings at your own risk. they may not always work
+    // Simply re-run your setup task after changing the mappings to update your workspace
+    mappings channel: project.forgeMappingChannel, version: project.minecraftVersion
+
+    // Access Transformers can change the visibility of a particular type. Set to 'true' to enable
+    if(project.hasProperty('forgeAccessTransformer') && project.getProperty('forgeAccessTransformer').toBoolean()) {
+        accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    }
+
+    // Default run configurations
+    // These can be tweaked, removed, or duplicated as needed
+    runs {
+        // Client run configuration
+        client {
+            // Directory for the project to run in
+            workingDirectory file('run/client')
+
+            // Add user credentials
+            if (project.hasProperty('minecraftAccessToken')) {
+                args '--accessToken', project.minecraftAccessToken
+            }
+
+            // Rename task to be unique
+            taskName "run${capitalizedId}Client"
+
+            // Add IntelliJ module naming
+            ideaModule "${moduleId}.main"
+
+            // Set the console logging level
+            property 'forge.logging.console.level', 'debug'
+
+            // Attach the sources to the run
+            mods.create(project.projectBaseName).source(sourceSets.main)
+        }
+
+        // Server run configuration
+        server {
+            workingDirectory file('run/server')
+            taskName "run${capitalizedId}Server"
+            ideaModule "${moduleId}.main"
+            property 'forge.logging.console.level', 'debug'
+            mods.create(project.projectBaseName).source(sourceSets.main)
+        }
+
+
+        // Data run configuration
+        data {
+            workingDirectory file('run/data')
+            taskName "run${capitalizedId}Data"
+            ideaModule "${moduleId}.main"
+            property 'forge.logging.console.level', 'debug'
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources
+            args '--mod', project.projectBaseName,
+                    '--all',
+                    '--output', sourceSets.generated.resources.srcDirs[0],
+                    '--existing', sourceSets.main.resources.srcDirs[0]
+
+            mods.create(project.projectBaseName).source(sourceSets.main)
+        }
+    }
+}
+
+jar {
+    // Reobfuscate the jar file to be used in production
+    finalizedBy 'reobfJar'
+}
+
+// Helper method for splitting a string, capitalizing, and then joining
+def splitCapitalizeAndJoin(final String name, final String split, final String join) {
+    return name.split(split).collect { it.capitalize() }.join(join)
+}

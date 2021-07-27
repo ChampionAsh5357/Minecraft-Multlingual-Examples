@@ -1,0 +1,23 @@
+// Add plugins for licensing
+plugins {
+    id 'java-conventions'
+    id 'org.cadixdev.licenser'
+}
+
+// Setup licensing information
+afterEvaluate {
+    license {
+        header = project.rootProject.file('HEADER')
+        properties {
+            projectName = (classifier.id.isPresent()
+                            ? project.projectName
+                            : "${classifier.artifactName.get().capitalize()} ($project.projectName)")
+            year = Calendar.getInstance().get(Calendar.YEAR)
+            author = project.generalAuthor
+        }
+        include '**/*.java'
+        include '**/*.kt'
+        include '**/*.scala'
+        include '**/*.groovy'
+    }
+}

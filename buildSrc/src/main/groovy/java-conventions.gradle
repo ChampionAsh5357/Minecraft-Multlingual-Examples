@@ -1,0 +1,85 @@
+// Add plugins for internal modules
+plugins {
+    id 'java'
+}
+
+// Create classifier extension to give the artifact name the project's base name
+abstract class ClassifierExtension {
+    abstract Property<String> getArtifactName();
+    abstract Property<String> getId()
+    abstract Property<String> getVersion()
+    abstract Property<String> getImplVersion()
+
+    ClassifierExtension() {
+        this.implVersion.convention(this.version)
+    }
+
+    void implFromSpec(Transformer<String, String> transformer) {
+        this.implVersion = transformer.transform(this.version)
+    }
+}
+
+// Set project information
+group = project.generalGroup
+def extension = project.extensions.create('classifier', ClassifierExtension)
+afterEvaluate {
+    if (!extension.artifactName.isPresent())
+        extension.artifactName = project.projectBaseName + (!extension.id.get().isEmpty() ? "-${extension.id.get()}" : '')
+    archivesBaseName = extension.artifactName.get()
+    version = extension.implVersion.get()
+    // Set manifest attributes
+    jar {
+        manifest.attributes([
+                'Specification-Title': project.projectName,
+                'Specification-Vendor': project.generalAuthor,
+                'Specification-Version': extension.version.get(),
+                'Implementation-Title': project.projectName,
+                'Implementation-Vendor': project.generalAuthor,
+                'Implementation-Version': project.version,
+                'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
+        ])
+    }
+}
+
+// Set toolchain to compile against current JDK
+java {
+    withSourcesJar()
+    withJavadocJar()
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(project.jdkVersion)
+        vendor = JvmVendorSpec.ADOPTOPENJDK
+    }
+}
+
+// Add javadoc tags
+javadoc {
+    options.encoding = 'UTF-8'
+    options.tags = [
+            'apiNote:a:API Note:',
+            'implSpec:a:Implementation Requirements:',
+            'implNote:a:Implementation Note:',
+            'jls:a:Java Language Specification:'
+    ]
+}
+
+// Add maven central to grab dependencies
+repositories {
+    mavenCentral()
+}
+
+// Set tests to use junit
+test {
+    useJUnitPlatform()
+}
+
+// Add test dependencies
+dependencies {
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: project.junitVersion
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: project.junitVersion
+}
+
+// Set compiler options
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+}

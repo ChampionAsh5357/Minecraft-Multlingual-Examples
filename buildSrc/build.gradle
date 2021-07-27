@@ -1,0 +1,14 @@
+// Add gradle plugin to build shared data
+plugins {
+    id 'groovy-gradle-plugin'
+}
+
+// Add repositories needed to grab plugins
+repositories {
+    gradlePluginPortal()
+}
+
+// Add external plugins
+dependencies {
+    implementation group: 'gradle.plugin.org.cadixdev.gradle', name: 'licenser', version: 'latest.release'
+}

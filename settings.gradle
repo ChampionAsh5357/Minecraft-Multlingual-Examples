@@ -1,0 +1,24 @@
+// Add external plugins
+pluginManagement {
+    plugins {
+        id 'org.jetbrains.kotlin.jvm' version kotlin15Version
+    }
+
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name 'Forge'
+            url 'https://maven.minecraftforge.net'
+        }
+    }
+
+    // Resolve any plugins that don't conform with gradle format
+    resolutionStrategy.eachPlugin {
+        if (requested.id.toString() == 'net.minecraftforge.gradle')
+            useModule group: requested.id, name: 'ForgeGradle', version: requested.version
+    }
+}
+
+// Set project data
+rootProject.name = 'multilingual_examples'
+include 'forge_java', 'forge_kotlin_15', 'forge_scala_2', 'forge_groovy_3'
