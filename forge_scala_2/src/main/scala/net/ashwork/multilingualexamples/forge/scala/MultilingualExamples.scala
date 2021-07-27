@@ -19,12 +19,12 @@ import net.minecraftforge.fml.common.Mod
  * The mod id supplied in the annotation must match that within the [[mods.toml]].
  */
 @Mod(MultilingualExamples.ID)
-class MultilingualExamples
+final class MultilingualExamples
 
 /**
  * The global instance of our main mod class. Used to store any constants.
  */
-object MultilingualExamples {
+final object MultilingualExamples {
     /**
      * The modid of our mod.
      */

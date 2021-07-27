@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
  * The mod id supplied in the annotation must match that within the {@code mods.toml}.
  */
 @Mod(MultilingualExamples.ID)
-public class MultilingualExamples {
+public final class MultilingualExamples {
 
     /**
      * The modid of our mod.

@@ -10,19 +10,22 @@
  * software. If not, see https://creativecommons.org/publicdomain/zero/1.0/.
  */
 
-package net.ashwork.multilingualexamples.forge.groovy
+package net.ashwork.multilingualexamples.fabric.kotlin;
 
-import net.minecraftforge.fml.common.Mod
+import net.fabricmc.api.ModInitializer;
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
- * The mod id supplied in the annotation must match that within the {@code mods.toml}.
+ * The fully qualified name of this class must match that within {@code entrypoints.main}.
+ * Any entry point must implement {@link ModInitializer}.
  */
-@Mod(MultilingualExamples.ID)
-final class MultilingualExamples {
+public final class MultilingualExamples implements ModInitializer {
 
     /**
-     * The modid of our mod.
+     * Initializes the called data once Minecraft is considered to be in a
+     * mod-load-ready state.
      */
-    static final String ID = "multilingual_examples_forge_groovy"
+    @Override
+    public void onInitialize() {
+    }
 }

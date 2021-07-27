@@ -1,0 +1,51 @@
+// Add plugins
+plugins {
+    id 'java-conventions'
+    id 'license-manager'
+    id 'fabric-loom'
+    id 'scala'
+    id 'idea'
+}
+
+// Set project information
+classifier.id = project.projectFabricScala2
+classifier.version = project.fabricScala2Version
+classifier.implFromSpec { "$project.minecraftVersion-$it" }
+def capitalizedId = splitCapitalizeAndJoin(project.projectFabricScala2, '-', '')
+
+// Create run configurations
+loom.runs {
+    it.create("${capitalizedId}Client").client()
+    it.create("${capitalizedId}Server").server()
+}
+
+// Include Fabric as a dependency
+dependencies {
+    minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraftVersion
+    mappings loom.officialMojangMappings()
+    modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.fabricLoaderVersion
+    modImplementation group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabricVersion
+
+    // Add scala libraries (TODO: Fix sdk not being set up in intellij)
+    implementation group: 'org.scala-lang', name: 'scala-library', version: project.scala2Version
+    modImplementation group: 'net.fabricmc', name: 'fabric-language-scala', version: project.fabricScala2LoaderVersion
+}
+
+// Replace version in json with actual version
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+jar {
+    // Reobfuscate the jar file to be used in production
+    finalizedBy 'remapJar'
+}
+
+// Helper method for splitting a string, capitalizing, and then joining
+def splitCapitalizeAndJoin(final String name, final String split, final String join) {
+    return name.split(split).collect { it.capitalize() }.join(join)
+}

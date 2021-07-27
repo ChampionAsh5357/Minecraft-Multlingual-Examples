@@ -1,0 +1,4 @@
+// Add plugins to fix fabric_scala_2 issues
+plugins {
+    id 'idea'
+}

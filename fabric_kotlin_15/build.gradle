@@ -1,0 +1,49 @@
+// Add plugins
+plugins {
+    id 'java-conventions'
+    id 'license-manager'
+    id 'fabric-loom'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+// Set project information
+classifier.id = project.projectFabricKotlin15
+classifier.version = project.fabricKotlin15Version
+classifier.implFromSpec { "$project.minecraftVersion-$it" }
+def capitalizedId = splitCapitalizeAndJoin(project.projectFabricKotlin15, '-', '')
+
+// Create run configurations
+loom.runs {
+    it.create("${capitalizedId}Client").client()
+    it.create("${capitalizedId}Server").server()
+}
+
+// Include Fabric as a dependency
+dependencies {
+    minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraftVersion
+    mappings loom.officialMojangMappings()
+    modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.fabricLoaderVersion
+    modImplementation group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabricVersion
+
+    // Add kotlin libraries
+    modImplementation group: 'net.fabricmc', name: 'fabric-language-kotlin', version: project.fabricKotlin15LoaderVersion
+}
+
+// Replace version in json with actual version
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+jar {
+    // Reobfuscate the jar file to be used in production
+    finalizedBy 'remapJar'
+}
+
+// Helper method for splitting a string, capitalizing, and then joining
+def splitCapitalizeAndJoin(final String name, final String split, final String join) {
+    return name.split(split).collect { it.capitalize() }.join(join)
+}
