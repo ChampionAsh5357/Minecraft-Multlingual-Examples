@@ -30,3 +30,7 @@ Each language/loader combination will be considered a sub-project within the gra
 ### License
 
 The entire project is licensed under Creative Commons Zero. That means that all copyright for this project is waived and can be used anywhere. Note that trademarks and patents are not granted, warranty is not provided, and there is no liability on the authors of this project for anything done with it.
+
+## Contributing
+
+PRs made to this repo should be in the JVM language you are most comfortable with. PRs should also be made to the latest release version of Minecraft. All PRs have two phases: the initial PR and the port PRs. The initial PR will have the change containing the language of your choosing. Once approved, port PRs will be made to the other languages. Once they have been approved, the PRs will then be merged at once.
