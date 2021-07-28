@@ -33,4 +33,4 @@ The entire project is licensed under Creative Commons Zero. That means that all 
 
 ## Contributing
 
-PRs made to this repo should be in the JVM language you are most comfortable with. PRs should also be made to the latest release version of Minecraft. All PRs have two phases: the initial PR and the port PRs. The initial PR will have the change containing the language of your choosing. Once approved, port PRs will be made to the other languages. Once they have been approved, the PRs will then be merged at once.
+PRs made to this repo should be in the JVM language and mod loader you are most comfortable with. PRs should also be made to the latest release version of Minecraft. All PRs have two phases: the initial PR and the port PRs. The initial PR will have the change containing the language and loader of your choosing. Once approved, port PRs will be made to the other languages and loaders. Once they have been approved, the PRs will then be merged at once.
