@@ -9,7 +9,6 @@ plugins {
 // Set project information
 classifier.id = project.projectFabricKotlin15
 classifier.version = project.fabricKotlin15Version
-classifier.implFromSpec { "$project.minecraftVersion-$it" }
 def capitalizedId = splitCapitalizeAndJoin(project.projectFabricKotlin15, '-', '')
 
 // Create run configurations

@@ -1,4 +1,5 @@
-// Add plugins to fix fabric_scala_2 issues
+// Add plugins to fix gradle issues
 plugins {
     id 'idea'
+    id 'org.jetbrains.kotlin.jvm' apply false
 }

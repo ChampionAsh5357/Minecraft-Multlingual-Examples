@@ -8,7 +8,6 @@ plugins {
 // Set project information
 classifier.id = project.projectFabricJava
 classifier.version = project.fabricJavaVersion
-classifier.implFromSpec { "$project.minecraftVersion-$it" }
 def capitalizedId = splitCapitalizeAndJoin(project.projectFabricJava, '-', '')
 
 // Create run configurations

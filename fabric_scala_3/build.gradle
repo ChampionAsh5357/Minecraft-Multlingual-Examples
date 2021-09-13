@@ -3,13 +3,14 @@ plugins {
     id 'java-conventions'
     id 'license-manager'
     id 'fabric-loom'
-    id 'groovy'
+    id 'scala'
+    id 'idea'
 }
 
 // Set project information
-classifier.id = project.projectFabricGroovy3
-classifier.version = project.fabricGroovy3Version
-def capitalizedId = splitCapitalizeAndJoin(project.projectFabricGroovy3, '-', '')
+classifier.id = project.projectFabricScala3
+classifier.version = project.fabricScala3Version
+def capitalizedId = splitCapitalizeAndJoin(project.projectFabricScala3, '-', '')
 
 // Create run configurations
 loom.runs {
@@ -24,9 +25,9 @@ dependencies {
     modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.fabricLoaderVersion
     modImplementation group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabricVersion
 
-    // Add groovy libraries
-    implementation group: 'org.codehaus.groovy', name: 'groovy', version: project.groovy3Version
-    modImplementation group: 'net.fabricmc', name: 'fabric-language-groovy', version: project.fabricGroovy3LoaderVersion
+    // Add scala libraries (TODO: Fix sdk not being set up in intellij)
+    implementation group: 'org.scala-lang', name: 'scala3-library_3', version: project.scala3Version
+    //modImplementation group: 'net.fabricmc', name: 'fabric-language-scala', version: project.fabricScala3LoaderVersion TODO: Add once exists
 }
 
 // Replace version in json with actual version

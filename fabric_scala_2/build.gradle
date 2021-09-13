@@ -10,7 +10,6 @@ plugins {
 // Set project information
 classifier.id = project.projectFabricScala2
 classifier.version = project.fabricScala2Version
-classifier.implFromSpec { "$project.minecraftVersion-$it" }
 def capitalizedId = splitCapitalizeAndJoin(project.projectFabricScala2, '-', '')
 
 // Create run configurations
