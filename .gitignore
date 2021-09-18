@@ -19,6 +19,7 @@ out
 # Other
 logs
 run
+generated
 
 # Gradle
 build

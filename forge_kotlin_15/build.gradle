@@ -10,20 +10,36 @@ plugins {
 classifier.id = project.projectForgeKotlin15
 classifier.version = project.forgeKotlin15Version
 classifier.implFromSpec { "$project.minecraftVersion-$it" }
-def capitalizedId = splitCapitalizeAndJoin(project.projectForgeKotlin15, '-', '')
-def moduleId = "${project.projectBaseName.replaceAll('-', '_')}.${project.projectForgeKotlin15.replaceAll('-', '_')}"
+def modId = project.projectBaseName.replaceAll('-', '_')
+def moduleId = "${modId}.${project.projectForgeKotlin15.replaceAll('-', '_')}"
 
 // Include resources from data generators
+project.evaluationDependsOn(':shared_resources')
 sourceSets {
     generated {}
     main.resources {
+        srcDirs project(':shared_resources').sourceSets.forge.resources.srcDirs
         srcDirs sourceSets.generated.resources.srcDirs
+    }
+}
+
+// Add library configuration for non-mod libraries
+configurations {
+    library
+    implementation.extendsFrom library
+}
+minecraft.runs.all {
+    lazyToken('minecraft_classpath') {
+        configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
     }
 }
 
 // Include MinecraftForge as a dependency
 dependencies {
     minecraft group: 'net.minecraftforge', name: 'forge', version: "$project.minecraftVersion-$project.forgeVersion"
+
+    // Add kotlin libraries
+    library group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'
 }
 
 minecraft {
@@ -53,14 +69,6 @@ minecraft {
             // Directory for the project to run in
             workingDirectory file('run/client')
 
-            // Add user credentials
-            if (project.hasProperty('minecraftAccessToken')) {
-                args '--accessToken', project.minecraftAccessToken
-            }
-
-            // Rename task to be unique
-            taskName "run${capitalizedId}Client"
-
             // Add IntelliJ module naming
             ideaModule "${moduleId}.main"
 
@@ -74,7 +82,6 @@ minecraft {
         // Server run configuration
         server {
             workingDirectory file('run/server')
-            taskName "run${capitalizedId}Server"
             ideaModule "${moduleId}.main"
             property 'forge.logging.console.level', 'debug'
             mods.create(project.projectBaseName).source(sourceSets.main)
@@ -84,15 +91,17 @@ minecraft {
         // Data run configuration
         data {
             workingDirectory file('run/data')
-            taskName "run${capitalizedId}Data"
             ideaModule "${moduleId}.main"
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources
-            args '--mod', project.projectBaseName,
+            args '--mod', modId,
                     '--all',
-                    '--output', sourceSets.generated.resources.srcDirs[0],
-                    '--existing', sourceSets.main.resources.srcDirs[0]
+                    '--output', sourceSets.generated.resources.srcDirs[0]
+
+            sourceSets.main.resources.srcDirs.forEach {
+                args '--existing', it
+            }
 
             mods.create(project.projectBaseName).source(sourceSets.main)
         }
@@ -106,9 +115,4 @@ jar {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions.jvmTarget = project.jdkVersion
-}
-
-// Helper method for splitting a string, capitalizing, and then joining
-def splitCapitalizeAndJoin(final String name, final String split, final String join) {
-    return name.split(split).collect { it.capitalize() }.join(join)
 }

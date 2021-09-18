@@ -17,7 +17,7 @@ issueTrackerURL = "https://github.com/ChampionAsh5357/minecraft-multlingual-exam
 [[mods]]
 
 # Mandatory: The modid of the mod
-modId = "multilingual_examples_forge_scala"
+modId = "multilingual_examples"
 
 # Mandatory: The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 # ${file.jarVersion} will substitute the value of the 'Implementation-Version' as read from the mod's JAR file metadata
@@ -48,7 +48,7 @@ An example mod for Minecraft 1.17.x in the Scala programming language via the Fo
 '''
 
 # Optional: A dependency for your mod to rely on, use the '.' to indicate dependency for a specific modid
-[[dependencies.multilingual_examples_forge_scala]]
+[[dependencies.multilingual_examples]]
     # Mandatory: The modid of the dependency
     modId = "forge"
 
@@ -64,9 +64,9 @@ An example mod for Minecraft 1.17.x in the Scala programming language via the Fo
     # Mandatory: Side this dependency is applied on
     side = "BOTH"
 
-[[dependencies.multilingual_examples_forge_scala]]
+[[dependencies.multilingual_examples]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[1.17,1.18)"
+    versionRange = "[1.17.1,1.18)"
     ordering = "NONE"
     side = "BOTH"
