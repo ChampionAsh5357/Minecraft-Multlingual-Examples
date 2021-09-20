@@ -10,22 +10,38 @@
  * software. If not, see https://creativecommons.org/publicdomain/zero/1.0/.
  */
 
-package net.ashwork.multilingualexamples.fabric.kotlin;
+package net.ashwork.multilingualexamples
 
-import net.fabricmc.api.ModInitializer;
+import net.ashwork.multilingualexamples.registrar.ItemRegistrar
+import net.fabricmc.api.ModInitializer
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
  * The fully qualified name of this class must match that within {@code entrypoints.main}.
  * Any entry point must implement {@link ModInitializer}.
  */
-public final class MultilingualExamples implements ModInitializer {
+final class MultilingualExamples implements ModInitializer {
+
+    /**
+     * The modid of our mod.
+     */
+    static final String ID = 'multilingual_examples'
+
+    /**
+     * A list of class loaders used to initialize the registry objects.
+     */
+    private static final List<Closure<?>> LOADERS = new ArrayList<>()
 
     /**
      * Initializes the called data once Minecraft is considered to be in a
      * mod-load-ready state.
      */
     @Override
-    public void onInitialize() {
+    void onInitialize() {
+        // Add registries
+        LOADERS.add { { ItemRegistrar.ASH } }
+        LOADERS.forEach {
+            it.call()
+        }
     }
 }

@@ -2,7 +2,7 @@
     "schemaVersion": 1,
 
     "name": "Multlingual Examples - Fabric Kotlin",
-    "id": "multilingual_examples_fabric_kotlin",
+    "id": "multilingual_examples",
     "version": "${version}",
     "description": "An example mod for Minecraft 1.17.x in the Kotlin programming language via the Fabric Mod Loader.",
 
@@ -21,7 +21,7 @@
         "main": [
             {
                 "adapter": "kotlin",
-                "value": "net.ashwork.multilingualexamples.fabric.kotlin.MultilingualExamples"
+                "value": "net.ashwork.multilingualexamples.MultilingualExamples"
             }
         ]
     },

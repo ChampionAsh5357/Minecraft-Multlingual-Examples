@@ -19,6 +19,7 @@ sourceSets {
     main.resources {
         srcDirs project(':shared_resources').sourceSets.forge.resources.srcDirs
         srcDirs sourceSets.generated.resources.srcDirs
+        exclude '.cache/'
     }
 }
 
@@ -88,6 +89,17 @@ minecraft {
                 args '--existing', it
             }
 
+            mods.create(project.projectBaseName).source(sourceSets.main)
+        }
+
+        // For exporting data to 'shared_resources' subproject
+        sharedData {
+            parent data
+            afterEvaluate {
+                getArgs().set(getArgs().findIndexOf {
+                    it.toString().equals('--output')
+                } + 1, project(':shared_resources').sourceSets.generated.resources.srcDirs[0].toString())
+            }
             mods.create(project.projectBaseName).source(sourceSets.main)
         }
     }

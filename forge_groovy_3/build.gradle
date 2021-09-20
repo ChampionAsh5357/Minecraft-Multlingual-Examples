@@ -20,6 +20,7 @@ sourceSets {
     main.resources {
         srcDirs project(':shared_resources').sourceSets.forge.resources.srcDirs
         srcDirs sourceSets.generated.resources.srcDirs
+        exclude '.cache/'
     }
 }
 

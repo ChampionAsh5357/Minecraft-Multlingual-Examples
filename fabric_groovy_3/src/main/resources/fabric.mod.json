@@ -2,7 +2,7 @@
     "schemaVersion": 1,
 
     "name": "Multlingual Examples - Fabric Groovy",
-    "id": "multilingual_examples_fabric_groovy",
+    "id": "multilingual_examples",
     "version": "${version}",
     "description": "An example mod for Minecraft 1.17.x in the Groovy programming language via the Fabric Mod Loader.",
 
@@ -21,7 +21,7 @@
         "main": [
             {
                 "adapter": "groovy",
-                "value": "net.ashwork.multilingualexamples.fabric.groovy.MultilingualExamples"
+                "value": "net.ashwork.multilingualexamples.MultilingualExamples"
             }
         ]
     },

@@ -10,12 +10,15 @@ plugins {
 // Set project information
 classifier.id = project.projectFabricScala3
 classifier.version = project.fabricScala3Version
-def capitalizedId = splitCapitalizeAndJoin(project.projectFabricScala3, '-', '')
 
-// Create run configurations
-loom.runs {
-    it.create("${capitalizedId}Client").client()
-    it.create("${capitalizedId}Server").server()
+// Include resources from data generators
+project.evaluationDependsOn(':shared_resources')
+sourceSets {
+    main.resources {
+        srcDirs project(':shared_resources').sourceSets.main.resources.srcDirs
+        srcDirs project(':shared_resources').sourceSets.generated.resources.srcDirs
+        exclude '.cache/'
+    }
 }
 
 // Include Fabric as a dependency
@@ -42,9 +45,4 @@ processResources {
 jar {
     // Reobfuscate the jar file to be used in production
     finalizedBy 'remapJar'
-}
-
-// Helper method for splitting a string, capitalizing, and then joining
-def splitCapitalizeAndJoin(final String name, final String split, final String join) {
-    return name.split(split).collect { it.capitalize() }.join(join)
 }

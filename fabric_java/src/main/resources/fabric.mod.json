@@ -2,7 +2,7 @@
     "schemaVersion": 1,
 
     "name": "Multlingual Examples - Fabric Java",
-    "id": "multilingual_examples_fabric_java",
+    "id": "multilingual_examples",
     "version": "${version}",
     "description": "An example mod for Minecraft 1.17.x in the Java programming language via the Fabric Mod Loader.",
 
@@ -19,7 +19,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "net.ashwork.multilingualexamples.fabric.java.MultilingualExamples"
+            "net.ashwork.multilingualexamples.MultilingualExamples"
         ]
     },
 

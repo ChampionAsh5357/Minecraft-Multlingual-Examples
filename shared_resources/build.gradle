@@ -11,4 +11,5 @@ sourceSets {
     forge {
         resources.srcDirs sourceSets.main.resources.srcDirs
     }
+    generated {}
 }

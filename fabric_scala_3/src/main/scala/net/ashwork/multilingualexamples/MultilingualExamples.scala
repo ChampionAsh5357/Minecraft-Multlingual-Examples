@@ -10,13 +10,16 @@
  * software. If not, see https://creativecommons.org/publicdomain/zero/1.0/.
  */
 
-package net.ashwork.multilingualexamples.fabric.scala
+package net.ashwork.multilingualexamples
 
+import net.ashwork.multilingualexamples.registrar.ItemRegistrar
 import net.fabricmc.api.ModInitializer
+
+import scala.collection.mutable.ListBuffer
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
- * The fully qualified name of this class must match that within [[entrypoints.main]].
+ * The fully qualified name of this class must match that within 'entrypoints.main'.
  * Any entry point must implement [[ModInitializer]]
  */
 final class MultilingualExamples extends ModInitializer {
@@ -26,5 +29,23 @@ final class MultilingualExamples extends ModInitializer {
      * mod-load-ready state.
      */
     override def onInitialize(): Unit = {
+        // Add registries
+        MultilingualExamples.LOADERS.addOne(() => ItemRegistrar.ASH)
+        MultilingualExamples.LOADERS.foreach(it => it.apply())
     }
+}
+
+/**
+ * The global instance of our main mod class. Used to store any constants.
+ */
+object MultilingualExamples {
+    /**
+     * The modid of our mod.
+     */
+    final val ID = "multilingual_examples"
+
+    /**
+     * A list of class loaders used to initialize the registry objects.
+     */
+    private final val LOADERS: ListBuffer[() => Unit] = ListBuffer.empty
 }

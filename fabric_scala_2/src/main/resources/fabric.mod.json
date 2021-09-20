@@ -2,7 +2,7 @@
     "schemaVersion": 1,
 
     "name": "Multlingual Examples - Fabric Scala",
-    "id": "multilingual_examples_fabric_scala",
+    "id": "multilingual_examples",
     "version": "${version}",
     "description": "An example mod for Minecraft 1.17.x in the Scala programming language via the Fabric Mod Loader.",
 
@@ -21,7 +21,7 @@
         "main": [
             {
                 "adapter": "scala",
-                "value": "net.ashwork.multilingualexamples.fabric.scala.MultilingualExamples"
+                "value": "net.ashwork.multilingualexamples.MultilingualExamples"
             }
         ]
     },
