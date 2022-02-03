@@ -1,6 +1,6 @@
 /*
  * Multilingual Examples
- * Written 2021-2021 by ChampionAsh5357.
+ * Written 2021-2022 by ChampionAsh5357.
  *
  * To the extent possible under law, the author(s) have dedicated all copyright and related
  * and neighboring rights to this software to the public domain worldwide. This software is
@@ -15,9 +15,9 @@ package net.ashwork.multilingualexamples.registrar;
 import net.ashwork.multilingualexamples.MultilingualExamples;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 /**
  * A utility class used to hold and register all items for this mod.

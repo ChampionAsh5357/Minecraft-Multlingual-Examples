@@ -1,6 +1,6 @@
 /*
  * Multilingual Examples
- * Written 2021-2021 by ChampionAsh5357.
+ * Written 2021-2022 by ChampionAsh5357.
  *
  * To the extent possible under law, the author(s) have dedicated all copyright and related
  * and neighboring rights to this software to the public domain worldwide. This software is

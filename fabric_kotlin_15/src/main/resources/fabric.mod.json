@@ -4,7 +4,7 @@
     "name": "Multlingual Examples - Fabric Kotlin",
     "id": "multilingual_examples",
     "version": "${version}",
-    "description": "An example mod for Minecraft 1.17.x in the Kotlin programming language via the Fabric Mod Loader.",
+    "description": "An example mod for Minecraft 1.18.x in the Kotlin programming language via the Fabric Mod Loader.",
 
     "authors": [
         "ChampionAsh5357"
@@ -27,10 +27,10 @@
     },
 
     "depends": {
-        "fabricloader": ">=0.11.6",
+        "fabricloader": ">=0.12.12",
         "fabric": "*",
-        "minecraft": "1.17.x",
-        "java": ">=16",
-        "fabric-language-kotlin": ">=1.6.3+kotlin.1.5.21"
+        "minecraft": "1.18.x",
+        "java": ">=17",
+        "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10"
     }
 }

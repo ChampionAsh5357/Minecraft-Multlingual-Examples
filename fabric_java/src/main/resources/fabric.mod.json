@@ -4,7 +4,7 @@
     "name": "Multlingual Examples - Fabric Java",
     "id": "multilingual_examples",
     "version": "${version}",
-    "description": "An example mod for Minecraft 1.17.x in the Java programming language via the Fabric Mod Loader.",
+    "description": "An example mod for Minecraft 1.18.x in the Java programming language via the Fabric Mod Loader.",
 
     "authors": [
         "ChampionAsh5357"
@@ -24,9 +24,9 @@
     },
 
     "depends": {
-        "fabricloader": ">=0.11.6",
+        "fabricloader": ">=0.12.12",
         "fabric": "*",
-        "minecraft": "1.17.x",
-        "java": ">=16"
+        "minecraft": "1.18.x",
+        "java": ">=17"
     }
 }

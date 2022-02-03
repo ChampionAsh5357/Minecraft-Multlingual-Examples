@@ -6,14 +6,14 @@ This is an example mod for Minecraft that written in multiple languages and mod 
 
 | Loader | Language | 1.17.x | 1.18.x |
 | :---:  |   :---:  | :---:  |  :---: |
-| Forge  |   Java   |   ✔️   |   ❌  |
-|        |  Kotlin  |   ✔️   |   ❌  |
-|        |  Scala   |   ✔️   |   ❌  |
-|        |  Groovy  |   ✔️   |   ❌  |
-| Fabric |   Java   |   ✔️   |   ❌  |
-|        |  Kotlin  |   ✔️   |   ❌  |
-|        |  Scala   |   ✔️   |   ❌  |
-|        |  Groovy  |   ✔️   |   ❌  |
+| Forge  |   Java   |   ✔️ |   ✔️|
+|        |  Kotlin  |   ✔️ |   ✔️|
+|        |  Scala   |   ✔️ |   ✔️|
+|        |  Groovy  |   ✔️ |   ✔️|
+| Fabric |   Java   |   ✔️ |   ✔️|
+|        |  Kotlin  |   ✔️ |   ✔️|
+|        |  Scala   |   ✔️ |   ✔️|
+|        |  Groovy  |   ✔️ |   ✔️|
 | Quilt  |   Java   |   ❌   |   ❌  |
 |        |  Kotlin  |   ❌   |   ❌  |
 |        |  Scala   |   ❌   |   ❌  |
@@ -21,7 +21,7 @@ This is an example mod for Minecraft that written in multiple languages and mod 
 
 ### Supported Versions
 
-All versions supported can be found as a branch on the repository. They will always be written as a subset of the major version being referred to (e.g. all 1.17 snapshots will be under the `1.17.x` branch).
+All versions supported can be found as a branch on the repository. They will always be written as a subset of the major version being referred to (e.g. all 1.18 snapshots will be under the `1.18.x` branch).
 
 ### Supported Languages and Loaders
 
