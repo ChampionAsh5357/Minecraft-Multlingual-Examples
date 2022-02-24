@@ -12,12 +12,17 @@
 
 package net.ashwork.multilingualexamples;
 
+import net.ashwork.multilingualexamples.client.MultilingualExamplesClient;
 import net.ashwork.multilingualexamples.data.ItemModels;
 import net.ashwork.multilingualexamples.data.Localizations;
 import net.ashwork.multilingualexamples.registrar.ItemRegistrar;
+import net.ashwork.multilingualexamples.registrar.ParticleTypeRegistrar;
 import net.minecraft.data.DataGenerator;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
@@ -39,10 +44,15 @@ public final class MultilingualExamples {
      */
     public MultilingualExamples() {
         // Get the event buses
-        final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus(),
+                forgeBus = MinecraftForge.EVENT_BUS;
 
         // Add registries
         ItemRegistrar.REGISTRAR.register(modBus);
+        ParticleTypeRegistrar.REGISTRAR.register(modBus);
+
+        // Add client
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new MultilingualExamplesClient(modBus, forgeBus));
 
         // Add mod events
         modBus.addListener(this::attachDataProviders);
