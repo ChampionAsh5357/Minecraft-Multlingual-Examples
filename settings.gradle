@@ -3,7 +3,7 @@ pluginManagement {
     // Allow for property defined plugin versions
     plugins {
         id 'fabric-loom' version fabricLoomVersion apply false
-        id 'org.jetbrains.kotlin.jvm' version kotlin15Version apply false
+        id 'org.jetbrains.kotlin.jvm' version kotlinVersion apply false
     }
 
     repositories {
@@ -28,5 +28,5 @@ pluginManagement {
 // Set project data
 rootProject.name = 'multilingual_examples'
 include 'shared_resources'
-include 'forge_java', 'forge_kotlin_15', 'forge_scala_2', 'forge_scala_3', 'forge_groovy_3'
-include 'fabric_java', 'fabric_kotlin_15', 'fabric_scala_2', 'fabric_scala_3', 'fabric_groovy_3'
+include 'forge_java', 'forge_kotlin', 'forge_scala', 'forge_groovy'
+include 'fabric_java', 'fabric_kotlin', 'fabric_scala', 'fabric_groovy'

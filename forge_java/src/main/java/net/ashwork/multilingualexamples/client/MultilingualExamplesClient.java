@@ -40,7 +40,15 @@ public class MultilingualExamplesClient {
      * @param event an event instance
      */
     private void onRegisterParticleFactories(final ParticleFactoryRegisterEvent event) {
-        // Register our particle factory
+        /*
+         * Register our particle factory.
+         *
+         * Since this is using net.minecraft.client.particle.ParticleEngine.SpriteParticleRegistration, this will need
+         * a JSON to reference the particle sprites. This will use the registry name of the particle type itself and be
+         * located within the 'particles' directory within assets.
+         *
+         * Textures referenced in the JSON will be in the 'particle' directory within textures.
+         */
         Minecraft.getInstance().particleEngine.register(ParticleTypeRegistrar.DRIPPING_ASH.get(), DrippingAshParticle.DrippingAshParticleProvider::new);
     }
 }

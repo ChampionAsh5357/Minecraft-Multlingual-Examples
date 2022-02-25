@@ -12,9 +12,9 @@
 
 package net.ashwork.multilingualexamples.client.particle;
 
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
@@ -77,7 +77,7 @@ public class DrippingAshParticle extends TextureSheetParticle {
 
         /**
          * Constructor to be passed as a method reference to
-         * {@link net.minecraft.client.particle.ParticleEngine#register(ParticleType, ParticleEngine.SpriteParticleRegistration)}.
+         * {@link net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry#register(ParticleType, ParticleFactoryRegistry.PendingParticleFactory)}.
          *
          * @param sprites the referenced sprites that will be used for rendering
          */

@@ -1,0 +1,46 @@
+// Add plugins
+plugins {
+    id 'java-conventions'
+    id 'license-manager'
+    id 'fabric-loom'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+// Set project information
+classifier.id = project.projectFabricKotlin
+classifier.version = project.fabricKotlinVersion
+
+// Include resources from data generators
+project.evaluationDependsOn(':shared_resources')
+sourceSets {
+    main.resources {
+        srcDirs project(':shared_resources').sourceSets.main.resources.srcDirs
+        srcDirs project(':shared_resources').sourceSets.generated.resources.srcDirs
+        exclude '.cache/'
+    }
+}
+
+// Include Fabric as a dependency
+dependencies {
+    minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraftVersion
+    mappings loom.officialMojangMappings()
+    modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.fabricLoaderVersion
+    modImplementation group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabricVersion
+
+    // Add kotlin libraries
+    modImplementation group: 'net.fabricmc', name: 'fabric-language-kotlin', version: project.fabricKotlinLoaderVersion
+}
+
+// Replace version in json with actual version
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+jar {
+    // Reobfuscate the jar file to be used in production
+    finalizedBy 'remapJar'
+}

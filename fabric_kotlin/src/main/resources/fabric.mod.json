@@ -1,10 +1,10 @@
 {
     "schemaVersion": 1,
 
-    "name": "Multlingual Examples - Fabric Java",
+    "name": "Multlingual Examples - Fabric Kotlin",
     "id": "multilingual_examples",
     "version": "${version}",
-    "description": "An example mod for Minecraft 1.18.x in the Java programming language via the Fabric Mod Loader.",
+    "description": "An example mod for Minecraft 1.18.x in the Kotlin programming language via the Fabric Mod Loader.",
 
     "authors": [
         "ChampionAsh5357"
@@ -19,10 +19,16 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "net.ashwork.multilingualexamples.MultilingualExamples"
+            {
+                "adapter": "kotlin",
+                "value": "net.ashwork.multilingualexamples.MultilingualExamples"
+            }
         ],
         "client": [
-            "net.ashwork.multilingualexamples.client.MultilingualExamplesClient"
+            {
+                "adapter": "kotlin",
+                "value": "net.ashwork.multilingualexamples.client.MultilingualExamplesClient"
+            }
         ]
     },
 
@@ -30,6 +36,7 @@
         "fabricloader": ">=0.12.12",
         "fabric": "*",
         "minecraft": "1.18.x",
-        "java": ">=17"
+        "java": ">=17",
+        "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10"
     }
 }
