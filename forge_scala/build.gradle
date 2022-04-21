@@ -2,7 +2,7 @@
 plugins {
     id 'java-conventions'
     id 'license-manager'
-    id 'net.minecraftforge.gradle'
+    alias(libs.plugins.forge.gradle)
     id 'scala'
 }
 
@@ -37,10 +37,10 @@ minecraft.runs.all {
 
 // Include MinecraftForge as a dependency
 dependencies {
-    minecraft group: 'net.minecraftforge', name: 'forge', version: "$project.minecraftVersion-$project.forgeVersion"
+    minecraft libs.forge
 
     // Add scala libraries
-    library group: 'org.scala-lang', name: 'scala-library', version: project.scalaVersion
+    library libs.scala.library
 }
 
 minecraft {

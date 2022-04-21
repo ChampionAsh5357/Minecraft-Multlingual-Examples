@@ -1,5 +1,5 @@
 // Add plugins to fix gradle issues
 plugins {
     id 'idea'
-    id 'org.jetbrains.kotlin.jvm' apply false
+    alias(libs.plugins.kotlin.jvm) apply false
 }

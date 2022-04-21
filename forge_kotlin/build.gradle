@@ -2,8 +2,8 @@
 plugins {
     id 'java-conventions'
     id 'license-manager'
-    id 'net.minecraftforge.gradle'
-    id 'org.jetbrains.kotlin.jvm'
+    alias(libs.plugins.forge.gradle)
+    alias(libs.plugins.kotlin.jvm)
 }
 
 // Set project information
@@ -37,13 +37,13 @@ minecraft.runs.all {
 
 // Include MinecraftForge as a dependency
 dependencies {
-    minecraft group: 'net.minecraftforge', name: 'forge', version: "$project.minecraftVersion-$project.forgeVersion"
+    minecraft libs.forge
 
     // Add kotlin libraries
-    library group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib'
+    library libs.kotlin.stdlib
 
     // Add because others modules break for mods...
-    library group: 'org.jetbrains', name: 'annotations', version: annotationsVersion
+    library libs.annotations
 }
 
 minecraft {

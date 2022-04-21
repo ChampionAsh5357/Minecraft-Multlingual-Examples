@@ -1,0 +1,77 @@
+[versions]
+minecraft = "1.18.2"
+
+# Latest Forge Versions
+# https://files.minecraftforge.net/net/minecraftforge/forge/
+forge = "1.18.2-40.1.0"
+forge_gradle = "5.1.+"
+
+# Latest Fabric Versions
+# https://fabricmc.net/develop/
+fabric_loom = "0.11-SNAPSHOT"
+fabric_loader = "0.13.3"
+fabric_api = "0.51.1+1.18.2"
+
+# Latest Quilt Versions
+# https://lambdaurora.dev/tools/import_quilt.html
+quilt_loom = "0.12.+"
+quilt_loader = "0.16.0-beta.7"
+quilted_fabric_api = "1.0.0-beta.7+0.51.1-1.18.2"
+
+# Latest Kotlin Versions
+# https://kotlinlang.org/docs/home.html
+kotlin = "1.6.21"
+
+# https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/
+fabric_kotlin = "1.7.3+kotlin.1.6.20"
+
+# Latest Scala Versions
+# https://docs.scala-lang.org/api/all.html
+scala = "2.13.8"
+# scala_3 = "3.1.2"
+
+# https://maven.fabricmc.net/net/fabricmc/fabric-language-scala/
+fabric_scala = "1.1.0+scala.2.13.6"
+# fabric_scala_3 = "2.0.0+scala.3.0.2"
+
+# Latest Groovy Versions
+# https://groovy.apache.org/download.html
+groovy = "4.0.1"
+
+# https://maven.fabricmc.net/net/fabricmc/fabric-language-groovy/
+fabric_groovy = "1.1.0"
+
+# Jetbrains Annotations
+# https://search.maven.org/artifact/org.jetbrains/annotations
+annotations = "23.0.0"
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+
+forge = { module = "net.minecraftforge:forge", version.ref = "forge" }
+
+fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_loader" }
+fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
+
+kotlin_stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+fabric_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_kotlin" }
+
+scala_library = { module = "org.scala-lang:scala-library", version.ref = "scala" }
+fabric_scala = { module = "net.fabricmc:fabric-language-scala", version.ref = "fabric_scala" }
+
+groovy_core = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
+fabric_groovy = { module = "net.fabricmc:fabric-language-groovy", version.ref = "fabric_groovy" }
+
+annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+
+[bundles]
+fabric = ["fabric_loader", "fabric_api"]
+
+[plugins]
+forge_gradle = { id = "net.minecraftforge.gradle", version.ref = "forge_gradle" }
+
+fabric_loom = { id = "fabric-loom", version.ref = "fabric_loom" }
+
+quilt_loom = { id = "org.quiltmc.loom", version.ref = "quilt_loom" }
+
+kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

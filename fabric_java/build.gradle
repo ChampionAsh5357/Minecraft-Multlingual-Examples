@@ -2,7 +2,7 @@
 plugins {
     id 'java-conventions'
     id 'license-manager'
-    id 'fabric-loom'
+    alias(libs.plugins.fabric.loom)
 }
 
 // Set project information
@@ -21,10 +21,9 @@ sourceSets {
 
 // Include Fabric as a dependency
 dependencies {
-    minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraftVersion
+    minecraft libs.minecraft
     mappings loom.officialMojangMappings()
-    modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.fabricLoaderVersion
-    modImplementation group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabricVersion
+    modImplementation libs.bundles.fabric
 }
 
 // Replace version in json with actual version

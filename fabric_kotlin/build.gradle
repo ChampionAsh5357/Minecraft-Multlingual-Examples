@@ -2,8 +2,8 @@
 plugins {
     id 'java-conventions'
     id 'license-manager'
-    id 'fabric-loom'
-    id 'org.jetbrains.kotlin.jvm'
+    alias(libs.plugins.fabric.loom)
+    alias(libs.plugins.kotlin.jvm)
 }
 
 // Set project information
@@ -22,13 +22,12 @@ sourceSets {
 
 // Include Fabric as a dependency
 dependencies {
-    minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraftVersion
+    minecraft libs.minecraft
     mappings loom.officialMojangMappings()
-    modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.fabricLoaderVersion
-    modImplementation group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabricVersion
+    modImplementation libs.bundles.fabric
 
     // Add kotlin libraries
-    modImplementation group: 'net.fabricmc', name: 'fabric-language-kotlin', version: project.fabricKotlinLoaderVersion
+    modImplementation libs.fabric.kotlin
 }
 
 // Replace version in json with actual version

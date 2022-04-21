@@ -2,7 +2,7 @@
 plugins {
     id 'java-conventions'
     id 'license-manager'
-    id 'fabric-loom'
+    alias(libs.plugins.fabric.loom)
     id 'groovy'
 }
 
@@ -22,14 +22,13 @@ sourceSets {
 
 // Include Fabric as a dependency
 dependencies {
-    minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraftVersion
+    minecraft libs.minecraft
     mappings loom.officialMojangMappings()
-    modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.fabricLoaderVersion
-    modImplementation group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabricVersion
+    modImplementation libs.bundles.fabric
 
     // Add groovy libraries
-    implementation group: 'org.apache.groovy', name: 'groovy', version: project.groovyVersion
-    modImplementation group: 'net.fabricmc', name: 'fabric-language-groovy', version: project.fabricGroovyLoaderVersion
+    implementation libs.groovy.core
+    modImplementation libs.fabric.groovy
 }
 
 // Replace version in json with actual version

@@ -1,11 +1,5 @@
 // Add external plugins
 pluginManagement {
-    // Allow for property defined plugin versions
-    plugins {
-        id 'fabric-loom' version fabricLoomVersion apply false
-        id 'org.jetbrains.kotlin.jvm' version kotlinVersion apply false
-    }
-
     repositories {
         gradlePluginPortal()
         maven {
@@ -16,12 +10,16 @@ pluginManagement {
             name 'Fabric'
             url 'https://maven.fabricmc.net'
         }
+        maven {
+            name 'Quilt'
+            url 'https://maven.quiltmc.org/repository/release'
+        }
     }
 
     // Resolve any plugins that don't conform with gradle format
     resolutionStrategy.eachPlugin {
         if (requested.id.toString() == 'net.minecraftforge.gradle')
-            useModule group: requested.id, name: 'ForgeGradle', version: forgeGradleVersion
+            useModule group: requested.id, name: 'ForgeGradle', version: requested.version
     }
 }
 

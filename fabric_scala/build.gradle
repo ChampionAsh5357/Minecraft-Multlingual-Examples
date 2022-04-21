@@ -2,7 +2,7 @@
 plugins {
     id 'java-conventions'
     id 'license-manager'
-    id 'fabric-loom'
+    alias(libs.plugins.fabric.loom)
     id 'scala'
     id 'idea'
 }
@@ -23,14 +23,13 @@ sourceSets {
 
 // Include Fabric as a dependency
 dependencies {
-    minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraftVersion
+    minecraft libs.minecraft
     mappings loom.officialMojangMappings()
-    modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.fabricLoaderVersion
-    modImplementation group: 'net.fabricmc.fabric-api', name: 'fabric-api', version: project.fabricVersion
+    modImplementation libs.bundles.fabric
 
     // Add scala libraries (TODO: Fix sdk not being set up in intellij)
-    implementation group: 'org.scala-lang', name: 'scala-library', version: project.scalaVersion
-    modImplementation group: 'net.fabricmc', name: 'fabric-language-scala', version: project.fabricScalaLoaderVersion
+    implementation libs.scala.library
+    modImplementation libs.fabric.scala
 }
 
 // Replace version in json with actual version

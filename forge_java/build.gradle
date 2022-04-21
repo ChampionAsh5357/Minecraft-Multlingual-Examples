@@ -2,7 +2,7 @@
 plugins {
     id 'java-conventions'
     id 'license-manager'
-    id 'net.minecraftforge.gradle'
+    alias(libs.plugins.forge.gradle)
 }
 
 // Set project information
@@ -25,7 +25,7 @@ sourceSets {
 
 // Include MinecraftForge as a dependency
 dependencies {
-    minecraft group: 'net.minecraftforge', name: 'forge', version: "$project.minecraftVersion-$project.forgeVersion"
+    minecraft libs.forge
 }
 
 minecraft {
