@@ -5,19 +5,19 @@ This is an example mod for Minecraft that written in multiple languages and mod 
 ## Available Examples
 
 | Loader | Language | 1.17.x | 1.18.x |
-| :---:  |   :---:  | :---:  |  :---: |
-| Forge  |   Java   |   ✔️ |   ✔️|
-|        |  Kotlin  |   ✔️ |   ✔️|
-|        |  Scala   |   ✔️ |   ✔️|
-|        |  Groovy  |   ✔️ |   ✔️|
-| Fabric |   Java   |   ✔️ |   ✔️|
-|        |  Kotlin  |   ✔️ |   ✔️|
-|        |  Scala   |   ✔️ |   ✔️|
-|        |  Groovy  |   ✔️ |   ✔️|
-| Quilt  |   Java   |   ❌   |   ❌  |
-|        |  Kotlin  |   ❌   |   ❌  |
-|        |  Scala   |   ❌   |   ❌  |
-|        |  Groovy  |   ❌   |   ❌  |
+|:------:|:--------:|:------:|:------:|
+| Forge  |   Java   |   ✔️   |   ✔️   |
+|        |  Kotlin  |   ✔️   |   ✔️   |
+|        |  Scala   |   ✔️   |   ✔️   |
+|        |  Groovy  |   ✔️   |   ✔️   |
+| Fabric |   Java   |   ✔️   |   ✔️   |
+|        |  Kotlin  |   ✔️   |   ✔️   |
+|        |  Scala   |   ✔️   |   ✔️   |
+|        |  Groovy  |   ✔️   |   ✔️   |
+| Quilt  |   Java   |   ❌    |   ❌    |
+|        |  Kotlin  |   ❌    |   ❌    |
+|        |  Scala   |   ❌    |   ❌    |
+|        |  Groovy  |   ❌    |   ❌    |
 
 ### Supported Versions
 
@@ -25,7 +25,7 @@ All versions supported can be found as a branch on the repository. They will alw
 
 ### Supported Languages and Loaders
 
-Each language/loader combination will be considered a sub-project within the gradle environment. Note that only the `buildSrc` and the contents of that sub-project need to be present for it to run, anything not used can be removed. Each sub-project is labeled as `<loader>_<language>`. Language version is specified for non Java projects as many different versions of other JVM languages can compile to one Java language.
+Each language/loader combination will be considered a sub-project within the gradle environment. Each subproject is labeled as `<loader>/<loader>-<language>`. Language version is specified for non-Java projects as many versions of other JVM languages can compile to one Java language.
 
 ### License
 

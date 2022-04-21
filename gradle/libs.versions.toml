@@ -45,6 +45,12 @@ fabric_groovy = "1.1.0"
 # https://search.maven.org/artifact/org.jetbrains/annotations
 annotations = "23.0.0"
 
+# Licenser
+licenser = "0.6.1"
+
+# Log4j
+log4j = "2.11.2"
+
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
 
@@ -64,8 +70,12 @@ fabric_groovy = { module = "net.fabricmc:fabric-language-groovy", version.ref = 
 
 annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
 
+log4j_core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
+log4j_api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4j" }
+
 [bundles]
 fabric = ["fabric_loader", "fabric_api"]
+log4j = ["log4j_core", "log4j_api"]
 
 [plugins]
 forge_gradle = { id = "net.minecraftforge.gradle", version.ref = "forge_gradle" }
@@ -75,3 +85,5 @@ fabric_loom = { id = "fabric-loom", version.ref = "fabric_loom" }
 quilt_loom = { id = "org.quiltmc.loom", version.ref = "quilt_loom" }
 
 kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+licenser = { id = "org.cadixdev.licenser", version.ref = "licenser" }
