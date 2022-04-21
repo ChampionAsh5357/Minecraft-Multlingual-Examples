@@ -83,7 +83,7 @@ subprojects {
             tasks.named<Copy>("processResources") {
                 inputs.property("version", project.version.toString())
 
-                filesMatching(listOf("**/mods.toml", "**/fabric.mod.json")) {
+                filesMatching(listOf("**/mods.toml", "**/fabric.mod.json", "**/quilt.mod.json")) {
                     expand(
                         mapOf(
                             "version" to project.version.toString()

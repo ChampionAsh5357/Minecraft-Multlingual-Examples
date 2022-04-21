@@ -1,9 +1,8 @@
 // Add plugins
 plugins {
-    java
+    groovy
     alias(libs.plugins.licenser)
     alias(libs.plugins.fabric.loom)
-    groovy
 }
 
 // Common Properties

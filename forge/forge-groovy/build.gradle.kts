@@ -9,10 +9,9 @@ buildscript {
 
 // Add plugins
 plugins {
-    java
+    groovy
     alias(libs.plugins.licenser)
     alias(libs.plugins.forge.gradle)
-    groovy
 }
 
 // Common Properties

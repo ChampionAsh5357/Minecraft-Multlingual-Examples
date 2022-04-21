@@ -38,7 +38,8 @@ rootProject.name = extra["base.id"] as String
 // Supported Loaders
 internal val loaders: List<String> = listOf(
     extra["forge.id"] as String,
-    extra["fabric.id"] as String
+    extra["fabric.id"] as String,
+    extra["quilt.id"] as String
 )
 
 // Supported Languages

@@ -14,10 +14,10 @@ This is an example mod for Minecraft that written in multiple languages and mod 
 |        |  Kotlin  |   ✔️   |   ✔️   |
 |        |  Scala   |   ✔️   |   ✔️   |
 |        |  Groovy  |   ✔️   |   ✔️   |
-| Quilt  |   Java   |   ❌    |   ❌    |
-|        |  Kotlin  |   ❌    |   ❌    |
-|        |  Scala   |   ❌    |   ❌    |
-|        |  Groovy  |   ❌    |   ❌    |
+| Quilt  |   Java   |   ❌    |   ✔️   |
+|        |  Kotlin  |   ❌    |   ✔️   |
+|        |  Scala   |   ❌    |   ✔️   |
+|        |  Groovy  |   ❌    |   ✔️   |
 
 ### Supported Versions
 

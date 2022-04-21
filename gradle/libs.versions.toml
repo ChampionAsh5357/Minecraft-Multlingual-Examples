@@ -59,6 +59,9 @@ forge = { module = "net.minecraftforge:forge", version.ref = "forge" }
 fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_loader" }
 fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
 
+quilt_loader = { module = "org.quiltmc:quilt-loader", version.ref = "quilt_loader" }
+quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-api", version.ref = "quilted_fabric_api" }
+
 kotlin_stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 fabric_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_kotlin" }
 
@@ -75,15 +78,14 @@ log4j_api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4
 
 [bundles]
 fabric = ["fabric_loader", "fabric_api"]
+quilt = ["quilt_loader", "quilted_fabric_api"]
+
 log4j = ["log4j_core", "log4j_api"]
 
 [plugins]
 forge_gradle = { id = "net.minecraftforge.gradle", version.ref = "forge_gradle" }
-
 fabric_loom = { id = "fabric-loom", version.ref = "fabric_loom" }
-
 quilt_loom = { id = "org.quiltmc.loom", version.ref = "quilt_loom" }
 
 kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-
 licenser = { id = "org.cadixdev.licenser", version.ref = "licenser" }

@@ -1,9 +1,8 @@
 // Add plugins
 plugins {
-    java
+    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.licenser)
     alias(libs.plugins.fabric.loom)
-    alias(libs.plugins.kotlin.jvm)
 }
 
 // Common Properties

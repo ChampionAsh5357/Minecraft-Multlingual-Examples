@@ -1,15 +1,15 @@
 // Add plugins
 plugins {
-    scala
+    groovy
     alias(libs.plugins.licenser)
-    alias(libs.plugins.fabric.loom)
+    alias(libs.plugins.quilt.loom)
 }
 
 // Common Properties
 internal val modId: String = extra["mod.id"] as String
 internal val rootId: String = extra["base.id"] as String
-internal val loaderId: String = extra["fabric.id"] as String
-internal val languageId: String = extra["scala.id"] as String
+internal val loaderId: String = extra["quilt.id"] as String
+internal val languageId: String = extra["groovy.id"] as String
 
 internal val commonResources: File = rootProject.file("shared-resources/common")
 internal val generatedResources: File = rootProject.file("shared-resources/generated")
@@ -32,22 +32,21 @@ sourceSets["main"].resources {
 dependencies {
     minecraft(libs.minecraft)
     mappings(loom.officialMojangMappings())
-    modImplementation(libs.bundles.fabric)
+    modImplementation(libs.bundles.quilt)
 
-    implementation(libs.scala.library)
-    modImplementation(libs.fabric.scala)
+    implementation(libs.groovy.core)
 }
 
 // Setup runs
 loom.runs {
     named("client") {
         client()
-        configName = "${languageId.capitalize()} Fabric Client"
+        configName = "${languageId.capitalize()} Quilt Client"
         runDir("../run/client")
     }
     named("server") {
         server()
-        configName = "${languageId.capitalize()} Fabric Server"
+        configName = "${languageId.capitalize()} Quilt Server"
         runDir("../run/server")
     }
 

@@ -9,10 +9,9 @@ buildscript {
 
 // Add plugins
 plugins {
-    java
+    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.licenser)
     alias(libs.plugins.forge.gradle)
-    alias(libs.plugins.kotlin.jvm)
 }
 
 // Common Properties

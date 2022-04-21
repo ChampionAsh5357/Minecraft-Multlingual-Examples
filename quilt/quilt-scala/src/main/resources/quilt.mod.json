@@ -1,0 +1,44 @@
+{
+    "schema_version": 1,
+
+    "quilt_loader": {
+        "group": "net.ashwork.mc",
+        "id": "multilingual_examples",
+        "version": "${version}",
+
+        "metadata": {
+            "name": "Multilingual Examples - Quilt Scala",
+            "description": "An example mod for Minecraft 1.18.x in the Scala programming language via the Quilt Mod Loader.",
+            "contributors": {
+                "ChampionAsh5357": "Owner"
+            },
+            "contact": {
+                "homepage": "https://github.com/ChampionAsh5357/minecraft-multlingual-examples",
+                "sources": "https://github.com/ChampionAsh5357/minecraft-multlingual-examples",
+                "issues": "https://github.com/ChampionAsh5357/minecraft-multlingual-examples/issues"
+            },
+            "license": "CC0-1.0"
+        },
+
+        "entrypoints": {
+            "init": "net.ashwork.mc.multilingualexamples.MultilingualExamples",
+            "client_init": "net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient"
+        },
+        "intermediate_mappings": "net.fabricmc:intermediary",
+
+        "depends": [
+            {
+                "id": "quilt_loader",
+                "versions": ">=0.16.0-"
+            },
+            {
+                "id": "quilted_fabric_api",
+                "versions": ">=1.0.0-"
+            },
+            {
+                "id": "minecraft",
+                "versions": ">=1.18.2"
+            }
+        ]
+    }
+}

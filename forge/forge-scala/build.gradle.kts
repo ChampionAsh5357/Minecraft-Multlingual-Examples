@@ -9,10 +9,9 @@ buildscript {
 
 // Add plugins
 plugins {
-    java
+    scala
     alias(libs.plugins.licenser)
     alias(libs.plugins.forge.gradle)
-    scala
 }
 
 // Common Properties
