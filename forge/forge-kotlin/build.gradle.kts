@@ -32,8 +32,10 @@ sourceSets["main"].resources {
 dependencies {
     minecraft(libs.forge)
 
-    minecraftLibrary(libs.kotlin.stdlib)
-    minecraftLibrary(libs.annotations)
+    minecraftLibrary(libs.kotlin.stdlib) {
+        // Exclude annotations to avoid overriding issues with modules during runtime
+        exclude(group = "org.jetbrains", module = "annotations")
+    }
 }
 
 // Setup runs
@@ -71,19 +73,6 @@ minecraft {
         ideaModule = "${rootId}.${loaderId}.${loaderId}-${languageId}.main"
         property("forge.enabledGameTestNamespaces", modId)
         mods.create(modId).source(sourceSets["main"])
-
-        // Weird nonsense because sets for some reason don't recognize unique strings
-        lazyToken("minecraft_classpath") {
-            val set = mutableSetOf<String>()
-            var annotationSeen = false
-            configurations.getByName("minecraftLibrary").copyRecursive().resolve().forEach {
-                val path = it.absolutePath.intern()
-                annotationSeen = annotationSeen || path.contains("org.jetbrains\\annotations\\23.0")
-                if (!path.contains("org.jetbrains\\annotations\\23.0") || !annotationSeen)
-                    set.add(path)
-            }
-            set.joinToString(separator = File.pathSeparator)
-        }
     }
 }
 

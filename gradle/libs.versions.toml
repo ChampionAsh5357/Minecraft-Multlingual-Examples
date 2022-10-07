@@ -38,10 +38,6 @@ fabric_scala = "1.1.0+scala.2.13.6"
 # https://groovy.apache.org/download.html
 groovy = "4.0.5"
 
-# Jetbrains Annotations
-# https://search.maven.org/artifact/org.jetbrains/annotations
-annotations = "23.0.0"
-
 # Licenser
 licenser = "0.6.1"
 
@@ -63,8 +59,6 @@ scala_library = { module = "org.scala-lang:scala-library", version.ref = "scala"
 fabric_scala = { module = "net.fabricmc:fabric-language-scala", version.ref = "fabric_scala" }
 
 groovy_core = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
-
-annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
 
 [bundles]
 fabric = ["fabric_loader", "fabric_api"]
