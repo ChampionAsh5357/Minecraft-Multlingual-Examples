@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client.particle;
 
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
@@ -17,9 +18,13 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * The base particle class. All rendering related to the particle occurs here.
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class DrippingAshParticle extends TextureSheetParticle {
 
     private final SpriteSet sprites;
@@ -71,7 +76,7 @@ public class DrippingAshParticle extends TextureSheetParticle {
 
         /**
          * Constructor to be passed as a method reference to
-         * {@link net.minecraft.client.particle.ParticleEngine#register(ParticleType, ParticleEngine.SpriteParticleRegistration)}.
+         * {@link net.minecraftforge.client.event.RegisterParticleProvidersEvent#register(ParticleType, ParticleEngine.SpriteParticleRegistration)}.
          *
          * @param sprites the referenced sprites that will be used for rendering
          */

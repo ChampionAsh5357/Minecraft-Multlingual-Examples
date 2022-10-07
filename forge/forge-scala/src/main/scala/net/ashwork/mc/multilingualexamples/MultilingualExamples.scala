@@ -14,7 +14,7 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent
+import net.minecraftforge.data.event.GatherDataEvent
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
@@ -53,8 +53,8 @@ final class MultilingualExamples {
 
         // Add client providers
         if (event.includeClient) {
-            gen.addProvider(ItemModels(gen, efh))
-            gen.addProvider(Localizations(gen))
+            gen.addProvider(true, ItemModels(gen, efh))
+            gen.addProvider(true, Localizations(gen))
         }
     }
 }

@@ -15,21 +15,6 @@ pluginManagement {
             url = uri("https://maven.quiltmc.org/repository/release")
         }
     }
-
-    // Resolve any plugins that do not conform with gradle format
-    resolutionStrategy.eachPlugin {
-
-        // ForgeGradle
-        if (requested.id.toString() == "net.minecraftforge.gradle") {
-            useModule(
-                mapOf(
-                    "group" to requested.id.toString(),
-                    "name" to "ForgeGradle",
-                    "version" to requested.version
-                )
-            )
-        }
-    }
 }
 
 // Project data

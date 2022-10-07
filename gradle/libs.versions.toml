@@ -1,34 +1,34 @@
 [versions]
-minecraft = "1.18.2"
+minecraft = "1.19.2"
 
 # Latest Forge Versions
 # https://files.minecraftforge.net/net/minecraftforge/forge/
-forge = "1.18.2-40.1.0"
+forge = "1.19.2-43.1.33"
 forge_gradle = "5.1.+"
 
 # Latest Fabric Versions
 # https://fabricmc.net/develop/
-fabric_loom = "0.11-SNAPSHOT"
-fabric_loader = "0.13.3"
-fabric_api = "0.51.1+1.18.2"
+fabric_loom = "1.0-SNAPSHOT"
+fabric_loader = "0.14.9"
+fabric_api = "0.62.0+1.19.2"
 
 # Latest Quilt Versions
 # https://lambdaurora.dev/tools/import_quilt.html
 quilt_loom = "0.12.+"
-quilt_loader = "0.16.0-beta.7"
-quilted_fabric_api = "1.0.0-beta.7+0.51.1-1.18.2"
+quilt_loader = "0.17.5-beta.3"
+quilted_fabric_api = "4.0.0-beta.13+0.62.0-1.19.2"
 
 # Latest Kotlin Versions
 # https://kotlinlang.org/docs/home.html
-kotlin = "1.6.21"
+kotlin = "1.7.20"
 
 # https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/
-fabric_kotlin = "1.7.3+kotlin.1.6.20"
+fabric_kotlin = "1.8.4+kotlin.1.7.20"
 
 # Latest Scala Versions
 # https://docs.scala-lang.org/api/all.html
-scala = "2.13.8"
-# scala_3 = "3.1.2"
+scala = "2.13.9"
+# scala_3 = "3.2.0"
 
 # https://maven.fabricmc.net/net/fabricmc/fabric-language-scala/
 fabric_scala = "1.1.0+scala.2.13.6"
@@ -36,10 +36,7 @@ fabric_scala = "1.1.0+scala.2.13.6"
 
 # Latest Groovy Versions
 # https://groovy.apache.org/download.html
-groovy = "4.0.1"
-
-# https://maven.fabricmc.net/net/fabricmc/fabric-language-groovy/
-fabric_groovy = "1.1.0"
+groovy = "4.0.5"
 
 # Jetbrains Annotations
 # https://search.maven.org/artifact/org.jetbrains/annotations
@@ -47,9 +44,6 @@ annotations = "23.0.0"
 
 # Licenser
 licenser = "0.6.1"
-
-# Log4j
-log4j = "2.11.2"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -69,18 +63,12 @@ scala_library = { module = "org.scala-lang:scala-library", version.ref = "scala"
 fabric_scala = { module = "net.fabricmc:fabric-language-scala", version.ref = "fabric_scala" }
 
 groovy_core = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
-fabric_groovy = { module = "net.fabricmc:fabric-language-groovy", version.ref = "fabric_groovy" }
 
 annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
-
-log4j_core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
-log4j_api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4j" }
 
 [bundles]
 fabric = ["fabric_loader", "fabric_api"]
 quilt = ["quilt_loader", "quilted_fabric_api"]
-
-log4j = ["log4j_core", "log4j_api"]
 
 [plugins]
 forge_gradle = { id = "net.minecraftforge.gradle", version.ref = "forge_gradle" }

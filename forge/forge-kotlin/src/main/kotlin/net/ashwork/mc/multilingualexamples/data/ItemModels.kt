@@ -7,14 +7,14 @@
 package net.ashwork.mc.multilingualexamples.data
 
 import net.ashwork.mc.multilingualexamples.ID
-import net.ashwork.mc.multilingualexamples.util.prefix
 import net.ashwork.mc.multilingualexamples.registrar.ASH
-import net.ashwork.mc.multilingualexamples.util.kt
+import net.ashwork.mc.multilingualexamples.util.prefix
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraftforge.client.model.generators.ItemModelProvider
 import net.minecraftforge.common.data.ExistingFileHelper
+import net.minecraftforge.registries.RegistryObject
 
 /**
  * A data provider which generates item models for the mod.
@@ -25,7 +25,7 @@ import net.minecraftforge.common.data.ExistingFileHelper
 internal class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) : ItemModelProvider(gen, ID, efh) {
 
     override fun registerModels() {
-        this.simpleItem(ASH.kt)
+        this.simpleItem(ASH)
     }
 
     /**
@@ -33,7 +33,7 @@ internal class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) : ItemMod
      *
      * @param item the item whose model is being generated
      */
-    private fun simpleItem(item: () -> Item) = this.simpleItem(item, item.invoke().registryName!!)
+    private fun simpleItem(item: RegistryObject<out Item>) = this.simpleItem(item, item.id!!)
 
     /**
      * Creates a simple item model through the 'item/generated' parent with a single
@@ -45,7 +45,7 @@ internal class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) : ItemMod
      * @param item the item whose model is being generated
      * @param layer0 the name of the layer0 texture living in 'textures/item'
      */
-    private fun simpleItem(item: () -> Item, layer0: ResourceLocation) =
-        this.withExistingParent(item.invoke().registryName!!.toString(), "item/generated")
+    private fun simpleItem(item: RegistryObject<out Item>, layer0: ResourceLocation) =
+        this.withExistingParent(item.id!!.toString(), "item/generated")
             .texture("layer0", layer0 prefix this.folder)
 }

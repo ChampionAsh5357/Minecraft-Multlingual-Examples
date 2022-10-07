@@ -2,6 +2,8 @@
     "pack": {
         "description": "Multilingual Examples Resources",
         "pack_format": 9,
-        "_pack_format_comment": "Pack Format for 1.18.2+ is 9."
+        "forge:resource_pack_format": 9,
+        "forge:data_pack_format": 10,
+        "_pack_format_comment": "Resource Pack Format for 1.18.2+ is 9. Datapack format for 1.19+ is 10."
     }
 }

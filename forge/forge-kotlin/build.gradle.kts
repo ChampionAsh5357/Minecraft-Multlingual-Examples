@@ -1,12 +1,3 @@
-// Fix bug for IntelliJ with transitive dependencies
-buildscript {
-    configurations.forEach {
-        it.resolutionStrategy {
-            libs.bundles.log4j.get().map { t -> t.toString() }.forEach(::force)
-        }
-    }
-}
-
 // Add plugins
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -88,7 +79,16 @@ minecraft {
         mods.create(modId).source(sourceSets["main"])
 
         lazyToken("minecraft_classpath") {
-            libraryConfiguration.copyRecursive().resolve().joinToString(separator = File.pathSeparator) { it.absolutePath }
+            // Weird nonsense because kotlin sets are weird
+            val set = mutableSetOf<String>()
+            var annotationSeen = false
+            libraryConfiguration.copyRecursive().resolve().forEach {
+                val path = it.absolutePath.intern()
+                annotationSeen = annotationSeen || path.contains("org.jetbrains\\annotations\\23.0")
+                if (!path.contains("org.jetbrains\\annotations\\23.0") || !annotationSeen)
+                    set.add(path)
+            }
+            set.joinToString(separator = File.pathSeparator)
         }
     }
 }

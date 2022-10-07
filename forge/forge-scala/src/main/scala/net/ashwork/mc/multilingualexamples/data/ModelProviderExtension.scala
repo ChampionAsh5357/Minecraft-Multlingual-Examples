@@ -22,5 +22,5 @@ trait ModelProviderExtension {
      * @return a new [[ResourceLocation]] with the path prefixed
      */
     def prefix(rl: ResourceLocation, prefix: String): ResourceLocation =
-        if(rl.getPath.contains("/")) rl else new ResourceLocation(rl.getNamespace, s"${prefix}/${rl.getPath}")
+        if(rl.getPath.contains("/")) rl else new ResourceLocation(rl.getNamespace, s"$prefix/${rl.getPath}")
 }

@@ -4,20 +4,20 @@ This is an example mod for Minecraft that written in multiple languages and mod 
 
 ## Available Examples
 
-| Loader | Language | 1.17.x | 1.18.x |
-|:------:|:--------:|:------:|:------:|
-| Forge  |   Java   |   ✔️   |   ✔️   |
-|        |  Kotlin  |   ✔️   |   ✔️   |
-|        |  Scala   |   ✔️   |   ✔️   |
-|        |  Groovy  |   ✔️   |   ✔️   |
-| Fabric |   Java   |   ✔️   |   ✔️   |
-|        |  Kotlin  |   ✔️   |   ✔️   |
-|        |  Scala   |   ✔️   |   ✔️   |
-|        |  Groovy  |   ✔️   |   ✔️   |
-| Quilt  |   Java   |   ❌    |   ✔️   |
-|        |  Kotlin  |   ❌    |   ✔️   |
-|        |  Scala   |   ❌    |   ✔️   |
-|        |  Groovy  |   ❌    |   ✔️   |
+| Loader | Language | 1.17.x | 1.18.x | 1.19.x |
+|:------:|:--------:|:------:|:------:|:------:|
+| Forge  |   Java   |   ✔️   |   ✔️   |   ✔️   |
+|        |  Kotlin  |   ✔️   |   ✔️   |   ✔️   |
+|        |  Scala   |   ✔️   |   ✔️   |   ✔️   |
+|        |  Groovy  |   ✔️   |   ✔️   |   ✔️   |
+| Fabric |   Java   |   ✔️   |   ✔️   |   ✔️   |
+|        |  Kotlin  |   ✔️   |   ✔️   |   ✔️   |
+|        |  Scala   |   ✔️   |   ✔️   |   ✔️   |
+|        |  Groovy  |   ✔️   |   ✔️   |   ✔️   |
+| Quilt  |   Java   |   ❌    |   ✔️   |   ✔️   |
+|        |  Kotlin  |   ❌    |   ✔️   |   ✔️   |
+|        |  Scala   |   ❌    |   ✔️   |   ✔️   |
+|        |  Groovy  |   ❌    |   ✔️   |   ✔️   |
 
 ### Supported Versions
 

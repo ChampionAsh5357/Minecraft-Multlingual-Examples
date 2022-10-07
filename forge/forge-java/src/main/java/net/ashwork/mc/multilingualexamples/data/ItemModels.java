@@ -13,9 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Objects;
-import java.util.function.Supplier;
 
 /**
  * A data provider which generates item models for the mod.
@@ -42,8 +42,8 @@ public final class ItemModels extends ItemModelProvider implements ModelProvider
      *
      * @param item the item whose model is being generated
      */
-    private void simpleItem(final Supplier<? extends Item> item) {
-        this.simpleItem(item, item.get().getRegistryName());
+    private void simpleItem(final RegistryObject<? extends Item> item) {
+        this.simpleItem(item, item.getId());
     }
 
     /**
@@ -57,8 +57,8 @@ public final class ItemModels extends ItemModelProvider implements ModelProvider
      * @param item the item whose model is being generated
      * @param layer0 the name of the layer0 texture living in {@code textures/item}
      */
-    private void simpleItem(final Supplier<? extends Item> item, final ResourceLocation layer0) {
-        this.withExistingParent(Objects.requireNonNull(item.get().getRegistryName()).toString(), "item/generated")
+    private void simpleItem(final RegistryObject<? extends Item> item, final ResourceLocation layer0) {
+        this.withExistingParent(Objects.requireNonNull(item.getId()).toString(), "item/generated")
                 .texture("layer0", this.prefix(layer0, this.folder));
     }
 }

@@ -13,6 +13,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraftforge.client.model.generators.ItemModelProvider
 import net.minecraftforge.common.data.ExistingFileHelper
+import net.minecraftforge.registries.RegistryObject
+
 /**
  * A data provider which generates item models for the mod.
  */
@@ -30,7 +32,7 @@ final class ItemModels extends ItemModelProvider implements ModelProviderExtensi
 
     @Override
     protected void registerModels() {
-        this.simpleItem { ItemRegistrar.ASH.get() }
+        this.simpleItem(ItemRegistrar.ASH)
     }
 
     /**
@@ -38,8 +40,8 @@ final class ItemModels extends ItemModelProvider implements ModelProviderExtensi
      *
      * @param item the item whose model is being generated
      */
-    private void simpleItem(final Closure<? extends Item> item) {
-        this.simpleItem(item, item.call().getRegistryName())
+    private void simpleItem(final RegistryObject<? extends Item> item) {
+        this.simpleItem(item, item.getId())
     }
 
     /**
@@ -52,8 +54,8 @@ final class ItemModels extends ItemModelProvider implements ModelProviderExtensi
      * @param item the item whose model is being generated
      * @param layer0 the name of the layer0 texture living in {@code textures/item}
      */
-    private void simpleItem(final Closure<? extends Item> item, final ResourceLocation layer0) {
-        this.withExistingParent(item.call().getRegistryName().toString(), 'item/generated')
+    private void simpleItem(final RegistryObject<? extends Item> item, final ResourceLocation layer0) {
+        this.withExistingParent(item.getId().toString(), 'item/generated')
                 .texture('layer0', this.prefix(layer0, this.folder))
     }
 }

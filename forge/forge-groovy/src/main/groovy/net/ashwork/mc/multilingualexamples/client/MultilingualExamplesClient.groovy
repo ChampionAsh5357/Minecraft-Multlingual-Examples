@@ -8,12 +8,11 @@ package net.ashwork.mc.multilingualexamples.client
 
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
-import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.ParticleEngine
 import net.minecraft.client.particle.ParticleProvider
 import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.SimpleParticleType
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent
 import net.minecraftforge.eventbus.api.IEventBus
 
 import java.util.function.Consumer
@@ -30,9 +29,9 @@ class MultilingualExamplesClient {
      * @param forgeBus the forge event bus
      */
     MultilingualExamplesClient(final IEventBus modBus, final IEventBus forgeBus) {
-        modBus.addListener(new Consumer<ParticleFactoryRegisterEvent>() {
+        modBus.addListener(new Consumer<RegisterParticleProvidersEvent>() {
             @Override
-            void accept(final ParticleFactoryRegisterEvent event) {
+            void accept(final RegisterParticleProvidersEvent event) {
                 onRegisterParticleFactories(event)
             }
         })
@@ -43,7 +42,7 @@ class MultilingualExamplesClient {
      *
      * @param event an event instance
      */
-    private static void onRegisterParticleFactories(final ParticleFactoryRegisterEvent event) {
+    private static void onRegisterParticleFactories(final RegisterParticleProvidersEvent event) {
         /*
          * Register our particle factory.
          *
@@ -53,7 +52,7 @@ class MultilingualExamplesClient {
          *
          * Textures referenced in the JSON will be in the 'particle' directory within textures.
          */
-        Minecraft.getInstance().particleEngine.register(ParticleTypeRegistrar.DRIPPING_ASH.get(), new ParticleEngine.SpriteParticleRegistration<SimpleParticleType>() {
+       event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(), new ParticleEngine.SpriteParticleRegistration<SimpleParticleType>() {
             @Override
             ParticleProvider<SimpleParticleType> create(SpriteSet sprites) {
                 return new DrippingAshParticle.DrippingAshParticleProvider(sprites)

@@ -1,12 +1,3 @@
-// Fix bug for IntelliJ with transitive dependencies
-buildscript {
-    configurations.forEach {
-        it.resolutionStrategy {
-            libs.bundles.log4j.get().map { t -> t.toString() }.forEach(::force)
-        }
-    }
-}
-
 // Add plugins
 plugins {
     scala

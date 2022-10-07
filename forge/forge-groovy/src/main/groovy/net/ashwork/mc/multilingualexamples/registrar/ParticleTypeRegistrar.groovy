@@ -7,6 +7,7 @@
 package net.ashwork.mc.multilingualexamples.registrar
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
+import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.registries.DeferredRegister
@@ -22,7 +23,7 @@ final class ParticleTypeRegistrar {
      * The registrar used to register the particle types for this mod. Must be attached
      * to the mod event bus through some call within the main mod constructor.
      */
-    static final DeferredRegister<ParticleType<?>> REGISTRAR = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MultilingualExamples.ID)
+    static final DeferredRegister<ParticleType<? extends ParticleOptions>> REGISTRAR = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MultilingualExamples.ID)
 
     static final RegistryObject<SimpleParticleType> DRIPPING_ASH = REGISTRAR.register('dripping_ash') {
         new SimpleParticleType(false)

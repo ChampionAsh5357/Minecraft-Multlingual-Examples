@@ -8,8 +8,7 @@ package net.ashwork.mc.multilingualexamples.client
 
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticleProvider
 import net.ashwork.mc.multilingualexamples.registrar.DRIPPING_ASH
-import net.minecraft.client.Minecraft
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent
 import net.minecraftforge.eventbus.api.IEventBus
 
 /**
@@ -30,7 +29,7 @@ class MultilingualExamplesClient(private val modBus: IEventBus, private val forg
      *
      * @param event an event instance
      */
-    private fun onRegisterParticleFactories(event: ParticleFactoryRegisterEvent) {
+    private fun onRegisterParticleFactories(event: RegisterParticleProvidersEvent) {
         /*
         * Register our particle factory.
         *
@@ -40,6 +39,6 @@ class MultilingualExamplesClient(private val modBus: IEventBus, private val forg
         *
         * Textures referenced in the JSON will be in the 'particle' directory within textures.
         */
-        Minecraft.getInstance().particleEngine.register(DRIPPING_ASH.get(), ::DrippingAshParticleProvider)
+        event.register(DRIPPING_ASH.get(), ::DrippingAshParticleProvider)
     }
 }

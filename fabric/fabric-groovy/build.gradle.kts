@@ -35,7 +35,6 @@ dependencies {
     modImplementation(libs.bundles.fabric)
 
     implementation(libs.groovy.core)
-    modImplementation(libs.fabric.groovy)
 }
 
 // Setup runs

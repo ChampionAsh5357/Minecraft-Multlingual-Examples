@@ -8,7 +8,7 @@
 
         "metadata": {
             "name": "Multilingual Examples - Quilt Kotlin",
-            "description": "An example mod for Minecraft 1.18.x in the Kotlin programming language via the Quilt Mod Loader.",
+            "description": "An example mod for Minecraft 1.19.x in the Kotlin programming language via the Quilt Mod Loader.",
             "contributors": {
                 "ChampionAsh5357": "Owner"
             },
@@ -29,15 +29,15 @@
         "depends": [
             {
                 "id": "quilt_loader",
-                "versions": ">=0.16.0-"
+                "versions": ">=0.17.5-"
             },
             {
                 "id": "quilted_fabric_api",
-                "versions": ">=1.0.0-"
+                "versions": ">=4.0.0-"
             },
             {
                 "id": "minecraft",
-                "versions": ">=1.18.2"
+                "versions": ">=1.19.2"
             }
         ]
     }

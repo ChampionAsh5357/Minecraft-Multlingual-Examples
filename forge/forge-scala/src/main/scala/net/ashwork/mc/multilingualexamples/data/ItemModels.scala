@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraftforge.client.model.generators.ItemModelProvider
 import net.minecraftforge.common.data.ExistingFileHelper
+import net.minecraftforge.registries.RegistryObject
 
 /**
  * A data provider which generates item models for the mod.
@@ -23,7 +24,7 @@ import net.minecraftforge.common.data.ExistingFileHelper
 class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelProvider(gen, MultilingualExamples.ID, efh) with ModelProviderExtension {
 
     override def registerModels(): Unit = {
-        this.simpleItem(ItemRegistrar.ASH.get)
+        this.simpleItem(ItemRegistrar.ASH)
     }
 
     /**
@@ -31,7 +32,7 @@ class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelP
      *
      * @param item the item whose model is being generated
      */
-    private def simpleItem(item: () => Item): Unit = this.simpleItem(item, item.apply.getRegistryName)
+    private def simpleItem(item: RegistryObject[_ <: Item]): Unit = this.simpleItem(item, item.getId)
 
     /**
      * Creates a simple item model through the 'item/generated' parent with a single
@@ -43,8 +44,8 @@ class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelP
      * @param item the item whose model is being generated
      * @param layer0 the name of the layer0 texture living in 'textures/item'
      */
-    private def simpleItem(item: () => Item, layer0: ResourceLocation) =
-        this.withExistingParent(item.apply().getRegistryName.toString, "item/generated")
+    private def simpleItem(item: RegistryObject[_ <: Item], layer0: ResourceLocation): Unit =
+        this.withExistingParent(item.getId.toString, "item/generated")
                 .texture("layer0", this.prefix(layer0, this.folder))
 }
 
