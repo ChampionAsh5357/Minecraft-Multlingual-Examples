@@ -28,18 +28,12 @@ sourceSets["main"].resources {
     exclude(".cache/")
 }
 
-// Add library configurations for non-mod dependencies
-internal val libraryConfiguration = configurations.create("library")
-configurations.named("implementation") {
-    extendsFrom(libraryConfiguration)
-}
-
 // Add dependencies
 dependencies {
     minecraft(libs.forge)
 
-    libraryConfiguration(libs.kotlin.stdlib)
-    libraryConfiguration(libs.annotations)
+    minecraftLibrary(libs.kotlin.stdlib)
+    minecraftLibrary(libs.annotations)
 }
 
 // Setup runs
@@ -78,11 +72,11 @@ minecraft {
         property("forge.enabledGameTestNamespaces", modId)
         mods.create(modId).source(sourceSets["main"])
 
+        // Weird nonsense because sets for some reason don't recognize unique strings
         lazyToken("minecraft_classpath") {
-            // Weird nonsense because kotlin sets are weird
             val set = mutableSetOf<String>()
             var annotationSeen = false
-            libraryConfiguration.copyRecursive().resolve().forEach {
+            configurations.getByName("minecraftLibrary").copyRecursive().resolve().forEach {
                 val path = it.absolutePath.intern()
                 annotationSeen = annotationSeen || path.contains("org.jetbrains\\annotations\\23.0")
                 if (!path.contains("org.jetbrains\\annotations\\23.0") || !annotationSeen)

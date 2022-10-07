@@ -28,17 +28,11 @@ sourceSets["main"].resources {
     exclude(".cache/")
 }
 
-// Add library configurations for non-mod dependencies
-internal val libraryConfiguration = configurations.create("library")
-configurations.named("implementation") {
-    extendsFrom(libraryConfiguration)
-}
-
 // Add dependencies
 dependencies {
     minecraft(libs.forge)
 
-    libraryConfiguration(libs.groovy.core)
+    minecraftLibrary(libs.groovy.core)
 }
 
 // Setup runs
@@ -76,10 +70,6 @@ minecraft {
         ideaModule = "${rootId}.${loaderId}.${loaderId}-${languageId}.main"
         property("forge.enabledGameTestNamespaces", modId)
         mods.create(modId).source(sourceSets["main"])
-
-        lazyToken("minecraft_classpath") {
-            libraryConfiguration.copyRecursive().resolve().joinToString(separator = File.pathSeparator) { it.absolutePath }
-        }
     }
 }
 
