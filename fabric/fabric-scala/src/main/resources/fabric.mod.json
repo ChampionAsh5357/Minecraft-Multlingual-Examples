@@ -29,6 +29,12 @@
                 "adapter": "scala",
                 "value": "net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient"
             }
+        ],
+        "fabric-datagen": [
+            {
+                "adapter": "scala",
+                "value": "net.ashwork.mc.multilingualexamples.data.MultilingualExamplesData"
+            }
         ]
     },
 

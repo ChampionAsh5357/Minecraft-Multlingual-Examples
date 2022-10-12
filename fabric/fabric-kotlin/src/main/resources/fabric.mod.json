@@ -29,6 +29,12 @@
                 "adapter": "kotlin",
                 "value": "net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient"
             }
+        ],
+        "fabric-datagen": [
+            {
+                "adapter": "kotlin",
+                "value": "net.ashwork.mc.multilingualexamples.data.MultilingualExamplesData"
+            }
         ]
     },
 
