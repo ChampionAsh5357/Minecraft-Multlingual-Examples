@@ -49,6 +49,16 @@ loom.runs {
         configName = "${languageId.capitalize()} Quilt Server"
         runDir("../run/server")
     }
+    create("data") {
+        server()
+        configName = "${languageId.capitalize()} Quilt Data"
+        runDir("../run/data")
+        vmArgs(
+            "-Dfabric-api.datagen",
+            "-Dfabric-api.datagen.output-dir=${generatedResources}",
+            "-Dfabric-api.datagen.strict-validation"
+        )
+    }
 
     all {
         ideConfigGenerated(true)

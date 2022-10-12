@@ -22,7 +22,8 @@
 
         "entrypoints": {
             "init": "net.ashwork.mc.multilingualexamples.MultilingualExamples",
-            "client_init": "net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient"
+            "client_init": "net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient",
+            "fabric-datagen": "net.ashwork.mc.multilingualexamples.data.MultilingualExamplesData"
         },
         "intermediate_mappings": "net.fabricmc:intermediary",
 
