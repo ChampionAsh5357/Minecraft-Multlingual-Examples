@@ -27,6 +27,11 @@
             {
                 "value": "net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient"
             }
+        ],
+        "fabric-datagen": [
+            {
+                "value": "net.ashwork.mc.multilingualexamples.data.MultilingualExamplesData"
+            }
         ]
     },
 
