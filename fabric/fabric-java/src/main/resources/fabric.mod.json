@@ -23,6 +23,9 @@
         ],
         "client": [
             "net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient"
+        ],
+        "fabric-datagen": [
+            "net.ashwork.mc.multilingualexamples.data.MultilingualExamplesData"
         ]
     },
 
