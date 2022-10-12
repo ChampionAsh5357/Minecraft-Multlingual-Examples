@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client;
 
+import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager;
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle;
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -17,6 +18,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
  */
 public class MultilingualExamplesClient {
 
+    private static MultilingualExamplesClient _instance;
+    private final ArmorModelManager modelManager;
+
     /**
      * Default constructor.
      *
@@ -24,7 +28,25 @@ public class MultilingualExamplesClient {
      * @param forgeBus the forge event bus
      */
     public MultilingualExamplesClient(final IEventBus modBus, final IEventBus forgeBus) {
+        _instance = this;
+
+        this.modelManager = new ArmorModelManager(modBus);
+
         modBus.addListener(this::onRegisterParticleFactories);
+    }
+
+    /**
+     * {@return the client instance of this mod}
+     */
+    public static MultilingualExamplesClient instance() {
+        return _instance;
+    }
+
+    /**
+     * {@return the armor model manager}
+     */
+    public ArmorModelManager armorModelManager() {
+        return this.modelManager;
     }
 
     /**
