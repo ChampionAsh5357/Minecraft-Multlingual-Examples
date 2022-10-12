@@ -248,9 +248,8 @@ public class ArmorModelManager {
      * @throws NullPointerException if there is no default player armor model handler
      */
     private ModelHandler getHandler(ArmorMaterial material, Entity entity) {
-        ModelHandler handler;
-        if (entity instanceof AbstractClientPlayer player) handler = this.playerArmorModels.get(player.getModelName(), material);
-        else handler = this.entityArmorModels.get(entity.getType(), material);
+        ModelHandler handler = entity instanceof AbstractClientPlayer player ? this.playerArmorModels.get(player.getModelName(), material)
+                : this.entityArmorModels.get(entity.getType(), material);
 
         if (handler == null) handler = this.playerArmorModels.get("default", material);
 

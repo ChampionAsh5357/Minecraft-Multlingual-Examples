@@ -96,7 +96,7 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
         chance that this enum gets loaded before registration, so it is better
         to supply a lazy reference instead, preferably through 'RegistryObject'.
          */
-        this.sound = sound;
+        this.sound = Lazy.of(sound);
         this.toughness = toughness;
         this.knockbackResistance = knockbackResistance;
         /*
