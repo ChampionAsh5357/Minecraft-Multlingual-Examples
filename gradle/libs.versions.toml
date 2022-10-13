@@ -27,12 +27,7 @@ fabric_kotlin = "1.8.4+kotlin.1.7.20"
 
 # Latest Scala Versions
 # https://docs.scala-lang.org/api/all.html
-scala = "2.13.9"
-# scala_3 = "3.2.0"
-
-# https://maven.fabricmc.net/net/fabricmc/fabric-language-scala/
-fabric_scala = "1.1.0+scala.2.13.6"
-# fabric_scala_3 = "2.0.0+scala.3.0.2"
+scala = "3.2.0"
 
 # Latest Groovy Versions
 # https://groovy.apache.org/download.html
@@ -55,8 +50,7 @@ quilted_fabric_api = { module = "org.quiltmc.quilted-fabric-api:quilted-fabric-a
 kotlin_stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 fabric_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_kotlin" }
 
-scala_library = { module = "org.scala-lang:scala-library", version.ref = "scala" }
-fabric_scala = { module = "net.fabricmc:fabric-language-scala", version.ref = "fabric_scala" }
+scala_library = { module = "org.scala-lang:scala3-library_3", version.ref = "scala" }
 
 groovy_core = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
 

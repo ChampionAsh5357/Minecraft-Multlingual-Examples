@@ -14,7 +14,7 @@ import net.fabricmc.fabric.api.datagen.v1.{DataGeneratorEntrypoint, FabricDataGe
  * must match that within 'entrypoints.fabric-datagen'. Any data entry point must
  * implement [[DataGeneratorEntrypoint]].
  */
-object MultilingualExamplesData extends DataGeneratorEntrypoint {
+class MultilingualExamplesData extends DataGeneratorEntrypoint {
 
     override def onInitializeDataGenerator(gen: FabricDataGenerator): Unit = {
         // Add providers

@@ -35,7 +35,6 @@ dependencies {
     modImplementation(libs.bundles.fabric)
 
     implementation(libs.scala.library)
-    modImplementation(libs.fabric.scala)
 }
 
 // Setup runs

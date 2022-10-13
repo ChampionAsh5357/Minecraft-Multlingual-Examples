@@ -20,19 +20,16 @@
     "entrypoints": {
         "main": [
             {
-                "adapter": "scala",
                 "value": "net.ashwork.mc.multilingualexamples.MultilingualExamples"
             }
         ],
         "client": [
             {
-                "adapter": "scala",
                 "value": "net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient"
             }
         ],
         "fabric-datagen": [
             {
-                "adapter": "scala",
                 "value": "net.ashwork.mc.multilingualexamples.data.MultilingualExamplesData"
             }
         ]
@@ -42,7 +39,6 @@
         "fabricloader": ">=0.14.9",
         "fabric": "*",
         "minecraft": "1.19.x",
-        "java": ">=17",
-        "fabric-language-scala": ">=1.1.0+scala.2.13.6"
+        "java": ">=17"
     }
 }
