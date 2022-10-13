@@ -16,8 +16,19 @@ import scala.collection.mutable.ListBuffer
  * The fully qualified name of this class must match that within 'entrypoints.main'.
  * Any entry point must implement [[ModInitializer]]
  */
-object MultilingualExamples extends ModInitializer {
-
+class MultilingualExamples extends ModInitializer {
+    /**
+     * Initializes the called data once Minecraft is considered to be in a
+     * mod-load-ready state.
+     */
+    override def onInitialize(): Unit = {
+        // Add registries
+        MultilingualExamples.LOADERS.addOne(() => ItemRegistrar.ASH)
+        MultilingualExamples.LOADERS.addOne(() => ParticleTypeRegistrar.DRIPPING_ASH)
+        MultilingualExamples.LOADERS.foreach(it => it.apply())
+    }
+}
+object MultilingualExamples {
     /**
      * The modid of our mod.
      */
@@ -27,15 +38,4 @@ object MultilingualExamples extends ModInitializer {
      * A list of class loaders used to initialize the registry objects.
      */
     private final val LOADERS: ListBuffer[() => Unit] = ListBuffer.empty
-
-    /**
-     * Initializes the called data once Minecraft is considered to be in a
-     * mod-load-ready state.
-     */
-    override def onInitialize(): Unit = {
-        // Add registries
-        LOADERS.addOne(() => ItemRegistrar.ASH)
-        LOADERS.addOne(() => ParticleTypeRegistrar.DRIPPING_ASH)
-        LOADERS.foreach(it => it.apply())
-    }
 }

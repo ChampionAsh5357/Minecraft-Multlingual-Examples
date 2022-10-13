@@ -8,6 +8,7 @@ package net.ashwork.mc.multilingualexamples.data
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
+import net.ashwork.mc.multilingualexamples.util.MultilingualExtensions.prefix
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -21,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject
  * @param gen the generator being written to
  * @param efh a resource holder for linking existing files
  */
-class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelProvider(gen, MultilingualExamples.ID, efh) with ModelProviderExtension {
+class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelProvider(gen, MultilingualExamples.ID, efh) {
 
     override def registerModels(): Unit = {
         this.simpleItem(ItemRegistrar.ASH)
@@ -46,7 +47,7 @@ class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelP
      */
     private def simpleItem(item: RegistryObject[_ <: Item], layer0: ResourceLocation): Unit =
         this.withExistingParent(item.getId.toString, "item/generated")
-                .texture("layer0", this.prefix(layer0, this.folder))
+                .texture("layer0", layer0 prefix this.folder)
 }
 
 /**

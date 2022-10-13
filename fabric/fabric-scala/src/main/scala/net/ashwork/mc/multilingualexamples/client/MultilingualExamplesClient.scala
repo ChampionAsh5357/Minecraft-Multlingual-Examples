@@ -16,7 +16,7 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
  * for the client. The fully qualified name of this class must match that within
  * 'entrypoints.client'. Any client entry point must implement [[ClientModInitializer]].
  */
-object MultilingualExamplesClient extends ClientModInitializer {
+class MultilingualExamplesClient extends ClientModInitializer {
 
     override def onInitializeClient(): Unit = {
         /*
