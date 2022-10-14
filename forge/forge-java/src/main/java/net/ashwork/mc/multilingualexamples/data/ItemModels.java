@@ -35,6 +35,10 @@ public final class ItemModels extends ItemModelProvider implements ModelProvider
     @Override
     protected void registerModels() {
         this.simpleItem(ItemRegistrar.ASH);
+        this.simpleItem(ItemRegistrar.COLLAGE_HELMET);
+        this.simpleItem(ItemRegistrar.COLLAGE_CHESTPLATE);
+        this.simpleItem(ItemRegistrar.COLLAGE_LEGGINGS);
+        this.simpleItem(ItemRegistrar.COLLAGE_BOOTS);
     }
 
     /**

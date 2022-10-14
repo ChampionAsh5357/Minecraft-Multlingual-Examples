@@ -29,7 +29,6 @@ public class MultilingualExamplesClient {
      */
     public MultilingualExamplesClient(final IEventBus modBus, final IEventBus forgeBus) {
         _instance = this;
-
         this.modelManager = new ArmorModelManager(modBus);
 
         modBus.addListener(this::onRegisterParticleFactories);

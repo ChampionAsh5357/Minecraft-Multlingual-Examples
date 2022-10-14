@@ -29,7 +29,6 @@ public final class Localizations extends LanguageProvider {
     protected void addTranslations() {
         // Add items
         this.addItem(ItemRegistrar.ASH, "Ash");
-
         this.addItem(ItemRegistrar.COLLAGE_HELMET, "Hat");
         this.addItem(ItemRegistrar.COLLAGE_CHESTPLATE, "Rocket");
         this.addItem(ItemRegistrar.COLLAGE_LEGGINGS, "Belt");
