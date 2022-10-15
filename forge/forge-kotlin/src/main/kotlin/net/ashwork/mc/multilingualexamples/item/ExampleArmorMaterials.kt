@@ -13,7 +13,6 @@ import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraftforge.registries.ForgeRegistries
-import net.minecraftforge.registries.RegistryObject
 
 /**
  * An enum containing the armor materials for this mod.
@@ -22,16 +21,16 @@ import net.minecraftforge.registries.RegistryObject
  * @param durabilities the armor durabilities for the feet, legs, chest, and head slots respectively
  * @param slotProtections the additive armor attribute modifiers for the feet, legs, chest, and head slots respectively
  * @param enchantmentValue the enchantibility of the armor material
- * @param sound the armor material equip sound
  * @param toughness the additive armor toughness attribute modifier
  * @param knockbackResistance the additive knockback resistance attribute modifier
+ * @param sound the armor material equip sound
  * @param repairIngredient a supplied ingredient of what items can repair this armor
  */
 enum class ExampleArmorMaterials(name: String, private val durabilities: IntArray,
     private val slotProtections: IntArray, private val enchantmentValue: Int,
-    sound: () -> SoundEvent, private val toughness: Float,
-    private val knockbackResistance: Float, repairIngredient: () -> Ingredient): ArmorMaterial {
-    COLLAGE("collage", 1, intArrayOf(1, 1, 2, 1), 0, ResourceLocation("item.armor.equip_leather"), 0F, 0F, { Ingredient.EMPTY });
+    private val toughness: Float, private val knockbackResistance: Float,
+    sound: () -> SoundEvent, repairIngredient: () -> Ingredient): ArmorMaterial {
+    COLLAGE("collage", 1, intArrayOf(1, 1, 2, 1), 0, ResourceLocation("item.armor.equip_leather"), 0F, 0F, Ingredient::EMPTY);
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
@@ -49,8 +48,8 @@ enum class ExampleArmorMaterials(name: String, private val durabilities: IntArra
      */
     constructor(name: String, durabilityMultiplier: Int, slotProtections: IntArray, enchantmentValue: Int,
                 soundName: ResourceLocation, toughness: Float, knockbackResistance: Float, repairIngredient: () -> Ingredient):
-            this(name, durabilityMultiplier, slotProtections, enchantmentValue, RegistryObject.create(soundName, ForgeRegistries.SOUND_EVENTS).run { this::get },
-                toughness, knockbackResistance, repairIngredient)
+            this(name, durabilityMultiplier, slotProtections, enchantmentValue, toughness, knockbackResistance,
+                { ForgeRegistries.SOUND_EVENTS.getValue(soundName)!! }, repairIngredient)
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
@@ -61,16 +60,16 @@ enum class ExampleArmorMaterials(name: String, private val durabilities: IntArra
      * @param durabilityMultiplier the armor material multiplier for the default durabilities
      * @param slotProtections the additive armor attribute modifiers for the feet, legs, chest, and head slots respectively
      * @param enchantmentValue the enchantibility of the armor material
-     * @param sound the armor material equip sound
      * @param toughness the additive armor toughness attribute modifier
      * @param knockbackResistance the additive knockback resistance attribute modifier
+     * @param sound the armor material equip sound
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
     constructor(name: String, durabilityMultiplier: Int, slotProtections: IntArray,
-                enchantmentValue: Int, sound: () -> SoundEvent, toughness: Float,
-                knockbackResistance: Float, repairIngredient: () -> Ingredient):
+                enchantmentValue: Int, toughness: Float, knockbackResistance: Float,
+                sound: () -> SoundEvent, repairIngredient: () -> Ingredient):
         this(name, intArrayOf(13 * durabilityMultiplier, 15 * durabilityMultiplier, 16 * durabilityMultiplier, 11 * durabilityMultiplier),
-            slotProtections, enchantmentValue, sound, toughness, knockbackResistance, repairIngredient)
+            slotProtections, enchantmentValue, toughness, knockbackResistance, sound, repairIngredient)
 
     /*
     All names must have their mod id prefixed. This is used as the default

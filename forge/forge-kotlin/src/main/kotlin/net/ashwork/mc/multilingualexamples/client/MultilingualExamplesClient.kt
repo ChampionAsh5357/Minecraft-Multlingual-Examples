@@ -15,16 +15,19 @@ import net.minecraftforge.eventbus.api.IEventBus
 /**
  * An isolated class for initialization of anything the mod needs specifically
  * for the client. This should only be referenced through a sided check.
- *
- * @param modBus the mod's event bus
- * @param forgeBus the forge event bus
  */
-class MultilingualExamplesClient(modBus: IEventBus, forgeBus: IEventBus) {
+object MultilingualExamplesClient{
 
-    private val modelManager: ArmorModelManager = ArmorModelManager(modBus)
+    private lateinit var modelManager: ArmorModelManager
 
-    init {
-        instance = this
+    /**
+     * Initializes the client handler.
+     *
+     * @param modBus the mod's event bus
+     * @param forgeBus the forge event bus
+     */
+    fun init(modBus: IEventBus, forgeBus: IEventBus) {
+        this.modelManager = ArmorModelManager(modBus)
 
         modBus.addListener(this::onRegisterParticleFactories)
     }
@@ -54,12 +57,3 @@ class MultilingualExamplesClient(modBus: IEventBus, forgeBus: IEventBus) {
         event.register(DRIPPING_ASH.get(), ::DrippingAshParticleProvider)
     }
 }
-
-private lateinit var instance: MultilingualExamplesClient
-
-/**
- * Returns the client instance of this mod.
- *
- * @return the client instance of this mod
- */
-fun clientInstance(): MultilingualExamplesClient = instance

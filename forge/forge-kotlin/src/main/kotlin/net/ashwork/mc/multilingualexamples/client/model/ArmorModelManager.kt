@@ -55,7 +55,7 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param types the entity types to apply the armor to
      * @param T the type of the armor model
      */
-    private fun <T: Model> registerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, modelFactory: (ModelPart) -> T, setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit, vararg types: EntityType<*>) =
+    private inline fun <T: Model> registerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, noinline modelFactory: (ModelPart) -> T, noinline setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit, vararg types: EntityType<*>) =
         this.registerArmorModel(material, register, createSingleModel(material, modelFactory, setup), *types)
 
     /**
@@ -67,7 +67,7 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param handler the armor model handler
      * @param types the entity types to apply the armor to
      */
-    private fun registerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, handler: (ModelLayerLocation) -> ModelHandler, vararg types: EntityType<*>) {
+    private inline fun registerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, handler: (ModelLayerLocation) -> ModelHandler, vararg types: EntityType<*>) {
         types.forEach {
             val mll = ModelLayerLocation(ForgeRegistries.ENTITY_TYPES.getKey(it)!!, material.name)
             register(mll)
@@ -86,7 +86,7 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param types the player models to apply the armor to
      * @param T the type of the armor model
      */
-    private fun <T: Model> registerPlayerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, modelFactory: (ModelPart) -> T, setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit, vararg types: String) =
+    private inline fun <T: Model> registerPlayerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, noinline modelFactory: (ModelPart) -> T, noinline setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit, vararg types: String) =
         this.registerPlayerArmorModel(material, register, createSingleModel(material, modelFactory, setup), *types)
 
     /**
@@ -98,7 +98,7 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param handler the armor model handler
      * @param types the player models to apply the armor to
      */
-    private fun registerPlayerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, handler: (ModelLayerLocation) -> ModelHandler, vararg types: String) {
+    private inline fun registerPlayerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, handler: (ModelLayerLocation) -> ModelHandler, vararg types: String) {
         types.forEach {
             val mll = ModelLayerLocation(ResourceLocation("player_$it"), material.name)
             register(mll)
@@ -182,14 +182,16 @@ class ArmorModelManager(modBus: IEventBus) {
 
         // Collage model
         val basicCollageLayerDef: (ModelLayerLocation) -> Unit = {
-            event.registerLayerDefinition(it) { LayerDefinition.create(createCollageMesh(CubeDeformation.NONE, 0F), 64, 32) }
+            event.registerLayerDefinition(it) {
+                LayerDefinition.create(CollageModel.createMesh(CubeDeformation.NONE, 0F), 64, 32)
+            }
         }
         this.registerArmorModel(ExampleArmorMaterials.COLLAGE, basicCollageLayerDef, ::CollageModel, CollageModel::copyAndSet,
             EntityType.DROWNED, EntityType.GIANT, EntityType.HUSK, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.SKELETON,
             EntityType.STRAY, EntityType.WITHER_SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN)
         this.registerArmorModel(ExampleArmorMaterials.COLLAGE,
             {
-                event.registerLayerDefinition(it) { LayerDefinition.create(createCollageMesh(CubeDeformation.NONE, 1F, 0F, -1F, -1F), 64, 32) }
+                event.registerLayerDefinition(it) { LayerDefinition.create(CollageModel.createMesh(CubeDeformation.NONE, 1F, 0F, -1F, -1F), 64, 32) }
             }, ::CollageModel, CollageModel::copyAndSet, EntityType.ARMOR_STAND)
         this.registerPlayerArmorModel(ExampleArmorMaterials.COLLAGE, basicCollageLayerDef, ::CollageModel, CollageModel::copyAndSet,
             "default", "slim")
@@ -267,10 +269,14 @@ class ArmorModelManager(modBus: IEventBus) {
  * @return the handler
  * @param T the type of the armor model
  */
-private fun <T: Model> createSingleModel(material: ArmorMaterial, modelFactory: (ModelPart) -> T, setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit): (ModelLayerLocation) -> ModelHandler {
+private inline fun <T: Model> createSingleModel(material: ArmorMaterial, crossinline modelFactory: (ModelPart) -> T, noinline setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit): (ModelLayerLocation) -> ModelHandler {
     val split = material.name.split(":")
     val texture = "${split[0]}:textures/models/armor/${split[1]}.png"
-    return { mll -> SingleModelHandler({ modelSet -> modelFactory(modelSet.bakeLayer(mll)) }, setup, texture) }
+    return { mll ->
+        SingleModelHandler(texture, setup) {
+            modelSet -> modelFactory(modelSet.bakeLayer(mll))
+        }
+    }
 }
 
 /**
@@ -317,8 +323,8 @@ interface ModelHandler {
  * @param setup a method to copy the original model parts and set visibility
  * @param texture the texture of the armor model
  */
-class SingleModelHandler<out T: Model>(private val modelFactory: (EntityModelSet) -> T,
-    private val setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit, private val texture: String): ModelHandler {
+class SingleModelHandler<out T: Model>(private val texture: String, private val setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit,
+                                       private val modelFactory: (EntityModelSet) -> T): ModelHandler {
 
     private lateinit var model: T
 

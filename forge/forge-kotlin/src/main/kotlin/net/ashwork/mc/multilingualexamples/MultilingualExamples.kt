@@ -13,10 +13,10 @@ import net.ashwork.mc.multilingualexamples.registrar.ITEM_REGISTRAR
 import net.ashwork.mc.multilingualexamples.registrar.PARTICLE_TYPE_REGISTRAR
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.fml.DistExecutor
+import net.minecraftforge.data.event.GatherDataEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
-import net.minecraftforge.data.event.GatherDataEvent
+import net.minecraftforge.fml.loading.FMLEnvironment
 
 /**
  * The modid of our mod.
@@ -40,11 +40,7 @@ internal class MultilingualExamples {
         PARTICLE_TYPE_REGISTRAR.register(modBus)
 
         // Add client
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT) {
-            Runnable {
-                MultilingualExamplesClient(modBus, forgeBus)
-            }
-        }
+        if (FMLEnvironment.dist == Dist.CLIENT) MultilingualExamplesClient.init(modBus, forgeBus)
 
         // Add mod events
         modBus.addListener(this::attachDataProviders)

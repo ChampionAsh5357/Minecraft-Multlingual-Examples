@@ -31,7 +31,7 @@ import net.minecraft.world.entity.LivingEntity
  * @param root the part representing the base of the model
  * @param renderType the render type to use when uploading the model to the buffer
  */
-open class CollageModel(root: ModelPart, renderType: (ResourceLocation) -> RenderType):
+class CollageModel(root: ModelPart, renderType: (ResourceLocation) -> RenderType):
     AgeableListModel<LivingEntity>(renderType, true, 16F, 0F, 2F, 2F, 24F) {
 
     /**
@@ -46,31 +46,31 @@ open class CollageModel(root: ModelPart, renderType: (ResourceLocation) -> Rende
 	Head elements, no need to get children as they are all visible in the
 	same equipment slot.
     */
-    protected val head: ModelPart = root.getChild("head")
+    private val head: ModelPart = root.getChild("head")
 
     /*
 	Body elements, need children as rocket and belt are visible in different
 	equipment slots.
     */
-    protected val body: ModelPart = root.getChild("body")
-    protected val rocket: ModelPart = this.body.getChild("rocket")
-    protected val bodyBelt: ModelPart = this.body.getChild("belt")
+    private val body: ModelPart = root.getChild("body")
+    private val rocket: ModelPart = this.body.getChild("rocket")
+    private val bodyBelt: ModelPart = this.body.getChild("belt")
 
     /*
 	Right leg elements, need children as belt and ankle guard are visible in
 	different equipment slots.
 	*/
-    protected val rightLeg: ModelPart = root.getChild("right_leg")
-    protected val rightLegBelt: ModelPart = this.rightLeg.getChild("right_leg_belt")
-    protected val rightAnkle: ModelPart = this.rightLeg.getChild("right_ankle")
+    private val rightLeg: ModelPart = root.getChild("right_leg")
+    private val rightLegBelt: ModelPart = this.rightLeg.getChild("right_leg_belt")
+    private val rightAnkle: ModelPart = this.rightLeg.getChild("right_ankle")
 
     /*
 	Left leg elements, need children as belt and ankle guard are visible in
 	different equipment slots.
 	*/
-    protected val leftLeg: ModelPart = root.getChild("left_leg")
-    protected val leftLegBelt: ModelPart = this.leftLeg.getChild("left_leg_belt")
-    protected val leftAnkle: ModelPart = this.leftLeg.getChild("left_ankle")
+    private val leftLeg: ModelPart = root.getChild("left_leg")
+    private val leftLegBelt: ModelPart = this.leftLeg.getChild("left_leg_belt")
+    private val leftAnkle: ModelPart = this.leftLeg.getChild("left_ankle")
 
     /**
      * Copies the poses from the original armor model and sets the visibility
@@ -132,87 +132,90 @@ open class CollageModel(root: ModelPart, renderType: (ResourceLocation) -> Rende
     override fun bodyParts(): MutableIterable<ModelPart> {
         return mutableListOf(this.body, this.rightLeg, this.leftLeg)
     }
-}
 
-/**
- * Creates a mesh representing this model. Assumes that any offset will
- * affect all parts uniformly.
- *
- * @param deformation the inflation value to apply to the cubes' axes
- * @param yOffset the offset of the model in the y direction
- * @return a mesh representing this model
- */
-fun createCollageMesh(deformation: CubeDeformation, yOffset: Float): MeshDefinition = createCollageMesh(deformation, yOffset, yOffset, yOffset, yOffset)
+    companion object {
 
-/**
- * Creates a mesh representing this model.
- *
- * @param deformation the inflation value to apply to the cubes' axes
- * @param yHeadOffset the offset of the head in the y direction
- * @param yBodyOffset the offset of the body in the y direction
- * @param yRightLegOffset the offset of the right leg in the y direction
- * @param yLeftLegOffset the offset of the left leg in the y direction
- * @return a mesh representing this model
- */
-fun createCollageMesh(deformation: CubeDeformation, yHeadOffset: Float, yBodyOffset: Float, yRightLegOffset: Float, yLeftLegOffset: Float): MeshDefinition {
-    // Create the mesh definition and get the root
-    val mesh = MeshDefinition()
-    val root = mesh.root
+        /**
+         * Creates a mesh representing this model. Assumes that any offset will
+         * affect all parts uniformly.
+         *
+         * @param deformation the inflation value to apply to the cubes' axes
+         * @param yOffset the offset of the model in the y direction
+         * @return a mesh representing this model
+         */
+        fun createMesh(deformation: CubeDeformation, yOffset: Float): MeshDefinition = createMesh(deformation, yOffset, yOffset, yOffset, yOffset)
 
-    /*
-	Head parts. The easiest method to apply transforms from the parent
-	model is to contain the same root parts at the appropriate origin
-	but with no cubes. Technically, this is not necessary as the part
-	pose during copying. However, if a transformation was applied to
-	any individual part of the armor model, this parent/child setup will
-	allow the pose to not be replaced.
-	*/
-    val head = root.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0f, yHeadOffset, 0f))
-    head.addOrReplaceChild(
-        "hat", CubeListBuilder.create()
-            .texOffs(24, 0).addBox(-5.0f, -9.0f, -5.0f, 10.0f, 1.0f, 10.0f, deformation)
-            .texOffs(0, 0).addBox(-4.0f, -11.0f, -4.0f, 8.0f, 2.0f, 8.0f, deformation),
-        PartPose.ZERO
-    )
+        /**
+         * Creates a mesh representing this model.
+         *
+         * @param deformation the inflation value to apply to the cubes' axes
+         * @param yHeadOffset the offset of the head in the y direction
+         * @param yBodyOffset the offset of the body in the y direction
+         * @param yRightLegOffset the offset of the right leg in the y direction
+         * @param yLeftLegOffset the offset of the left leg in the y direction
+         * @return a mesh representing this model
+         */
+        fun createMesh(deformation: CubeDeformation, yHeadOffset: Float, yBodyOffset: Float, yRightLegOffset: Float, yLeftLegOffset: Float): MeshDefinition {
+            // Create the mesh definition and get the root
+            val mesh = MeshDefinition()
+            val root = mesh.root
 
-    // Body parts
-    val body = root.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0f, yBodyOffset, 0f))
-    body.addOrReplaceChild(
-        "belt", CubeListBuilder.create()
-            .texOffs(24, 11).addBox(-4.0f, 9.0f, -3.0f, 8.0f, 1.0f, 1.0f, deformation),
-        PartPose.ZERO
-    )
-    body.addOrReplaceChild(
-        "rocket", CubeListBuilder.create()
-            .texOffs(0, 10).addBox(-3.0f, 1.0f, 2.0f, 6.0f, 10.0f, 6.0f, deformation),
-        PartPose.ZERO
-    )
+            /*
+            Head parts. The easiest method to apply transforms from the parent
+            model is to contain the same root parts at the appropriate origin
+            but with no cubes. Technically, this is not necessary as the part
+            pose during copying. However, if a transformation was applied to
+            any individual part of the armor model, this parent/child setup will
+            allow the pose to not be replaced.
+            */
+            val head = root.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0f, yHeadOffset, 0f))
+            head.addOrReplaceChild(
+                "hat", CubeListBuilder.create()
+                    .texOffs(24, 0).addBox(-5.0f, -9.0f, -5.0f, 10.0f, 1.0f, 10.0f, deformation)
+                    .texOffs(0, 0).addBox(-4.0f, -11.0f, -4.0f, 8.0f, 2.0f, 8.0f, deformation),
+                PartPose.ZERO
+            )
 
-    // Right leg parts
-    val rightLeg = root.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(-1.9f, 12f + yRightLegOffset, 0f))
-    rightLeg.addOrReplaceChild(
-        "right_leg_belt", CubeListBuilder.create()
-            .texOffs(24, 13).addBox(-2.1f, 1.0f, -3.0f, 4.0f, 1.0f, 1.0f, deformation),
-        PartPose.ZERO
-    )
-    rightLeg.addOrReplaceChild(
-        "right_ankle", CubeListBuilder.create()
-            .texOffs(44, 11).addBox(-2.1f, 10.0f, 2.0f, 4.0f, 1.0f, 1.0f, deformation),
-        PartPose.ZERO
-    )
+            // Body parts
+            val body = root.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0f, yBodyOffset, 0f))
+            body.addOrReplaceChild(
+                "belt", CubeListBuilder.create()
+                    .texOffs(24, 11).addBox(-4.0f, 9.0f, -3.0f, 8.0f, 1.0f, 1.0f, deformation),
+                PartPose.ZERO
+            )
+            body.addOrReplaceChild(
+                "rocket", CubeListBuilder.create()
+                    .texOffs(0, 10).addBox(-3.0f, 1.0f, 2.0f, 6.0f, 10.0f, 6.0f, deformation),
+                PartPose.ZERO
+            )
 
-    // Left leg parts
-    val leftLeg = root.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(1.9f, 12f + yLeftLegOffset, 0f))
-    leftLeg.addOrReplaceChild(
-        "left_leg_belt", CubeListBuilder.create()
-            .texOffs(34, 13).addBox(-1.9f, 1.0f, -3.0f, 4.0f, 1.0f, 1.0f, deformation),
-        PartPose.ZERO
-    )
-    leftLeg.addOrReplaceChild(
-        "left_ankle",
-        CubeListBuilder.create().texOffs(44, 13).addBox(-1.9f, 10.0f, 2.0f, 4.0f, 1.0f, 1.0f, deformation),
-        PartPose.ZERO
-    )
+            // Right leg parts
+            val rightLeg = root.addOrReplaceChild("right_leg", CubeListBuilder.create(), PartPose.offset(-1.9f, 12f + yRightLegOffset, 0f))
+            rightLeg.addOrReplaceChild(
+                "right_leg_belt", CubeListBuilder.create()
+                    .texOffs(24, 13).addBox(-2.1f, 1.0f, -3.0f, 4.0f, 1.0f, 1.0f, deformation),
+                PartPose.ZERO
+            )
+            rightLeg.addOrReplaceChild(
+                "right_ankle", CubeListBuilder.create()
+                    .texOffs(44, 11).addBox(-2.1f, 10.0f, 2.0f, 4.0f, 1.0f, 1.0f, deformation),
+                PartPose.ZERO
+            )
 
-    return mesh
+            // Left leg parts
+            val leftLeg = root.addOrReplaceChild("left_leg", CubeListBuilder.create(), PartPose.offset(1.9f, 12f + yLeftLegOffset, 0f))
+            leftLeg.addOrReplaceChild(
+                "left_leg_belt", CubeListBuilder.create()
+                    .texOffs(34, 13).addBox(-1.9f, 1.0f, -3.0f, 4.0f, 1.0f, 1.0f, deformation),
+                PartPose.ZERO
+            )
+            leftLeg.addOrReplaceChild(
+                "left_ankle",
+                CubeListBuilder.create().texOffs(44, 13).addBox(-1.9f, 10.0f, 2.0f, 4.0f, 1.0f, 1.0f, deformation),
+                PartPose.ZERO
+            )
+
+            return mesh
+        }
+    }
 }

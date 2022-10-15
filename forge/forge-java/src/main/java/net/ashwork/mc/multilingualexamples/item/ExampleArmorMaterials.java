@@ -15,7 +15,6 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -49,7 +48,7 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
     ExampleArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
-        this(name, durabilityMultiplier, slotProtections, enchantmentValue, RegistryObject.create(soundName, ForgeRegistries.SOUND_EVENTS), toughness, knockbackResistance, repairIngredient);
+        this(name, durabilityMultiplier, slotProtections, enchantmentValue, () -> ForgeRegistries.SOUND_EVENTS.getValue(soundName), toughness, knockbackResistance, repairIngredient);
     }
 
     /**

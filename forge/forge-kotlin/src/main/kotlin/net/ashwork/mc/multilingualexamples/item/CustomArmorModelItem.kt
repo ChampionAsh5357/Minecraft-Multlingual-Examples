@@ -6,7 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.item
 
-import net.ashwork.mc.multilingualexamples.client.clientInstance
+import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
 import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.model.Model
@@ -18,8 +18,7 @@ import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.ItemStack
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.client.extensions.common.IClientItemExtensions
-import net.minecraftforge.fml.DistExecutor
-import java.util.concurrent.Callable
+import net.minecraftforge.fml.loading.FMLEnvironment
 import java.util.function.Consumer
 
 /**
@@ -30,28 +29,22 @@ import java.util.function.Consumer
  * @param slot the slot the armor can be worn in
  * @param properties the item properties
  */
-open class CustomArmorModelItem(material: ArmorMaterial, slot: EquipmentSlot, properties: Properties):
+class CustomArmorModelItem(material: ArmorMaterial, slot: EquipmentSlot, properties: Properties):
     ArmorItem(material, slot, properties) {
 
     override fun initializeClient(consumer: Consumer<IClientItemExtensions>) {
         consumer.accept(object: IClientItemExtensions {
             override fun getGenericArmorModel(entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, original: HumanoidModel<*>): Model {
                 // Check sides in case of illegal calling
-                return DistExecutor.unsafeCallWhenOn(Dist.CLIENT) {
-                    Callable {
-                        clientInstance().armorModelManager().getArmorModel(material, entity, stack, slot, original)
-                    }
-                }
+                return if (FMLEnvironment.dist == Dist.CLIENT) MultilingualExamplesClient.armorModelManager().getArmorModel(material, entity, stack, slot, original)
+                    else super.getGenericArmorModel(entity, stack, slot, original)
             }
         })
     }
 
     override fun getArmorTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot, type: String?): String? {
         // Check sides in case of illegal calling
-        return DistExecutor.unsafeCallWhenOn(Dist.CLIENT) {
-            Callable {
-                clientInstance().armorModelManager().getTexture(this.material, stack, entity, slot, type)
-            }
-        }
+        return if (FMLEnvironment.dist == Dist.CLIENT) MultilingualExamplesClient.armorModelManager().getTexture(this.material, stack, entity, slot, type)
+            else super.getArmorTexture(stack, entity, slot, type)
     }
 }
