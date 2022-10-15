@@ -32,7 +32,7 @@ final class MultilingualExamples {
     ParticleTypeRegistrar.REGISTRAR.register(modBus)
 
     // Add client
-    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () => () => new MultilingualExamplesClient(modBus, forgeBus))
+    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () => () => MultilingualExamplesClient.init(modBus, forgeBus))
 
     // Add mod events
     modBus.addListener(this.attachDataProviders)

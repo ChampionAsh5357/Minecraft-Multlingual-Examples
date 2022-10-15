@@ -15,13 +15,18 @@ import net.minecraftforge.eventbus.api.IEventBus
 /**
  * An isolated class for initialization of anything the mod needs specifically
  * for the client. This should only be referenced through a sided check.
- *
- * @param modBus the mod's event bus
- * @param forgeBus the forge event bus
  */
-class MultilingualExamplesClient(private val modBus: IEventBus, private val forgeBus: IEventBus) {
+object MultilingualExamplesClient {
 
-    this.modBus.addListener(this.onRegisterParticleFactories)
+    /**
+     * Initializes the client handler.
+     *
+     * @param modBus the mod's event bus
+     * @param forgeBus the forge event bus
+     */
+    def init(modBus: IEventBus, forgeBus: IEventBus): Unit = {
+        modBus.addListener(onRegisterParticleFactories)
+    }
 
     private def onRegisterParticleFactories(event: RegisterParticleProvidersEvent): Unit = {
         /*

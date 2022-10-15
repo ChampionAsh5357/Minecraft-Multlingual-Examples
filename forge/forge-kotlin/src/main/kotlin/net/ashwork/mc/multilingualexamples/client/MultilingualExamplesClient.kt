@@ -29,7 +29,7 @@ object MultilingualExamplesClient{
     fun init(modBus: IEventBus, forgeBus: IEventBus) {
         this.modelManager = ArmorModelManager(modBus)
 
-        modBus.addListener(this::onRegisterParticleFactories)
+        modBus.addListener(::onRegisterParticleFactories)
     }
 
     /**
