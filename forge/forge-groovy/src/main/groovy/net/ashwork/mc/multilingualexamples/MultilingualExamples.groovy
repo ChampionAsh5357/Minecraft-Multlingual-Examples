@@ -17,12 +17,11 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.data.ExistingFileHelper
 import net.minecraftforge.data.event.GatherDataEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.fml.loading.FMLEnvironment
-
-import java.util.function.Consumer
 /**
  * The main mod class. This is where the initialization of the mod happens.
  * The mod id supplied in the annotation must match that within the {@code mods.toml}.
@@ -42,7 +41,7 @@ final class MultilingualExamples {
         // Extension methods during runtime
         ResourceLocation.metaClass.prefix = { String prefix ->
             ResourceLocation rl = (ResourceLocation) delegate
-            rl.getPath().contains("/") ? rl : new ResourceLocation(rl.getNamespace(), "${prefix}/${rl.getPath()}")
+            rl.getPath().contains('/') ? rl : new ResourceLocation(rl.getNamespace(), "${prefix}/${rl.getPath()}")
         }
 
         // Get the event buses
@@ -56,13 +55,7 @@ final class MultilingualExamples {
         // Add client
         if (FMLEnvironment.dist == Dist.CLIENT) new MultilingualExamplesClient(modBus, forgeBus)
 
-        // Add mod events
-        modBus.addListener(new Consumer<GatherDataEvent>() {
-            @Override
-            void accept(final GatherDataEvent event) {
-                attachDataProviders(event)
-            }
-        })
+        modBus.addListener(EventPriority.NORMAL, false, GatherDataEvent, this::attachDataProviders)
     }
 
     /**

@@ -18,10 +18,9 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.ItemStack
 import net.minecraftforge.client.event.EntityRenderersEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.registries.ForgeRegistries
-
-import java.util.function.Consumer
 /**
  * A manager used for handling armor models on any given entity.
  */
@@ -39,18 +38,8 @@ class ArmorModelManager {
         this.entityArmorModels = HashBasedTable.create()
         this.playerArmorModels = HashBasedTable.create()
 
-        modBus.addListener(new Consumer<EntityRenderersEvent.RegisterLayerDefinitions>() {
-            @Override
-            void accept(EntityRenderersEvent.RegisterLayerDefinitions event) {
-                onRegisterLayerDefinitions(event)
-            }
-        })
-        modBus.addListener(new Consumer<EntityRenderersEvent.AddLayers>() {
-            @Override
-            void accept(EntityRenderersEvent.AddLayers event) {
-                onAddLayers(event)
-            }
-        })
+        modBus.addListener(EventPriority.NORMAL, false, EntityRenderersEvent.RegisterLayerDefinitions, this::onRegisterLayerDefinitions)
+        modBus.addListener(EventPriority.NORMAL, false, EntityRenderersEvent.AddLayers, this::onAddLayers)
     }
 
     /**
@@ -111,7 +100,7 @@ class ArmorModelManager {
      */
     private void registerPlayerArmorModel(ArmorMaterial material, Closure<?> register, Closure<ModelHandler> handler, String... types) {
         for (String type : types) {
-            var mll = new ModelLayerLocation(new ResourceLocation('player_${type}'), material.getName())
+            var mll = new ModelLayerLocation(new ResourceLocation("player_$type"), material.getName())
             register(mll)
             this.playerArmorModels.put(type, material, handler(mll))
         }
@@ -129,7 +118,7 @@ class ArmorModelManager {
      */
     private static <T extends Model> Closure<ModelHandler> createSingleModel(ArmorMaterial material, Closure<T> modelFactory, Closure<?> setup) {
         var split = material.getName().split(':')
-        var texture = '${split[0]}:textures/models/armor/${split[1]}.png'
+        var texture = "${split[0]}:textures/models/armor/${split[1]}.png"
         return { ModelLayerLocation mll -> new SingleModelHandler<>({ EntityModelSet entityModelSet -> modelFactory(entityModelSet.bakeLayer(mll)) }, setup, texture) }
     }
 
@@ -234,18 +223,8 @@ class ArmorModelManager {
         be (and already is in some loaders/mods), so it is best to update them
         with the new models to render according to their rendered definitions.
          */
-        this.playerArmorModels.values().forEach(new Consumer<ModelHandler>() {
-            @Override
-            void accept(ModelHandler handler) {
-                handler.constructModel(event.getEntityModels())
-            }
-        })
-        this.entityArmorModels.values().forEach(new Consumer<ModelHandler>() {
-            @Override
-            void accept(ModelHandler handler) {
-                handler.constructModel(event.getEntityModels())
-            }
-        })
+        this.playerArmorModels.values().forEach() {it.constructModel(event.getEntityModels()) }
+        this.entityArmorModels.values().forEach() {it.constructModel(event.getEntityModels()) }
     }
 
     /**

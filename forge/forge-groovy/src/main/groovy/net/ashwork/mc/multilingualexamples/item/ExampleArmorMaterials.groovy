@@ -12,18 +12,16 @@ import net.minecraftforge.registries.ForgeRegistries
  * An enum containing the armor materials for this mod.
  */
 enum ExampleArmorMaterials implements ArmorMaterial {
-    COLLAGE('collage', 1, [1, 1, 2, 1] as int[], 0, new ResourceLocation('item.armor.equip_leather'), 0.0F, 0.0F, { -> Ingredient.EMPTY })
+    COLLAGE('collage', 1, [1, 1, 2, 1], 0, new ResourceLocation('item.armor.equip_leather'), 0.0F, 0.0F, { -> Ingredient.EMPTY })
 
     private final String name
-    private final int[] durabilities
-    private final int[] slotProtections
+    private final List<Integer> durabilities
+    private final List<Integer> slotProtections
     private final int enchantmentValue
-    @Lazy
-    private SoundEvent _sound
+    private final Closure<? extends SoundEvent> sound
     private final float toughness
     private final float knockbackResistance
-    @Lazy
-    private Ingredient _repairIngredient
+    private final Closure<? extends Ingredient> _repairIngredient
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
@@ -39,7 +37,7 @@ enum ExampleArmorMaterials implements ArmorMaterial {
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Closure<? extends Ingredient> repairIngredient) {
+    ExampleArmorMaterials(String name, int durabilityMultiplier, List<Integer> slotProtections, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Closure<? extends Ingredient> repairIngredient) {
         this(name, durabilityMultiplier, slotProtections, enchantmentValue, { -> ForgeRegistries.SOUND_EVENTS.getValue(soundName) }, toughness, knockbackResistance, repairIngredient)
     }
 
@@ -57,8 +55,8 @@ enum ExampleArmorMaterials implements ArmorMaterial {
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, Closure<? extends SoundEvent> sound, float toughness, float knockbackResistance, Closure<? extends Ingredient> repairIngredient) {
-        this(name, [13 * durabilityMultiplier, 15 * durabilityMultiplier, 16 * durabilityMultiplier, 11 * durabilityMultiplier] as int[], slotProtections, enchantmentValue, sound, toughness, knockbackResistance, repairIngredient)
+    ExampleArmorMaterials(String name, int durabilityMultiplier, List<Integer> slotProtections, int enchantmentValue, Closure<? extends SoundEvent> sound, float toughness, float knockbackResistance, Closure<? extends Ingredient> repairIngredient) {
+        this(name, [13 * durabilityMultiplier, 15 * durabilityMultiplier, 16 * durabilityMultiplier, 11 * durabilityMultiplier], slotProtections, enchantmentValue, sound, toughness, knockbackResistance, repairIngredient)
     }
 
     /**
@@ -73,12 +71,12 @@ enum ExampleArmorMaterials implements ArmorMaterial {
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, int[] durabilities, int[] slotProtections, int enchantmentValue, Closure<? extends SoundEvent> sound, float toughness, float knockbackResistance, Closure<? extends Ingredient> repairIngredient) {
+    ExampleArmorMaterials(String name, List<Integer> durabilities, List<Integer> slotProtections, int enchantmentValue, Closure<? extends SoundEvent> sound, float toughness, float knockbackResistance, Closure<? extends Ingredient> repairIngredient) {
         /*
         All names must have their mod id prefixed. This is used as the default
         armor texture prefix for '*_layer_(1/2)'.
          */
-        this.name = '${MultilingualExamples.ID}:${name}'
+        this.name = "${MultilingualExamples.ID}:$name"
         this.durabilities = durabilities
         this.slotProtections = slotProtections
         this.enchantmentValue = enchantmentValue
@@ -87,7 +85,7 @@ enum ExampleArmorMaterials implements ArmorMaterial {
         chance that this enum gets loaded before registration, so it is better
         to supply a lazy reference instead, preferably through 'RegistryObject'.
          */
-        this._sound = sound()
+        this.sound = sound.memoize()
         this.toughness = toughness
         this.knockbackResistance = knockbackResistance
         /*
@@ -95,7 +93,7 @@ enum ExampleArmorMaterials implements ArmorMaterial {
         handled in this way. No need to be concurrent as this would only be
         called in thread-safe environments.
          */
-        this._repairIngredient = repairIngredient()
+        this._repairIngredient = repairIngredient.memoize()
     }
 
     @Override
@@ -115,12 +113,12 @@ enum ExampleArmorMaterials implements ArmorMaterial {
 
     @Override
     SoundEvent getEquipSound() {
-        return this._sound
+        return this.sound()
     }
 
     @Override
     Ingredient getRepairIngredient() {
-        return this._repairIngredient
+        return this._repairIngredient()
     }
 
     @Override

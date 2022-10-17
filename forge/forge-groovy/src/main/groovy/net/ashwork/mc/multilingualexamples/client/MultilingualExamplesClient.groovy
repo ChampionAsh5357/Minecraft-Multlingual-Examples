@@ -14,9 +14,8 @@ import net.minecraft.client.particle.ParticleProvider
 import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.IEventBus
-
-import java.util.function.Consumer
 /**
  * An isolated class for initialization of anything the mod needs specifically
  * for the client. This should only be referenced through a sided check.
@@ -36,12 +35,7 @@ class MultilingualExamplesClient {
         _instance = this
         this.modelManager = new ArmorModelManager(modBus)
 
-        modBus.addListener(new Consumer<RegisterParticleProvidersEvent>() {
-            @Override
-            void accept(final RegisterParticleProvidersEvent event) {
-                onRegisterParticleFactories(event)
-            }
-        })
+        modBus.addListener(EventPriority.NORMAL, false, RegisterParticleProvidersEvent, this::onRegisterParticleFactories)
     }
 
     /**
