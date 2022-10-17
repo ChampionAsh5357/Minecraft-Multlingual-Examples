@@ -33,7 +33,6 @@ dependencies {
     minecraft(libs.forge)
 
     minecraftLibrary(libs.scala.library)
-    // TODO: Figure out what's going on with scala weirdness
 }
 
 // Setup runs
@@ -43,7 +42,6 @@ minecraft {
     runs {
         create("client") {
             workingDirectory(file("../run/client"))
-            property("bsl.debug", "true")
         }
 
         create("server") {
@@ -72,6 +70,14 @@ minecraft {
         ideaModule = "${rootId}.${loaderId}.${loaderId}-${languageId}.main"
         property("forge.enabledGameTestNamespaces", modId)
         mods.create(modId).source(sourceSets["main"])
+
+        // Fix scala's broken module artifacts
+        afterEvaluate {
+            val regex = "scala(.+)library(.+).jar".toRegex()
+            property("mergeModules", configurations.minecraftLibrary.get().copyRecursive().resolve().asSequence()
+                .map { it.name }
+                .filter { regex matches it }.distinct().joinToString(separator = ","))
+        }
     }
 }
 
