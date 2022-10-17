@@ -55,6 +55,6 @@ object DrippingAshParticle {
         override def createParticle(particleType: SimpleParticleType, level: ClientLevel,
                                     xOriginal: Double, yOriginal: Double, zOriginal: Double,
                                     xVelocity: Double, yVelocity: Double, zVelocity: Double
-                                   ): Particle = new DrippingAshParticle(level, xOriginal, yOriginal, zOriginal, xVelocity, yVelocity, zVelocity, this.sprites)
+                                   ): Particle = DrippingAshParticle(level, xOriginal, yOriginal, zOriginal, xVelocity, yVelocity, zVelocity, this.sprites)
     }
 }

@@ -26,6 +26,10 @@ class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelP
 
     override def registerModels(): Unit = {
         this.simpleItem(ItemRegistrar.ASH)
+        this.simpleItem(ItemRegistrar.COLLAGE_HELMET)
+        this.simpleItem(ItemRegistrar.COLLAGE_CHESTPLATE)
+        this.simpleItem(ItemRegistrar.COLLAGE_LEGGINGS)
+        this.simpleItem(ItemRegistrar.COLLAGE_BOOTS)
     }
 
     /**
@@ -48,19 +52,4 @@ class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelP
     private def simpleItem(item: RegistryObject[_ <: Item], layer0: ResourceLocation): Unit =
         this.withExistingParent(item.getId.toString, "item/generated")
                 .texture("layer0", layer0 prefix this.folder)
-}
-
-/**
- * The global instance of [[ItemModels]]. Created for apply factories.
- */
-object ItemModels {
-
-    /**
-     * A simple constructor.
-     *
-     * @param gen the generator being written to
-     * @param efh a resource holder for linking existing files
-     * @return a new [[ItemModels]] instance
-     */
-    def apply(gen: DataGenerator, efh: ExistingFileHelper): ItemModels = new ItemModels(gen, efh)
 }

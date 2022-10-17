@@ -27,9 +27,9 @@ import net.minecraftforge.registries.ForgeRegistries
  * @param repairIngredient a supplied ingredient of what items can repair this armor
  */
 enum class ExampleArmorMaterials(name: String, private val durabilities: IntArray,
-    private val slotProtections: IntArray, private val enchantmentValue: Int,
-    private val toughness: Float, private val knockbackResistance: Float,
-    sound: () -> SoundEvent, repairIngredient: () -> Ingredient): ArmorMaterial {
+                                 private val slotProtections: IntArray, private val enchantmentValue: Int,
+                                 private val toughness: Float, private val knockbackResistance: Float,
+                                 sound: () -> SoundEvent, repairIngredient: () -> Ingredient): ArmorMaterial {
     COLLAGE("collage", 1, intArrayOf(1, 1, 2, 1), 0, ResourceLocation("item.armor.equip_leather"), 0F, 0F, Ingredient::EMPTY);
 
     /**

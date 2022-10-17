@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
 import net.minecraft.client.Minecraft
@@ -18,6 +19,8 @@ import net.minecraftforge.eventbus.api.IEventBus
  */
 object MultilingualExamplesClient {
 
+    private var modelManager: Option[ArmorModelManager] = None
+    
     /**
      * Initializes the client handler.
      *
@@ -25,9 +28,23 @@ object MultilingualExamplesClient {
      * @param forgeBus the forge event bus
      */
     def init(modBus: IEventBus, forgeBus: IEventBus): Unit = {
+        modelManager = Some(ArmorModelManager(modBus))
+        
         modBus.addListener(onRegisterParticleFactories)
     }
 
+    /**
+     * Returns the armor model manager.
+     *
+     * @return the armor model manager
+     */
+    def armorModelManager: ArmorModelManager = modelManager.get
+
+    /**
+     * An event used to register particle factories.
+     *
+     * @param event an event instance
+     */
     private def onRegisterParticleFactories(event: RegisterParticleProvidersEvent): Unit = {
         /*
         * Register our particle factory.
@@ -38,6 +55,6 @@ object MultilingualExamplesClient {
         *
         * Textures referenced in the JSON will be in the 'particle' directory within textures.
         */
-        event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(), new DrippingAshParticle.DrippingAshParticleProvider(_))
+        event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(), DrippingAshParticle.DrippingAshParticleProvider(_))
     }
 }

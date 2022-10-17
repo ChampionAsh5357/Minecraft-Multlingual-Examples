@@ -1,33 +1,20 @@
-/*
- * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
- * SPDX-License-Identifier: CC0-1.0
- */
-
 package net.ashwork.mc.multilingualexamples.client.model
 
-import com.google.common.collect.HashBasedTable
-import com.google.common.collect.Table
+import com.google.common.collect.{HashBasedTable, Table}
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
-import net.minecraft.client.model.HumanoidModel
-import net.minecraft.client.model.Model
-import net.minecraft.client.model.geom.EntityModelSet
-import net.minecraft.client.model.geom.ModelLayerLocation
-import net.minecraft.client.model.geom.ModelPart
-import net.minecraft.client.model.geom.builders.CubeDeformation
-import net.minecraft.client.model.geom.builders.LayerDefinition
+import net.minecraft.client.model.geom.builders.{CubeDeformation, LayerDefinition}
+import net.minecraft.client.model.{HumanoidModel, Model}
+import net.minecraft.client.model.geom.{EntityModelSet, ModelLayerLocation, ModelPart}
 import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.EntityType
-import net.minecraft.world.entity.EquipmentSlot
-import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.item.ArmorMaterial
-import net.minecraft.world.item.ItemStack
-import net.minecraftforge.client.event.EntityRenderersEvent.AddLayers
-import net.minecraftforge.client.event.EntityRenderersEvent.RegisterLayerDefinitions
+import net.minecraft.world.entity.{Entity, EntityType, EquipmentSlot, LivingEntity}
+import net.minecraft.world.item.{ArmorMaterial, ArmorMaterials, ItemStack}
+import net.minecraftforge.client.event.EntityRenderersEvent.{AddLayers, RegisterLayerDefinitions}
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.registries.ForgeRegistries
+
+import scala.Option
+import scala.jdk.javaapi.CollectionConverters
 
 /**
  * A manager used for handling armor models on any given entity.
@@ -36,13 +23,11 @@ import net.minecraftforge.registries.ForgeRegistries
  */
 class ArmorModelManager(modBus: IEventBus) {
 
-    private val entityArmorModels: Table<EntityType<*>, ArmorMaterial, ModelHandler> = HashBasedTable.create()
-    private val playerArmorModels: Table<String, ArmorMaterial, ModelHandler> = HashBasedTable.create()
+    private val entityArmorModels: Table[EntityType[_], ArmorMaterial, ModelHandler] = HashBasedTable.create()
+    private val playerArmorModels: Table[String, ArmorMaterial, ModelHandler] = HashBasedTable.create()
 
-    init {
-        modBus.addListener(this::onRegisterLayerDefinitions)
-        modBus.addListener(this::onAddLayers)
-    }
+    modBus.addListener(onRegisterLayerDefinitions)
+    modBus.addListener(onAddLayers)
 
     /**
      * Registers a single handler for an armor model for use with the
@@ -53,10 +38,10 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param modelFactory a factory used to construct the model from its part
      * @param setup a method to copy the original model parts and set visibility
      * @param types the entity types to apply the armor to
-     * @param T the type of the armor model
+     * @tparam T the type of the armor model
      */
-    private inline fun <T: Model> registerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, noinline modelFactory: (ModelPart) -> T, noinline setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit, vararg types: EntityType<*>) =
-        this.registerArmorModel(material, register, createSingleModel(material, modelFactory, setup), *types)
+    private inline def registerArmorModel[T <: Model](material: ArmorMaterial, register: ModelLayerLocation => Unit, modelFactory: ModelPart => T, setup: (T, HumanoidModel[_], EquipmentSlot) => Unit, types: EntityType[_]*): Unit =
+        registerArmorModelHandler(material, register, ArmorModelManager.createSingleModel(material, modelFactory, setup), types:_*)
 
     /**
      * Registers an armor model handler for use with the specified entity
@@ -67,11 +52,11 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param handler the armor model handler
      * @param types the entity types to apply the armor to
      */
-    private inline fun registerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, handler: (ModelLayerLocation) -> ModelHandler, vararg types: EntityType<*>) {
-        types.forEach {
-            val mll = ModelLayerLocation(ForgeRegistries.ENTITY_TYPES.getKey(it)!!, material.name)
+    private inline def registerArmorModelHandler(material: ArmorMaterial, register: ModelLayerLocation => Unit, handler: ModelLayerLocation => ModelHandler, types: EntityType[_]*): Unit = {
+        for (`type` <- types) {
+            val mll = ModelLayerLocation(ForgeRegistries.ENTITY_TYPES.getKey(`type`), material.getName)
             register(mll)
-            this.entityArmorModels.put(it, material, handler(mll))
+            entityArmorModels.put(`type`, material, handler(mll))
         }
     }
 
@@ -84,10 +69,10 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param modelFactory a factory used to construct the model from its part
      * @param setup a method to copy the original model parts and set visibility
      * @param types the player models to apply the armor to
-     * @param T the type of the armor model
+     * @tparam T the type of the armor model
      */
-    private inline fun <T: Model> registerPlayerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, noinline modelFactory: (ModelPart) -> T, noinline setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit, vararg types: String) =
-        this.registerPlayerArmorModel(material, register, createSingleModel(material, modelFactory, setup), *types)
+    private inline def registerPlayerArmorModel[T <: Model](material: ArmorMaterial, register: ModelLayerLocation => Unit, modelFactory: ModelPart => T, setup: (T, HumanoidModel[_], EquipmentSlot) => Unit, types: String*): Unit =
+        registerPlayerArmorModelHandler(material, register, ArmorModelManager.createSingleModel(material, modelFactory, setup), types:_*)
 
     /**
      * Registers an armor model handler for use with the specified player
@@ -98,11 +83,11 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param handler the armor model handler
      * @param types the player models to apply the armor to
      */
-    private inline fun registerPlayerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, handler: (ModelLayerLocation) -> ModelHandler, vararg types: String) {
-        types.forEach {
-            val mll = ModelLayerLocation(ResourceLocation("player_$it"), material.name)
+    private inline def registerPlayerArmorModelHandler(material: ArmorMaterial, register: ModelLayerLocation => Unit, handler: ModelLayerLocation => ModelHandler, types: String*): Unit = {
+        for (`type` <- types) {
+            val mll = ModelLayerLocation(ResourceLocation(s"player_${`type`}"), material.getName)
             register(mll)
-            this.playerArmorModels.put(it, material, handler(mll))
+            playerArmorModels.put(`type`, material, handler(mll))
         }
     }
 
@@ -111,7 +96,7 @@ class ArmorModelManager(modBus: IEventBus) {
      *
      * @param event an event instance
      */
-    private fun onRegisterLayerDefinitions(event: RegisterLayerDefinitions) {
+    private def onRegisterLayerDefinitions(event: RegisterLayerDefinitions): Unit = {
         /*
         This registers the definitions that allow us to create the models for
         each entity. We could clear the map as currently the method is only
@@ -181,19 +166,17 @@ class ArmorModelManager(modBus: IEventBus) {
         */
 
         // Collage model
-        val basicCollageLayerDef: (ModelLayerLocation) -> Unit = {
-            event.registerLayerDefinition(it) {
-                LayerDefinition.create(CollageModel.createMesh(CubeDeformation.NONE, 0F), 64, 32)
-            }
+        val basicCollageLayerDef: ModelLayerLocation => Unit = {
+            event.registerLayerDefinition(_, () => LayerDefinition.create(CollageModel.createMesh(CubeDeformation.NONE, 0F), 64, 32))
         }
-        this.registerArmorModel(ExampleArmorMaterials.COLLAGE, basicCollageLayerDef, ::CollageModel, CollageModel::copyAndSet,
+        val armor: ArmorMaterial = ExampleArmorMaterials.COLLAGE
+        registerArmorModel(armor, basicCollageLayerDef, CollageModel(_), _.copyAndSet(_, _),
             EntityType.DROWNED, EntityType.GIANT, EntityType.HUSK, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.SKELETON,
             EntityType.STRAY, EntityType.WITHER_SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN)
-        this.registerArmorModel(ExampleArmorMaterials.COLLAGE,
-            {
-                event.registerLayerDefinition(it) { LayerDefinition.create(CollageModel.createMesh(CubeDeformation.NONE, 1F, 0F, -1F, -1F), 64, 32) }
-            }, ::CollageModel, CollageModel::copyAndSet, EntityType.ARMOR_STAND)
-        this.registerPlayerArmorModel(ExampleArmorMaterials.COLLAGE, basicCollageLayerDef, ::CollageModel, CollageModel::copyAndSet,
+        registerArmorModel(armor,
+            event.registerLayerDefinition(_, () => LayerDefinition.create(CollageModel.createMesh(CubeDeformation.NONE, 1F, 0F, -1F, -1F), 64, 32)),
+                CollageModel(_), _.copyAndSet(_, _), EntityType.ARMOR_STAND)
+        registerPlayerArmorModel(armor, basicCollageLayerDef, CollageModel(_), _.copyAndSet(_, _),
             "default", "slim")
     }
 
@@ -202,7 +185,7 @@ class ArmorModelManager(modBus: IEventBus) {
      *
      * @param event an event instance
      */
-    private fun onAddLayers(event: AddLayers) {
+    private def onAddLayers(event: AddLayers): Unit =  {
         /*
         As the armor models are associated with a layer but are technically
         separate from them, we need to build our own baking and caching system.
@@ -210,8 +193,8 @@ class ArmorModelManager(modBus: IEventBus) {
         be (and already is in some loaders/mods), so it is best to update them
         with the new models to render according to their rendered definitions.
          */
-        this.playerArmorModels.values().forEach { it.constructModel(event.entityModels) }
-        this.entityArmorModels.values().forEach { it.constructModel(event.entityModels) }
+        CollectionConverters.asScala(playerArmorModels.values()).foreach { _.constructModel(event.getEntityModels) }
+        CollectionConverters.asScala(entityArmorModels.values()).foreach { _.constructModel(event.getEntityModels) }
     }
 
     /**
@@ -224,11 +207,16 @@ class ArmorModelManager(modBus: IEventBus) {
      * @return the model handler
      * @throws NullPointerException if there is no default player armor model handler
      */
-    private fun getHandler(material: ArmorMaterial, entity: Entity): ModelHandler {
-        val handler = if (entity is AbstractClientPlayer) this.playerArmorModels.get(entity.modelName, material)
-            else this.entityArmorModels.get(entity.type, material)
+    private def getHandler(material: ArmorMaterial, entity: Entity): ModelHandler = {
+        val handler = Option(entity match {
+            case p: AbstractClientPlayer => playerArmorModels.get(p.getModelName, material)
+            case _ => entityArmorModels.get(entity.getType, material)
+        })
 
-        return handler ?: this.playerArmorModels.get("default", material)!!
+        handler match {
+            case Some(a) => a
+            case None => playerArmorModels.get("default", material)
+        }
     }
 
     /**
@@ -242,8 +230,8 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param original the original armor model to render
      * @return the model to be rendered
      */
-    fun getArmorModel(material: ArmorMaterial, entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, original: HumanoidModel<*>): Model =
-        this.getHandler(material, entity).getAndSetup(entity, stack, slot, original)
+    def getArmorModel(material: ArmorMaterial, entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, original: HumanoidModel[_]): Model =
+        getHandler(material, entity).getAndSetup(entity, stack, slot, original)
 
     /**
      * Gets the texture to apply to the model.
@@ -252,29 +240,33 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param stack the armor currently being worn
      * @param entity the entity wearing the armor
      * @param slot the slot the armor is in
-     * @param type the subtype of the model, either {@code null} or 'overlay' when dyeable
+     * @param type the subtype of the model, either [[None]] or 'overlay' when dyeable
      * @return the full path and extension of the texture
      */
-    fun getTexture(material: ArmorMaterial, stack: ItemStack, entity: Entity, slot: EquipmentSlot, type: String?): String =
-        this.getHandler(material, entity).getTexture(stack, entity, slot, type)
+    def getTexture(material: ArmorMaterial, stack: ItemStack, entity: Entity, slot: EquipmentSlot, `type`: Option[String]): String =
+        getHandler(material, entity).getTexture(stack, entity, slot, `type`)
 }
 
 /**
- * Constructs a handler for armor models with only one model. Assumes the
- * texture data to be in one file.
- *
- * @param material the material of the armor model
- * @param modelFactory a factory used to construct the model from its part
- * @param setup a method to copy the original model parts and set visibility
- * @return the handler
- * @param T the type of the armor model
+ * The global instance for independent methods.
  */
-private inline fun <T: Model> createSingleModel(material: ArmorMaterial, crossinline modelFactory: (ModelPart) -> T, noinline setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit): (ModelLayerLocation) -> ModelHandler {
-    val split = material.name.split(":")
-    val texture = "${split[0]}:textures/models/armor/${split[1]}.png"
-    return { mll ->
-        SingleModelHandler(texture, setup) {
-            modelSet -> modelFactory(modelSet.bakeLayer(mll))
+object ArmorModelManager {
+
+    /**
+     * Constructs a handler for armor models with only one model. Assumes the
+     * texture data to be in one file.
+     *
+     * @param material the material of the armor model
+     * @param modelFactory a factory used to construct the model from its part
+     * @param setup a method to copy the original model parts and set visibility
+     * @return the handler
+     * @tparam T the type of the armor model
+     */
+    private inline def createSingleModel[T <: Model](material: ArmorMaterial, modelFactory: ModelPart => T, setup: (T, HumanoidModel[_], EquipmentSlot) => Unit): ModelLayerLocation => ModelHandler = {
+        val split = material.getName.split(":")
+        val texture = s"${split(0)}:textures/models/armor/${split(1)}.png"
+        mll => {
+            SingleModelHandler(texture, setup, modelSet => modelFactory(modelSet.bakeLayer(mll)))
         }
     }
 }
@@ -282,14 +274,14 @@ private inline fun <T: Model> createSingleModel(material: ArmorMaterial, crossin
 /**
  * A handler for managing models not attached to any entity renderer.
  */
-interface ModelHandler {
+trait ModelHandler {
 
     /**
      * Constructs the model anytime the assets are reloaded.
      *
      * @param modelSet the model set containing the model definitions
      */
-    fun constructModel(modelSet: EntityModelSet)
+    def constructModel(modelSet: EntityModelSet): Unit
 
     /**
      * Sets up the parameters for properly rendering the model and returns
@@ -301,7 +293,7 @@ interface ModelHandler {
      * @param original the original armor model to render
      * @return the model to be rendered
      */
-    fun getAndSetup(entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, original: HumanoidModel<*>): Model
+    def getAndSetup(entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, original: HumanoidModel[_]): Model
 
     /**
      * Gets the texture to apply to the model.
@@ -309,33 +301,32 @@ interface ModelHandler {
      * @param stack the armor currently being worn
      * @param entity the entity wearing the armor
      * @param slot the slot the armor is in
-     * @param type the subtype of the model, either {@code null} or 'overlay' when dyeable
+     * @param type the subtype of the model, either [[None]] or 'overlay' when dyeable
      * @return the full path and extension of the texture
      */
-    fun getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot, type: String?): String
+    def getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot, `type`: Option[String]): String
 }
 
 /**
  * An armor handler for one armor model at a single deformation.
  *
- * @param T the type of the armor model
+ * @tparam T the type of the armor model
  * @param modelFactory a factory used to construct the model from its part
  * @param setup a method to copy the original model parts and set visibility
  * @param texture the texture of the armor model
  */
-class SingleModelHandler<out T: Model>(private val texture: String, private val setup: (T, HumanoidModel<*>, EquipmentSlot) -> Unit,
-                                       private val modelFactory: (EntityModelSet) -> T): ModelHandler {
+class SingleModelHandler[T <: Model](private val texture: String, private val setup: (T, HumanoidModel[_], EquipmentSlot) => Unit,
+                                     private val modelFactory: EntityModelSet => T) extends ModelHandler {
 
-    private lateinit var model: T
+    private var model: Option[T] = None
 
-    override fun constructModel(modelSet: EntityModelSet) {
-        this.model = modelFactory(modelSet)
+    override def constructModel(modelSet: EntityModelSet): Unit = model = Some(modelFactory(modelSet))
+
+    override def getAndSetup(entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, original: HumanoidModel[_]): Model = {
+        val _model = model.get
+        setup(_model, original, slot)
+        _model
     }
 
-    override fun getAndSetup(entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, original: HumanoidModel<*>): Model {
-        setup(this.model, original, slot)
-        return this.model
-    }
-
-    override fun getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot, type: String?): String = this.texture
+    override def getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot, `type`: Option[String]): String = this.texture
 }

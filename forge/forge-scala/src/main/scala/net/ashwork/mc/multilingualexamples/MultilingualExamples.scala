@@ -15,6 +15,7 @@ import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.data.event.GatherDataEvent
+import net.minecraftforge.fml.loading.FMLEnvironment
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
@@ -32,7 +33,7 @@ final class MultilingualExamples {
     ParticleTypeRegistrar.REGISTRAR.register(modBus)
 
     // Add client
-    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () => () => MultilingualExamplesClient.init(modBus, forgeBus))
+    if (FMLEnvironment.dist == Dist.CLIENT) MultilingualExamplesClient.init(modBus, forgeBus)
 
     // Add mod events
     modBus.addListener(this.attachDataProviders)
