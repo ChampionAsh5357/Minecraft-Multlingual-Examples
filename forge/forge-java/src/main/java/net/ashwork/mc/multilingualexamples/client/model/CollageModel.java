@@ -6,7 +6,6 @@
 
 package net.ashwork.mc.multilingualexamples.client.model;
 
-
 import com.google.common.collect.ImmutableList;
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials;
 import net.minecraft.MethodsReturnNonnullByDefault;
