@@ -33,9 +33,7 @@ dependencies {
     minecraft(libs.forge)
 
     minecraftLibrary(libs.scala.library)
-    // Shouldn't be needed since the above adds it anyways, but still fails during runtime
     // TODO: Figure out what's going on with scala weirdness
-    minecraftLibrary(group = "org.scala-lang", name = "scala-library", version = "2.13.8")
 }
 
 // Setup runs
@@ -45,6 +43,7 @@ minecraft {
     runs {
         create("client") {
             workingDirectory(file("../run/client"))
+            property("bsl.debug", "true")
         }
 
         create("server") {
