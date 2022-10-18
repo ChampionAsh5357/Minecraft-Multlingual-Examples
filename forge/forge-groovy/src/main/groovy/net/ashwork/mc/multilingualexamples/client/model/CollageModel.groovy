@@ -1,3 +1,9 @@
+/*
+ * Multilingual Examples
+ * Written 2021-2022 by ChampionAsh5357
+ * SPDX-License-Identifier: CC0-1.0
+ */
+
 package net.ashwork.mc.multilingualexamples.client.model
 
 import com.google.common.collect.ImmutableList
@@ -139,7 +145,7 @@ class CollageModel extends AgeableListModel<LivingEntity> {
                 PartPose.ZERO)
 
         // Right leg parts
-        PartDefinition rightLeg = root.addOrReplaceChild('right_leg', CubeListBuilder.create(), PartPose.offset(-1.9F, (float) (12F + yRightLegOffset), 0F))
+        PartDefinition rightLeg = root.addOrReplaceChild('right_leg', CubeListBuilder.create(), PartPose.offset(-1.9F, (12F + yRightLegOffset) as float, 0F))
         rightLeg.addOrReplaceChild('right_leg_belt', CubeListBuilder.create()
                 .texOffs(24, 13).addBox(-2.1F, 1.0F, -3.0F, 4.0F, 1.0F, 1.0F, deformation),
                 PartPose.ZERO)
@@ -148,7 +154,7 @@ class CollageModel extends AgeableListModel<LivingEntity> {
                 PartPose.ZERO)
 
         // Left leg parts
-        PartDefinition leftLeg = root.addOrReplaceChild('left_leg', CubeListBuilder.create(), PartPose.offset(1.9F, (float) (12F + yLeftLegOffset), 0F))
+        PartDefinition leftLeg = root.addOrReplaceChild('left_leg', CubeListBuilder.create(), PartPose.offset(1.9F, (12F + yLeftLegOffset) as float, 0F))
         leftLeg.addOrReplaceChild('left_leg_belt', CubeListBuilder.create()
                 .texOffs(34, 13).addBox(-1.9F, 1.0F, -3.0F, 4.0F, 1.0F, 1.0F, deformation),
                 PartPose.ZERO)

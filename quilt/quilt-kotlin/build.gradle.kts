@@ -42,17 +42,17 @@ loom.runs {
     named("client") {
         client()
         configName = "${languageId.capitalize()} Quilt Client"
-        runDir("../run/client")
+        runDir("../../run/client")
     }
     named("server") {
         server()
         configName = "${languageId.capitalize()} Quilt Server"
-        runDir("../run/server")
+        runDir("../../run/server")
     }
     create("data") {
         server()
         configName = "${languageId.capitalize()} Quilt Data"
-        runDir("../run/data")
+        runDir("../../run/data")
         vmArgs(
             "-Dfabric-api.datagen",
             "-Dfabric-api.datagen.output-dir=${generatedResources}",

@@ -76,6 +76,6 @@ class MultilingualExamplesClient {
             ParticleProvider<SimpleParticleType> create(SpriteSet sprites) {
                 return new DrippingAshParticle.DrippingAshParticleProvider(sprites)
             }
-        })
+       })
     }
 }
