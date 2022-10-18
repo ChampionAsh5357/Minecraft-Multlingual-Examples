@@ -8,13 +8,10 @@ package net.ashwork.mc.multilingualexamples.client
 
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
-import net.fabricmc.fabric.api.client.particle.v1.FabricSpriteProvider
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
-import net.minecraft.client.particle.ParticleProvider
 import net.minecraft.core.particles.SimpleParticleType
 import org.quiltmc.loader.api.ModContainer
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer
-
 /**
  * An isolated class for initialization of anything the mod needs specifically
  * for the client. The fully qualified name of this class must match that within
@@ -33,11 +30,7 @@ class MultilingualExamplesClient implements ClientModInitializer {
          *
          * Textures referenced in the JSON will be in the 'particle' directory within textures.
          */
-        ParticleFactoryRegistry.getInstance().register(ParticleTypeRegistrar.DRIPPING_ASH, new ParticleFactoryRegistry.PendingParticleFactory<SimpleParticleType>() {
-            @Override
-            ParticleProvider<SimpleParticleType> create(FabricSpriteProvider sprites) {
-                return new DrippingAshParticle.DrippingAshParticleProvider(sprites)
-            }
-        })
+        ParticleFactoryRegistry.getInstance().register(ParticleTypeRegistrar.DRIPPING_ASH,
+                { new DrippingAshParticle.DrippingAshParticleProvider(it) } as ParticleFactoryRegistry.PendingParticleFactory<SimpleParticleType>)
     }
 }

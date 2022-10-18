@@ -10,8 +10,6 @@ import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
 import net.minecraft.client.particle.ParticleEngine
-import net.minecraft.client.particle.ParticleProvider
-import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent
 import net.minecraftforge.eventbus.api.EventPriority
@@ -71,11 +69,7 @@ class MultilingualExamplesClient {
          *
          * Textures referenced in the JSON will be in the 'particle' directory within textures.
          */
-       event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(), new ParticleEngine.SpriteParticleRegistration<SimpleParticleType>() {
-            @Override
-            ParticleProvider<SimpleParticleType> create(SpriteSet sprites) {
-                return new DrippingAshParticle.DrippingAshParticleProvider(sprites)
-            }
-       })
+       event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(),
+               { new DrippingAshParticle.DrippingAshParticleProvider(it) } as ParticleEngine.SpriteParticleRegistration<SimpleParticleType>)
     }
 }
