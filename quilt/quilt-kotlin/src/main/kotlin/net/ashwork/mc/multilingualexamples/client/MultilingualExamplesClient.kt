@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticleProvider
 import net.ashwork.mc.multilingualexamples.registrar.DRIPPING_ASH
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
@@ -20,6 +21,8 @@ import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer
 internal class MultilingualExamplesClient: ClientModInitializer {
 
     override fun onInitializeClient(mod: ModContainer) {
+        armorModelManager().init()
+
         /*
          * Register our particle factory.
          *
@@ -30,5 +33,16 @@ internal class MultilingualExamplesClient: ClientModInitializer {
          * Textures referenced in the JSON will be in the 'particle' directory within textures.
          */
         ParticleFactoryRegistry.getInstance().register(DRIPPING_ASH, ::DrippingAshParticleProvider)
+    }
+
+    companion object {
+        private val modelManager: ArmorModelManager = ArmorModelManager()
+
+        /**
+         * Returns the armor model manager.
+         *
+         * @return the armor model manager
+         */
+        fun armorModelManager(): ArmorModelManager = modelManager
     }
 }
