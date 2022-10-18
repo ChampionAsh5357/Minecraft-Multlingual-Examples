@@ -41,5 +41,6 @@
                 "versions": ">=1.19.2"
             }
         ]
-    }
+    },
+    "mixin": "multilingual_examples.mixins.json"
 }
