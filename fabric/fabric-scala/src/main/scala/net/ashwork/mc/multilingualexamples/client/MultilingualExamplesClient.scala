@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
 import net.fabricmc.api.ClientModInitializer
@@ -19,6 +20,8 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 class MultilingualExamplesClient extends ClientModInitializer {
 
     override def onInitializeClient(): Unit = {
+        MultilingualExamplesClient.armorModelManager.init()
+        
         /*
          * Register our particle factory.
          *
@@ -30,4 +33,15 @@ class MultilingualExamplesClient extends ClientModInitializer {
          */
         ParticleFactoryRegistry.getInstance().register(ParticleTypeRegistrar.DRIPPING_ASH, new DrippingAshParticle.DrippingAshParticleProvider(_))
     }
+}
+object MultilingualExamplesClient {
+
+    private final val modelManager: ArmorModelManager = ArmorModelManager()
+
+    /**
+     * Returns the armor model manager.
+     *
+     * @return the armor model manager
+     */
+    def armorModelManager: ArmorModelManager = modelManager
 }
