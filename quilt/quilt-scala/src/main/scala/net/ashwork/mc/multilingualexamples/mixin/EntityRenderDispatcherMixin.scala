@@ -10,8 +10,8 @@ import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
 import net.minecraft.client.renderer.entity.{EntityRenderDispatcher, EntityRendererProvider}
 import net.minecraft.server.packs.resources.ResourceManager
 import org.spongepowered.asm.mixin.Mixin
-import org.spongepowered.asm.mixin.injection.{At, Inject}
 import org.spongepowered.asm.mixin.injection.callback.{CallbackInfo, LocalCapture}
+import org.spongepowered.asm.mixin.injection.{At, Inject}
 
 /**
  * A mixin used to inject logic into [[EntityRenderDispatcher]].
