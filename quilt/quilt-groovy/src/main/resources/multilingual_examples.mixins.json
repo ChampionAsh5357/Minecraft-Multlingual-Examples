@@ -1,0 +1,13 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "net.ashwork.mc.multilingualexamples.mixin",
+    "compatibilityLevel": "JAVA_17",
+    "mixins": [],
+    "client": [
+        "EntityRenderDispatcherMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

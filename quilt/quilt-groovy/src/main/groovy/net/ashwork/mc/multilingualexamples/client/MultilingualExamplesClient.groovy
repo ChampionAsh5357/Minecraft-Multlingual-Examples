@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
@@ -19,8 +20,39 @@ import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer
  */
 class MultilingualExamplesClient implements ClientModInitializer {
 
+    private static MultilingualExamplesClient _instance
+    private final ArmorModelManager modelManager
+
+    /**
+     * Default constructor.
+     */
+    MultilingualExamplesClient() {
+        _instance = this
+        this.modelManager = new ArmorModelManager()
+    }
+
+    /**
+     * Returns the client instance of this mod.
+     *
+     * @return the client instance of this mod
+     */
+    static MultilingualExamplesClient instance() {
+        return _instance
+    }
+
+    /**
+     * Returns the armor model manager.
+     *
+     * @return the armor model manager
+     */
+    ArmorModelManager armorModelManager() {
+        return this.modelManager
+    }
+
     @Override
     void onInitializeClient(final ModContainer mod) {
+        this.armorModelManager().init()
+
         /*
          * Register our particle factory.
          *
