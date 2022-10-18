@@ -96,6 +96,7 @@ class ArmorModelManager {
      * A method used to initialize the custom armor model handlers.
      */
     def init(): Unit = {
+        // Register the renderer used for the custom armor models for each supported armor item
         val renderer: ArmorRenderer = (poseStack, bufferSource, stack, entity, slot, light, context) => {
             stack.getItem match {
                 case item: ArmorItem =>

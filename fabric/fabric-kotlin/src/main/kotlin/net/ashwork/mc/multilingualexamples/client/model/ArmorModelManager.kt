@@ -104,6 +104,7 @@ class ArmorModelManager {
      * A method used to initialize the custom armor model handlers.
      */
     fun init() {
+        // Register the renderer used for the custom armor models for each supported armor item
         val renderer = ArmorRenderer { poseStack, bufferSource, stack, entity, slot, light, context ->
             if (stack.item is ArmorItem) {
                 val handler = this.getHandler((stack.item as ArmorItem).material, entity)

@@ -135,6 +135,7 @@ public class ArmorModelManager {
      * A method used to initialize the custom armor model handlers.
      */
     public void init() {
+        // Register the renderer used for the custom armor models for each supported armor item
         ArmorRenderer renderer = (poseStack, bufferSource, stack, entity, slot, light, context) -> {
             if (stack.getItem() instanceof ArmorItem armor) {
                 var handler = this.getHandler(armor.getMaterial(), entity);
