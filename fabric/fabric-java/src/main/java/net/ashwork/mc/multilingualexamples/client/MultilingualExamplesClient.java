@@ -46,7 +46,7 @@ public class MultilingualExamplesClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        this.modelManager.init();
+        this.armorModelManager().init();
 
         /*
          * Register our particle factory.

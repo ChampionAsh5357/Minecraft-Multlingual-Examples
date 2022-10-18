@@ -276,7 +276,7 @@ public class ArmorModelManager {
          * @param entity the entity wearing the armor
          * @param stack the armor currently being worn
          * @param slot the slot the armor is in
-         * @param context the context model to render
+         * @param context the context model
          * @return the model to be rendered
          */
         Model getAndSetup(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> context);

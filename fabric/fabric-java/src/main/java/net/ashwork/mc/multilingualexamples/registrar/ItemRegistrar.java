@@ -28,10 +28,10 @@ public final class ItemRegistrar {
     public static final List<ArmorItem> CUSTOM_ARMOR_MODEL_ITEMS = new ArrayList<>();
 
     public static final Item ASH = register("ash", new Item(new Item.Properties().tab(CreativeModeTab.TAB_BREWING)));
-    public static final Item COLLAGE_HELMET = registerCustomArmorModelItem("collage_helmet", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, new Item.Properties().tab(CreativeModeTab.TAB_BREWING)));
-    public static final Item COLLAGE_CHESTPLATE = registerCustomArmorModelItem("collage_chestplate", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_BREWING)));
-    public static final Item COLLAGE_LEGGINGS = registerCustomArmorModelItem("collage_leggings", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties().tab(CreativeModeTab.TAB_BREWING)));
-    public static final Item COLLAGE_BOOTS = registerCustomArmorModelItem("collage_boots", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties().tab(CreativeModeTab.TAB_BREWING)));
+    public static final ArmorItem COLLAGE_HELMET = registerCustomArmorModelItem("collage_helmet", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static final ArmorItem COLLAGE_CHESTPLATE = registerCustomArmorModelItem("collage_chestplate", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static final ArmorItem COLLAGE_LEGGINGS = registerCustomArmorModelItem("collage_leggings", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static final ArmorItem COLLAGE_BOOTS = registerCustomArmorModelItem("collage_boots", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
 
     /**
      * Registers an object to the item registry.
