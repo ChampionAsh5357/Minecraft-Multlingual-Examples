@@ -28,5 +28,9 @@ public final class Localizations extends FabricLanguageProvider {
     public void generateTranslations(final TranslationBuilder builder) {
         // Add items
         builder.add(ItemRegistrar.ASH, "Ash");
+        builder.add(ItemRegistrar.COLLAGE_HELMET, "Hat");
+        builder.add(ItemRegistrar.COLLAGE_CHESTPLATE, "Rocket");
+        builder.add(ItemRegistrar.COLLAGE_LEGGINGS, "Belt");
+        builder.add(ItemRegistrar.COLLAGE_BOOTS, "Ankle Guard");
     }
 }

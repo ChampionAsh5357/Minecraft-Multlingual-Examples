@@ -12,17 +12,16 @@ import net.ashwork.mc.multilingualexamples.data.Localizations
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
 import net.minecraft.data.DataGenerator
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.data.ExistingFileHelper
+import net.minecraftforge.data.event.GatherDataEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.IEventBus
-import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
-import net.minecraftforge.data.event.GatherDataEvent
-
-import java.util.function.Consumer
-
+import net.minecraftforge.fml.loading.FMLEnvironment
 /**
  * The main mod class. This is where the initialization of the mod happens.
  * The mod id supplied in the annotation must match that within the {@code mods.toml}.
@@ -39,6 +38,12 @@ final class MultilingualExamples {
      * The mod constructor. All event bus attachments should be present here.
      */
     MultilingualExamples() {
+        // Extension methods during runtime
+        ResourceLocation.metaClass.prefix = { String prefix ->
+            ResourceLocation rl = (ResourceLocation) delegate
+            rl.getPath().contains('/') ? rl : new ResourceLocation(rl.getNamespace(), "${prefix}/${rl.getPath()}")
+        }
+
         // Get the event buses
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus(),
                 forgeBus = MinecraftForge.EVENT_BUS
@@ -48,22 +53,9 @@ final class MultilingualExamples {
         ParticleTypeRegistrar.REGISTRAR.register(modBus)
 
         // Add client
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT) {
-            new Runnable() {
-                @Override
-                void run() {
-                    new MultilingualExamplesClient(modBus, forgeBus)
-                }
-            }
-        }
+        if (FMLEnvironment.dist == Dist.CLIENT) new MultilingualExamplesClient(modBus, forgeBus)
 
-        // Add mod events
-        modBus.addListener(new Consumer<GatherDataEvent>() {
-            @Override
-            void accept(final GatherDataEvent event) {
-                attachDataProviders(event)
-            }
-        })
+        modBus.addListener(EventPriority.NORMAL, false, GatherDataEvent, this::attachDataProviders)
     }
 
     /**

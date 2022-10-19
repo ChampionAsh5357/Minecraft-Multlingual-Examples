@@ -21,5 +21,5 @@ object ParticleTypeRegistrar {
      */
     final val REGISTRAR = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MultilingualExamples.ID)
 
-    final val DRIPPING_ASH = REGISTRAR.register("dripping_ash", () => new SimpleParticleType(false))
+    final val DRIPPING_ASH = REGISTRAR.register("dripping_ash", () => SimpleParticleType(false))
 }

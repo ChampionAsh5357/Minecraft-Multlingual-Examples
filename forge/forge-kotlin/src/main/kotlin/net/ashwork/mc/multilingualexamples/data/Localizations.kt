@@ -7,7 +7,7 @@
 package net.ashwork.mc.multilingualexamples.data
 
 import net.ashwork.mc.multilingualexamples.ID
-import net.ashwork.mc.multilingualexamples.registrar.ASH
+import net.ashwork.mc.multilingualexamples.registrar.*
 import net.minecraft.data.DataGenerator
 import net.minecraftforge.common.data.LanguageProvider
 
@@ -21,5 +21,9 @@ internal class Localizations(gen: DataGenerator) : LanguageProvider(gen, ID, "en
     override fun addTranslations() {
         // Add items
         this.addItem(ASH, "Ash")
+        this.addItem(COLLAGE_HELMET, "Hat")
+        this.addItem(COLLAGE_CHESTPLATE, "Rocket")
+        this.addItem(COLLAGE_LEGGINGS, "Belt")
+        this.addItem(COLLAGE_BOOTS, "Ankle Guard")
     }
 }

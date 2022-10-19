@@ -25,6 +25,6 @@ object MultilingualExtensions {
          * @return a new [[ResourceLocation]] with the path prefixed
          */
         infix def prefix(prefix: String): ResourceLocation =
-            if(rl.getPath.contains("/")) rl else new ResourceLocation(rl.getNamespace, s"$prefix/${rl.getPath}")
+            if(rl.getPath.contains("/")) rl else ResourceLocation(rl.getNamespace, s"$prefix/${rl.getPath}")
     }
 }

@@ -7,7 +7,7 @@
 package net.ashwork.mc.multilingualexamples.data
 
 import net.ashwork.mc.multilingualexamples.ID
-import net.ashwork.mc.multilingualexamples.registrar.ASH
+import net.ashwork.mc.multilingualexamples.registrar.*
 import net.ashwork.mc.multilingualexamples.util.prefix
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
@@ -26,6 +26,10 @@ internal class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) : ItemMod
 
     override fun registerModels() {
         this.simpleItem(ASH)
+        this.simpleItem(COLLAGE_HELMET)
+        this.simpleItem(COLLAGE_CHESTPLATE)
+        this.simpleItem(COLLAGE_LEGGINGS)
+        this.simpleItem(COLLAGE_BOOTS)
     }
 
     /**

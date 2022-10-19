@@ -7,6 +7,9 @@
 package net.ashwork.mc.multilingualexamples.registrar
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
+import net.ashwork.mc.multilingualexamples.item.CustomArmorModelItem
+import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraftforge.registries.DeferredRegister
@@ -26,5 +29,17 @@ final class ItemRegistrar {
 
     static final RegistryObject<Item> ASH = REGISTRAR.register('ash') {
         new Item(new Item.Properties().tab(CreativeModeTab.TAB_BREWING))
+    }
+    static final RegistryObject<Item> COLLAGE_HELMET = REGISTRAR.register('collage_helmet') {
+        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))
+    }
+    static final RegistryObject<Item> COLLAGE_CHESTPLATE = REGISTRAR.register('collage_chestplate') {
+        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))
+    }
+    static final RegistryObject<Item> COLLAGE_LEGGINGS = REGISTRAR.register('collage_leggings') {
+        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))
+    }
+    static final RegistryObject<Item> COLLAGE_BOOTS = REGISTRAR.register('collage_boots') {
+        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))
     }
 }

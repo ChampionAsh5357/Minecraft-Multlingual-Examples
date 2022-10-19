@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticleProvider
 import net.ashwork.mc.multilingualexamples.registrar.DRIPPING_ASH
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent
@@ -14,15 +15,29 @@ import net.minecraftforge.eventbus.api.IEventBus
 /**
  * An isolated class for initialization of anything the mod needs specifically
  * for the client. This should only be referenced through a sided check.
- *
- * @param modBus the mod's event bus
- * @param forgeBus the forge event bus
  */
-class MultilingualExamplesClient(private val modBus: IEventBus, private val forgeBus: IEventBus) {
+object MultilingualExamplesClient{
 
-    init {
-        this.modBus.addListener(this::onRegisterParticleFactories)
+    private lateinit var modelManager: ArmorModelManager
+
+    /**
+     * Initializes the client handler.
+     *
+     * @param modBus the mod's event bus
+     * @param forgeBus the forge event bus
+     */
+    fun init(modBus: IEventBus, forgeBus: IEventBus) {
+        this.modelManager = ArmorModelManager(modBus)
+
+        modBus.addListener(::onRegisterParticleFactories)
     }
+
+    /**
+     * Returns the armor model manager.
+     *
+     * @return the armor model manager
+     */
+    fun armorModelManager(): ArmorModelManager = modelManager
 
     /**
      * An event used to register particle factories.

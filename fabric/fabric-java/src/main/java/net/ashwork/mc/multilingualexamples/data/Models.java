@@ -34,5 +34,9 @@ public final class Models extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerators generators) {
         // Simple item models through the 'item/generated' parent.
         generators.generateFlatItem(ItemRegistrar.ASH, ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(ItemRegistrar.COLLAGE_HELMET, ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(ItemRegistrar.COLLAGE_CHESTPLATE, ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(ItemRegistrar.COLLAGE_LEGGINGS, ModelTemplates.FLAT_ITEM);
+        generators.generateFlatItem(ItemRegistrar.COLLAGE_BOOTS, ModelTemplates.FLAT_ITEM);
     }
 }

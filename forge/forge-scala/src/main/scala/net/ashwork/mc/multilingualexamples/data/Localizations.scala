@@ -21,19 +21,9 @@ class Localizations(gen: DataGenerator) extends LanguageProvider(gen, Multilingu
     override def addTranslations(): Unit = {
         // Add items
         this.addItem(ItemRegistrar.ASH, "Ash")
+        this.addItem(ItemRegistrar.COLLAGE_HELMET, "Hat")
+        this.addItem(ItemRegistrar.COLLAGE_CHESTPLATE, "Rocket")
+        this.addItem(ItemRegistrar.COLLAGE_LEGGINGS, "Belt")
+        this.addItem(ItemRegistrar.COLLAGE_BOOTS, "Ankle Guard")
     }
-}
-
-/**
- * The global instance of [[Localizations]]. Created for apply factories.
- */
-object Localizations {
-
-    /**
-     * A simple constructor.
-     *
-     * @param gen the generator being written to
-     * @return a new [[Localizations]] instance
-     */
-    def apply(gen: DataGenerator): Localizations = new Localizations(gen)
 }

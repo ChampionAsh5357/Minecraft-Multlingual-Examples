@@ -41,19 +41,19 @@ minecraft {
 
     runs {
         create("client") {
-            workingDirectory(file("../run/client"))
+            workingDirectory(file("../../run/client"))
         }
 
         create("server") {
-            workingDirectory(file("../run/server"))
+            workingDirectory(file("../../run/server"))
         }
 
         create("gameTestServer") {
-            workingDirectory(file("../run/game-test-server"))
+            workingDirectory(file("../../run/game-test-server"))
         }
 
         create("data") {
-            workingDirectory(file("../run/data"))
+            workingDirectory(file("../../run/data"))
 
             args(
                 "--mod", modId,
@@ -70,6 +70,14 @@ minecraft {
         ideaModule = "${rootId}.${loaderId}.${loaderId}-${languageId}.main"
         property("forge.enabledGameTestNamespaces", modId)
         mods.create(modId).source(sourceSets["main"])
+
+        // Fix scala's broken module artifacts
+        afterEvaluate {
+            val regex = "scala(.+)library(.+).jar".toRegex()
+            property("mergeModules", configurations.minecraftLibrary.get().copyRecursive().resolve().asSequence()
+                .map { it.name }
+                .filter { regex matches it }.distinct().joinToString(separator = ","))
+        }
     }
 }
 

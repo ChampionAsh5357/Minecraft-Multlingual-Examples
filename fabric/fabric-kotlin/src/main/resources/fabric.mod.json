@@ -37,6 +37,9 @@
             }
         ]
     },
+    "mixins": [
+        "multilingual_examples.mixins.json"
+    ],
 
     "depends": {
         "fabricloader": ">=0.14.9",

@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject
 /**
  * A data provider which generates item models for the mod.
  */
-final class ItemModels extends ItemModelProvider implements ModelProviderExtension {
+final class ItemModels extends ItemModelProvider {
 
     /**
      * A simple constructor.
@@ -33,6 +33,10 @@ final class ItemModels extends ItemModelProvider implements ModelProviderExtensi
     @Override
     protected void registerModels() {
         this.simpleItem(ItemRegistrar.ASH)
+        this.simpleItem(ItemRegistrar.COLLAGE_HELMET)
+        this.simpleItem(ItemRegistrar.COLLAGE_CHESTPLATE)
+        this.simpleItem(ItemRegistrar.COLLAGE_LEGGINGS)
+        this.simpleItem(ItemRegistrar.COLLAGE_BOOTS)
     }
 
     /**
@@ -56,6 +60,6 @@ final class ItemModels extends ItemModelProvider implements ModelProviderExtensi
      */
     private void simpleItem(final RegistryObject<? extends Item> item, final ResourceLocation layer0) {
         this.withExistingParent(item.getId().toString(), 'item/generated')
-                .texture('layer0', this.prefix(layer0, this.folder))
+                .texture('layer0', layer0.prefix(this.folder))
     }
 }

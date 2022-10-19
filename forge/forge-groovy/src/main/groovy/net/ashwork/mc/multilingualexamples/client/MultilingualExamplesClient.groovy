@@ -6,21 +6,22 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
 import net.minecraft.client.particle.ParticleEngine
-import net.minecraft.client.particle.ParticleProvider
-import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.IEventBus
-
-import java.util.function.Consumer
 /**
  * An isolated class for initialization of anything the mod needs specifically
  * for the client. This should only be referenced through a sided check.
  */
 class MultilingualExamplesClient {
+
+    private static MultilingualExamplesClient _instance
+    private final ArmorModelManager modelManager
 
     /**
      * Default constructor.
@@ -29,12 +30,28 @@ class MultilingualExamplesClient {
      * @param forgeBus the forge event bus
      */
     MultilingualExamplesClient(final IEventBus modBus, final IEventBus forgeBus) {
-        modBus.addListener(new Consumer<RegisterParticleProvidersEvent>() {
-            @Override
-            void accept(final RegisterParticleProvidersEvent event) {
-                onRegisterParticleFactories(event)
-            }
-        })
+        _instance = this
+        this.modelManager = new ArmorModelManager(modBus)
+
+        modBus.addListener(EventPriority.NORMAL, false, RegisterParticleProvidersEvent, this::onRegisterParticleFactories)
+    }
+
+    /**
+     * Returns the client instance of this mod.
+     *
+     * @return the client instance of this mod
+     */
+    static MultilingualExamplesClient instance() {
+        return _instance
+    }
+
+    /**
+     * Returns the armor model manager.
+     *
+     * @return the armor model manager
+     */
+    ArmorModelManager armorModelManager() {
+        return this.modelManager
     }
 
     /**
@@ -52,11 +69,7 @@ class MultilingualExamplesClient {
          *
          * Textures referenced in the JSON will be in the 'particle' directory within textures.
          */
-       event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(), new ParticleEngine.SpriteParticleRegistration<SimpleParticleType>() {
-            @Override
-            ParticleProvider<SimpleParticleType> create(SpriteSet sprites) {
-                return new DrippingAshParticle.DrippingAshParticleProvider(sprites)
-            }
-        })
+       event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(),
+               { new DrippingAshParticle.DrippingAshParticleProvider(it) } as ParticleEngine.SpriteParticleRegistration<SimpleParticleType>)
     }
 }

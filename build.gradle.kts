@@ -4,12 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
-// Add plugins to fix gradle issues
-//plugins {
-//    idea
-//    alias(libs.plugins.kotlin.jvm) apply false
-//}
-
 // Add common plugins
 plugins {
     java
