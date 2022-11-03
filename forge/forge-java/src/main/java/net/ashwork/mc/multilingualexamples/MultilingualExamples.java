@@ -6,20 +6,22 @@
 
 package net.ashwork.mc.multilingualexamples;
 
-import net.ashwork.mc.multilingualexamples.data.Localizations;
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient;
-import net.ashwork.mc.multilingualexamples.data.ItemModels;
-import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
-import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar;
+import net.ashwork.mc.multilingualexamples.data.ExampleBlockStateModelProvider;
+import net.ashwork.mc.multilingualexamples.data.ExampleItemModelProvider;
+import net.ashwork.mc.multilingualexamples.data.ExampleLocalizationProvider;
+import net.ashwork.mc.multilingualexamples.data.ExampleLootTableProvider;
+import net.ashwork.mc.multilingualexamples.data.ExampleRecipeProvider;
+import net.ashwork.mc.multilingualexamples.registrar.Registrars;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.data.event.GatherDataEvent;
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
@@ -42,8 +44,7 @@ public final class MultilingualExamples {
                 forgeBus = MinecraftForge.EVENT_BUS;
 
         // Add registries
-        ItemRegistrar.REGISTRAR.register(modBus);
-        ParticleTypeRegistrar.REGISTRAR.register(modBus);
+        Registrars.init(modBus);
 
         // Add client
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new MultilingualExamplesClient(modBus, forgeBus));
@@ -69,8 +70,15 @@ public final class MultilingualExamples {
 
         // Add client providers
         if (event.includeClient()) {
-            gen.addProvider(true, new ItemModels(gen, efh));
-            gen.addProvider(true, new Localizations(gen));
+            gen.addProvider(true, new ExampleBlockStateModelProvider(gen, efh));
+            gen.addProvider(true, new ExampleItemModelProvider(gen, efh));
+            gen.addProvider(true, new ExampleLocalizationProvider(gen));
+        }
+
+        // Add server providers
+        if (event.includeServer()) {
+            gen.addProvider(true, new ExampleLootTableProvider(gen));
+            gen.addProvider(true, new ExampleRecipeProvider(gen));
         }
     }
 }

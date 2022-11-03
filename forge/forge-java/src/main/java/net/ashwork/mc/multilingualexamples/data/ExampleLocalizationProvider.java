@@ -7,6 +7,7 @@
 package net.ashwork.mc.multilingualexamples.data;
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
+import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -14,14 +15,14 @@ import net.minecraftforge.common.data.LanguageProvider;
 /**
  * A data provider which generates an {@code en_us} localization for the mod.
  */
-public final class Localizations extends LanguageProvider {
+public final class ExampleLocalizationProvider extends LanguageProvider {
 
     /**
      * A simple constructor.
      *
      * @param gen the generator being written to
      */
-    public Localizations(final DataGenerator gen) {
+    public ExampleLocalizationProvider(final DataGenerator gen) {
         super(gen, MultilingualExamples.ID, "en_us");
     }
 
@@ -33,5 +34,9 @@ public final class Localizations extends LanguageProvider {
         this.addItem(ItemRegistrar.COLLAGE_CHESTPLATE, "Rocket");
         this.addItem(ItemRegistrar.COLLAGE_LEGGINGS, "Belt");
         this.addItem(ItemRegistrar.COLLAGE_BOOTS, "Ankle Guard");
+        this.addItem(ItemRegistrar.WAFFLE_MIX, "Waffle Mix");
+
+        // Add blocks
+        this.addBlock(BlockRegistrar.WAFFLE, "Waffle");
     }
 }

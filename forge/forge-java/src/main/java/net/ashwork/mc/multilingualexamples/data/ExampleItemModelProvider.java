@@ -18,17 +18,17 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.Objects;
 
 /**
- * A data provider which generates item models for the mod.
+ * A data provider which generates item models for items in this mod.
  */
-public final class ItemModels extends ItemModelProvider implements ModelProviderExtension {
+public final class ExampleItemModelProvider extends ItemModelProvider implements ModelProviderExtension {
 
     /**
-     * A simple constructor.
+     * Default constructor.
      *
      * @param gen the generator being written to
      * @param efh a resource holder for linking existing files
      */
-    public ItemModels(final DataGenerator gen, final ExistingFileHelper efh) {
+    public ExampleItemModelProvider(final DataGenerator gen, final ExistingFileHelper efh) {
         super(gen, MultilingualExamples.ID, efh);
     }
 
@@ -39,6 +39,7 @@ public final class ItemModels extends ItemModelProvider implements ModelProvider
         this.simpleItem(ItemRegistrar.COLLAGE_CHESTPLATE);
         this.simpleItem(ItemRegistrar.COLLAGE_LEGGINGS);
         this.simpleItem(ItemRegistrar.COLLAGE_BOOTS);
+        this.simpleItem(ItemRegistrar.WAFFLE_MIX);
     }
 
     /**
