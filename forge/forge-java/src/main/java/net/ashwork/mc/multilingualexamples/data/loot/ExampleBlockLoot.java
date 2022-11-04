@@ -16,6 +16,7 @@ public class ExampleBlockLoot extends BlockLoot {
     @Override
     protected void addTables() {
         this.dropSelf(BlockRegistrar.WAFFLE.get());
+        this.add(BlockRegistrar.SQUISHED_WAFFLE.get(), BlockLoot::createSlabItemTable);
     }
 
     @NotNull

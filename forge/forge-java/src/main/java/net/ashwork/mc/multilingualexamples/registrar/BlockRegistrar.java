@@ -1,9 +1,11 @@
 package net.ashwork.mc.multilingualexamples.registrar;
 
+import net.ashwork.mc.multilingualexamples.block.FlattenableBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -23,13 +25,21 @@ public class BlockRegistrar {
      */
     public static void register() {}
 
-    public static RegistryObject<Block> WAFFLE = registerBlockWithSimpleItem("waffle",
-            () -> new Block(BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
+    public static final RegistryObject<SlabBlock> SQUISHED_WAFFLE = registerBlockWithSimpleItem("squished_waffle",
+            () -> new SlabBlock(BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
                     .destroyTime(0.2f).sound(SoundType.WOOL)
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                     .isValidSpawn(((state, getter, pos, type) -> false))
                     .isSuffocating((state, getter, pos) -> false)),
-            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE));
+            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
+
+    public static final RegistryObject<FlattenableBlock> WAFFLE = registerBlockWithSimpleItem("waffle",
+            () -> new FlattenableBlock(SQUISHED_WAFFLE, BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
+                    .destroyTime(0.2f).sound(SoundType.WOOL)
+                    .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
+                    .isValidSpawn(((state, getter, pos, type) -> false))
+                    .isSuffocating((state, getter, pos) -> false)),
+            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
 
     /**
      * Registers a block with a {@link BlockItem}.

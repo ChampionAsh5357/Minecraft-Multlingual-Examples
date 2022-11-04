@@ -38,5 +38,6 @@ public final class ExampleLocalizationProvider extends LanguageProvider {
 
         // Add blocks
         this.addBlock(BlockRegistrar.WAFFLE, "Waffle");
+        this.addBlock(BlockRegistrar.SQUISHED_WAFFLE, "Squished Waffle");
     }
 }
