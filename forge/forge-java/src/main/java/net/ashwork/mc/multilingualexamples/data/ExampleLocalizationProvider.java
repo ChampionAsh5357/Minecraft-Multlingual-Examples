@@ -35,6 +35,9 @@ public final class ExampleLocalizationProvider extends LanguageProvider {
         this.addItem(ItemRegistrar.COLLAGE_LEGGINGS, "Belt");
         this.addItem(ItemRegistrar.COLLAGE_BOOTS, "Ankle Guard");
         this.addItem(ItemRegistrar.WAFFLE_MIX, "Waffle Mix");
+        this.addItem(ItemRegistrar.WAFFLE_CONE, "Waffle Cone");
+        this.addItem(ItemRegistrar.SNOW_CONE, "Snow Cone");
+        this.addItem(ItemRegistrar.ICE_CREAM_SANDWICH, "Ice Cream Sandwich");
 
         // Add blocks
         this.addBlock(BlockRegistrar.WAFFLE, "Waffle");

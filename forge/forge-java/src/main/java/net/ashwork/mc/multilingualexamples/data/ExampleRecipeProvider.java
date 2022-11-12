@@ -5,6 +5,7 @@ import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.Items;
@@ -34,8 +35,25 @@ public class ExampleRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> writer) {
-        ShapelessRecipeBuilder.shapeless(ItemRegistrar.WAFFLE_MIX.get()).requires(Items.EGG, 3).unlockedBy("has_egg", has(Items.EGG)).save(writer);
+        ShapelessRecipeBuilder.shapeless(ItemRegistrar.WAFFLE_MIX.get()).requires(Items.EGG, 3)
+                .unlockedBy("has_egg", has(Items.EGG)).save(writer);
         cookingFood(writer, ItemRegistrar.WAFFLE_MIX.get(), BlockRegistrar.WAFFLE.get(), 0.35f, 200);
+        ShapedRecipeBuilder.shaped(ItemRegistrar.WAFFLE_CONE.get(), 3)
+                .pattern("W W")
+                .pattern(" W ")
+                .define('W', BlockRegistrar.WAFFLE.get())
+                .unlockedBy("has_waffle", has(BlockRegistrar.WAFFLE.get())).save(writer);
+        ShapedRecipeBuilder.shaped(ItemRegistrar.SNOW_CONE.get())
+                .pattern("S")
+                .pattern("W")
+                .define('S', Items.SNOWBALL).define('W', ItemRegistrar.WAFFLE_CONE.get())
+                .unlockedBy("has_snowball", has(Items.SNOWBALL)).unlockedBy("has_waffle_cone", has(ItemRegistrar.WAFFLE_CONE.get())).save(writer);
+        ShapedRecipeBuilder.shaped(ItemRegistrar.ICE_CREAM_SANDWICH.get(), 6)
+                .pattern("WWW")
+                .pattern("MMM")
+                .pattern("WWW")
+                .define('W', BlockRegistrar.SQUISHED_WAFFLE.get()).define('M', Items.MILK_BUCKET)
+                .unlockedBy("has_milk", has(Items.MILK_BUCKET)).unlockedBy("has_squished_waffle", has(BlockRegistrar.SQUISHED_WAFFLE.get())).save(writer);
     }
 
     /**

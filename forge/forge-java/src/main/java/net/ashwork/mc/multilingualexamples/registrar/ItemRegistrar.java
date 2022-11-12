@@ -29,4 +29,7 @@ public final class ItemRegistrar {
     public static final RegistryObject<Item> COLLAGE_LEGGINGS = Registrars.ITEMS.register("collage_leggings", () -> new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static final RegistryObject<Item> COLLAGE_BOOTS = Registrars.ITEMS.register("collage_boots", () -> new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static final RegistryObject<Item> WAFFLE_MIX = Registrars.ITEMS.register("waffle_mix", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
+    public static final RegistryObject<Item> WAFFLE_CONE = Registrars.ITEMS.register("waffle_cone", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE_CONE.get())));
+    public static final RegistryObject<Item> SNOW_CONE = Registrars.ITEMS.register("snow_cone", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.SNOW_CONE.get())));
+    public static final RegistryObject<Item> ICE_CREAM_SANDWICH = Registrars.ITEMS.register("ice_cream_sandwich", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.ICE_CREAM_SANDWICH.get())));
 }

@@ -40,6 +40,9 @@ public final class ExampleItemModelProvider extends ItemModelProvider implements
         this.simpleItem(ItemRegistrar.COLLAGE_LEGGINGS);
         this.simpleItem(ItemRegistrar.COLLAGE_BOOTS);
         this.simpleItem(ItemRegistrar.WAFFLE_MIX);
+        this.simpleItem(ItemRegistrar.WAFFLE_CONE);
+        this.simpleItem(ItemRegistrar.SNOW_CONE);
+        this.simpleItem(ItemRegistrar.ICE_CREAM_SANDWICH);
     }
 
     /**
