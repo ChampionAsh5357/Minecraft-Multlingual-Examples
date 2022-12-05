@@ -1,3 +1,9 @@
+/*
+ * Multilingual Examples
+ * Written 2021-2022 by ChampionAsh5357
+ * SPDX-License-Identifier: CC0-1.0
+ */
+
 package net.ashwork.mc.multilingualexamples.block;
 
 import net.minecraft.world.item.context.UseOnContext;
