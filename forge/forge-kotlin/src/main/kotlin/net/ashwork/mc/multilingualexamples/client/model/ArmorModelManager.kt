@@ -252,7 +252,7 @@ class ArmorModelManager(modBus: IEventBus) {
      * @param stack the armor currently being worn
      * @param entity the entity wearing the armor
      * @param slot the slot the armor is in
-     * @param type the subtype of the model, either {@code null} or 'overlay' when dyeable
+     * @param type the subtype of the model, either [Nothing] or 'overlay' when dyeable
      * @return the full path and extension of the texture
      */
     fun getTexture(material: ArmorMaterial, stack: ItemStack, entity: Entity, slot: EquipmentSlot, type: String?): String =
@@ -309,7 +309,7 @@ interface ModelHandler {
      * @param stack the armor currently being worn
      * @param entity the entity wearing the armor
      * @param slot the slot the armor is in
-     * @param type the subtype of the model, either {@code null} or 'overlay' when dyeable
+     * @param type the subtype of the model, either [Nothing] or 'overlay' when dyeable
      * @return the full path and extension of the texture
      */
     fun getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot, type: String?): String

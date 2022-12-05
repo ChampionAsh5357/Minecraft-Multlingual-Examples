@@ -35,7 +35,7 @@ public class BlockRegistrar {
             () -> new SlabBlock(BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
                     .destroyTime(0.2f).sound(SoundType.WOOL)
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
-                    .isValidSpawn(((state, getter, pos, type) -> false))
+                    .isValidSpawn((state, getter, pos, type) -> false)
                     .isSuffocating((state, getter, pos) -> false)),
             () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
 
@@ -43,7 +43,7 @@ public class BlockRegistrar {
             () -> new FlattenableBlock(SQUISHED_WAFFLE, BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
                     .destroyTime(0.2f).sound(SoundType.WOOL)
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
-                    .isValidSpawn(((state, getter, pos, type) -> false))
+                    .isValidSpawn((state, getter, pos, type) -> false)
                     .isSuffocating((state, getter, pos) -> false)),
             () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
 

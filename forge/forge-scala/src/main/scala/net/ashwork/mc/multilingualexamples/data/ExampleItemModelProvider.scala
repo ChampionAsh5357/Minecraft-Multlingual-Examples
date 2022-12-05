@@ -22,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject
  * @param gen the generator being written to
  * @param efh a resource holder for linking existing files
  */
-class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelProvider(gen, MultilingualExamples.ID, efh) {
+class ExampleItemModelProvider(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelProvider(gen, MultilingualExamples.ID, efh) {
 
     override def registerModels(): Unit = {
         this.simpleItem(ItemRegistrar.ASH)
@@ -30,6 +30,10 @@ class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) extends ItemModelP
         this.simpleItem(ItemRegistrar.COLLAGE_CHESTPLATE)
         this.simpleItem(ItemRegistrar.COLLAGE_LEGGINGS)
         this.simpleItem(ItemRegistrar.COLLAGE_BOOTS)
+        this.simpleItem(ItemRegistrar.WAFFLE_MIX)
+        this.simpleItem(ItemRegistrar.WAFFLE_CONE)
+        this.simpleItem(ItemRegistrar.SNOW_CONE)
+        this.simpleItem(ItemRegistrar.ICE_CREAM_SANDWICH)
     }
 
     /**

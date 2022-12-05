@@ -16,7 +16,7 @@ import net.minecraftforge.common.data.LanguageProvider
  *
  * @param gen the generator being written to
  */
-internal class Localizations(gen: DataGenerator) : LanguageProvider(gen, ID, "en_us") {
+internal class ExampleLocalizationProvider(gen: DataGenerator) : LanguageProvider(gen, ID, "en_us") {
 
     override fun addTranslations() {
         // Add items
@@ -25,5 +25,13 @@ internal class Localizations(gen: DataGenerator) : LanguageProvider(gen, ID, "en
         this.addItem(COLLAGE_CHESTPLATE, "Rocket")
         this.addItem(COLLAGE_LEGGINGS, "Belt")
         this.addItem(COLLAGE_BOOTS, "Ankle Guard")
+        this.addItem(WAFFLE_MIX, "Waffle Mix")
+        this.addItem(WAFFLE_CONE, "Waffle Cone")
+        this.addItem(SNOW_CONE, "Snow Cone")
+        this.addItem(ICE_CREAM_SANDWICH, "Ice Cream Sandwich")
+
+        // Add blocks
+        this.addBlock(WAFFLE, "Waffle")
+        this.addBlock(SQUISHED_WAFFLE, "Squished Waffle")
     }
 }

@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject
 /**
  * A data provider which generates item models for the mod.
  */
-final class ItemModels extends ItemModelProvider {
+final class ExampleItemModelProvider extends ItemModelProvider {
 
     /**
      * A simple constructor.
@@ -26,7 +26,7 @@ final class ItemModels extends ItemModelProvider {
      * @param gen the generator being written to
      * @param efh a resource holder for linking existing files
      */
-    ItemModels(final DataGenerator gen, final ExistingFileHelper efh) {
+    ExampleItemModelProvider(final DataGenerator gen, final ExistingFileHelper efh) {
         super(gen, MultilingualExamples.ID, efh)
     }
 
@@ -37,6 +37,10 @@ final class ItemModels extends ItemModelProvider {
         this.simpleItem(ItemRegistrar.COLLAGE_CHESTPLATE)
         this.simpleItem(ItemRegistrar.COLLAGE_LEGGINGS)
         this.simpleItem(ItemRegistrar.COLLAGE_BOOTS)
+        this.simpleItem(ItemRegistrar.WAFFLE_MIX)
+        this.simpleItem(ItemRegistrar.WAFFLE_CONE)
+        this.simpleItem(ItemRegistrar.SNOW_CONE)
+        this.simpleItem(ItemRegistrar.ICE_CREAM_SANDWICH)
     }
 
     /**

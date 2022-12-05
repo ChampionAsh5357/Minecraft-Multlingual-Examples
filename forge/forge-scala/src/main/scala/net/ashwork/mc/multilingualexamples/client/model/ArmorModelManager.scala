@@ -20,7 +20,7 @@ import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.registries.ForgeRegistries
 
 import scala.Option
-import scala.jdk.javaapi.CollectionConverters
+import scala.jdk.CollectionConverters._
 
 /**
  * A manager used for handling armor models on any given entity.
@@ -199,8 +199,8 @@ class ArmorModelManager(modBus: IEventBus) {
         be (and already is in some loaders/mods), so it is best to update them
         with the new models to render according to their rendered definitions.
          */
-        CollectionConverters.asScala(playerArmorModels.values()).foreach { _.constructModel(event.getEntityModels) }
-        CollectionConverters.asScala(entityArmorModels.values()).foreach { _.constructModel(event.getEntityModels) }
+        playerArmorModels.values.asScala.foreach { _.constructModel(event.getEntityModels) }
+        entityArmorModels.values.asScala.foreach { _.constructModel(event.getEntityModels) }
     }
 
     /**

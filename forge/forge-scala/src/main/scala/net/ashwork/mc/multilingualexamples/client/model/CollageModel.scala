@@ -16,8 +16,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.{EquipmentSlot, LivingEntity}
 
 import java.lang
-import scala.jdk.javaapi.FunctionConverters
-import scala.jdk.javaapi.CollectionConverters
+import scala.jdk.FunctionConverters._
+import scala.jdk.CollectionConverters._
 
 /**
  * The armor model class for [[ExampleArmorMaterials.COLLAGE]].
@@ -31,7 +31,7 @@ import scala.jdk.javaapi.CollectionConverters
  * @param renderType the render type to use when uploading the model to the buffer
  */
 class CollageModel(root: ModelPart, renderType: ResourceLocation => RenderType) extends
-    AgeableListModel[LivingEntity](FunctionConverters.asJavaFunction(renderType), true, 16F, 0F, 2F, 2F, 24F) {
+    AgeableListModel[LivingEntity](renderType.asJavaFunction, true, 16F, 0F, 2F, 2F, 24F) {
 
     /**
      * Default constructor. Uses the no cull version of the entity cutout
@@ -120,9 +120,9 @@ class CollageModel(root: ModelPart, renderType: ResourceLocation => RenderType) 
 
     override def setupAnim(entity: LivingEntity, animationPosition: Float, animationSpeed: Float, bob: Float, yHeadRot: Float, xHeadRot: Float): Unit = {}
 
-    override def headParts: lang.Iterable[ModelPart] = CollectionConverters.asJava(List(this.head))
+    override def headParts: lang.Iterable[ModelPart] = Seq(this.head).asJava
 
-    override def bodyParts: lang.Iterable[ModelPart] = CollectionConverters.asJava(List(this.body, this.rightLeg, this.leftLeg))
+    override def bodyParts: lang.Iterable[ModelPart] = Seq(this.body, this.rightLeg, this.leftLeg).asJava
 }
 
 /**

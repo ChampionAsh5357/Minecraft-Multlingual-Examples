@@ -7,10 +7,10 @@
 package net.ashwork.mc.multilingualexamples
 
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
-import net.ashwork.mc.multilingualexamples.data.ItemModels
-import net.ashwork.mc.multilingualexamples.data.Localizations
-import net.ashwork.mc.multilingualexamples.registrar.ITEM_REGISTRAR
-import net.ashwork.mc.multilingualexamples.registrar.PARTICLE_TYPE_REGISTRAR
+import net.ashwork.mc.multilingualexamples.data.*
+import net.ashwork.mc.multilingualexamples.data.ExampleItemModelProvider
+import net.ashwork.mc.multilingualexamples.data.ExampleLocalizationProvider
+import net.ashwork.mc.multilingualexamples.registrar.initRegistrars
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.data.event.GatherDataEvent
@@ -36,8 +36,7 @@ internal class MultilingualExamples {
         val forgeBus = MinecraftForge.EVENT_BUS
 
         // Add registries
-        ITEM_REGISTRAR.register(modBus)
-        PARTICLE_TYPE_REGISTRAR.register(modBus)
+        initRegistrars(modBus)
 
         // Add client
         if (FMLEnvironment.dist == Dist.CLIENT) MultilingualExamplesClient.init(modBus, forgeBus)
@@ -62,8 +61,15 @@ internal class MultilingualExamples {
 
         // Add client providers
         if (event.includeClient()) {
-            gen.addProvider(true, ItemModels(gen, efh))
-            gen.addProvider(true, Localizations(gen))
+            gen.addProvider(true, ExampleBlockStateModelProvider(gen, efh))
+            gen.addProvider(true, ExampleItemModelProvider(gen, efh))
+            gen.addProvider(true, ExampleLocalizationProvider(gen))
+        }
+
+        // Add server providers
+        if (event.includeServer()) {
+            gen.addProvider(true, ExampleLootTableProvider(gen))
+            gen.addProvider(true, ExampleRecipeProvider(gen))
         }
     }
 }

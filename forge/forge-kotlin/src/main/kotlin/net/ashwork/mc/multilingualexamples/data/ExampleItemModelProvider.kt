@@ -17,12 +17,12 @@ import net.minecraftforge.common.data.ExistingFileHelper
 import net.minecraftforge.registries.RegistryObject
 
 /**
- * A data provider which generates item models for the mod.
+ * A data provider which generates item models for in this mod.
  *
  * @param gen the generator being written to
  * @param efh a resource holder for linking existing files
  */
-internal class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) : ItemModelProvider(gen, ID, efh) {
+internal class ExampleItemModelProvider(gen: DataGenerator, efh: ExistingFileHelper) : ItemModelProvider(gen, ID, efh) {
 
     override fun registerModels() {
         this.simpleItem(ASH)
@@ -30,6 +30,10 @@ internal class ItemModels(gen: DataGenerator, efh: ExistingFileHelper) : ItemMod
         this.simpleItem(COLLAGE_CHESTPLATE)
         this.simpleItem(COLLAGE_LEGGINGS)
         this.simpleItem(COLLAGE_BOOTS)
+        this.simpleItem(WAFFLE_MIX)
+        this.simpleItem(WAFFLE_CONE)
+        this.simpleItem(SNOW_CONE)
+        this.simpleItem(ICE_CREAM_SANDWICH)
     }
 
     /**

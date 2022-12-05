@@ -7,10 +7,8 @@
 package net.ashwork.mc.multilingualexamples
 
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
-import net.ashwork.mc.multilingualexamples.data.ItemModels
-import net.ashwork.mc.multilingualexamples.data.Localizations
-import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
-import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
+import net.ashwork.mc.multilingualexamples.data.*
+import net.ashwork.mc.multilingualexamples.registrar.Registrars
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
@@ -49,8 +47,7 @@ final class MultilingualExamples {
                 forgeBus = MinecraftForge.EVENT_BUS
 
         // Add registries
-        ItemRegistrar.REGISTRAR.register(modBus)
-        ParticleTypeRegistrar.REGISTRAR.register(modBus)
+        Registrars.init(modBus)
 
         // Add client
         if (FMLEnvironment.dist == Dist.CLIENT) new MultilingualExamplesClient(modBus, forgeBus)
@@ -74,8 +71,15 @@ final class MultilingualExamples {
 
         // Add client providers
         if (event.includeClient()) {
-            gen.addProvider(true, new ItemModels(gen, efh))
-            gen.addProvider(true, new Localizations(gen))
+            gen.addProvider(true, new ExampleBlockStateModelProvider(gen, efh))
+            gen.addProvider(true, new ExampleItemModelProvider(gen, efh))
+            gen.addProvider(true, new ExampleLocalizationProvider(gen))
+        }
+
+        // Add server providers
+        if (event.includeServer()) {
+            gen.addProvider(true, new ExampleLootTableProvider(gen))
+            gen.addProvider(true, new ExampleRecipeProvider(gen))
         }
     }
 }
