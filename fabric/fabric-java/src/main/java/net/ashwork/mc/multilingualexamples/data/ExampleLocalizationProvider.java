@@ -6,22 +6,22 @@
 
 package net.ashwork.mc.multilingualexamples.data;
 
+import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.world.item.Item;
 
 /**
  * A data provider which generates an {@code en_us} localization for the mod.
  */
-public final class Localizations extends FabricLanguageProvider {
+public final class ExampleLocalizationProvider extends FabricLanguageProvider {
 
     /**
      * A simple constructor.
      *
      * @param gen the generator being written to
      */
-    public Localizations(final FabricDataGenerator gen) {
+    public ExampleLocalizationProvider(final FabricDataGenerator gen) {
         super(gen);
     }
 
@@ -33,5 +33,13 @@ public final class Localizations extends FabricLanguageProvider {
         builder.add(ItemRegistrar.COLLAGE_CHESTPLATE, "Rocket");
         builder.add(ItemRegistrar.COLLAGE_LEGGINGS, "Belt");
         builder.add(ItemRegistrar.COLLAGE_BOOTS, "Ankle Guard");
+        builder.add(ItemRegistrar.WAFFLE_MIX, "Waffle Mix");
+        builder.add(ItemRegistrar.WAFFLE_CONE, "Waffle Cone");
+        builder.add(ItemRegistrar.SNOW_CONE, "Snow Cone");
+        builder.add(ItemRegistrar.ICE_CREAM_SANDWICH, "Ice Cream Sandwich");
+
+        // Add blocks
+        builder.add(BlockRegistrar.WAFFLE, "Waffle");
+        builder.add(BlockRegistrar.SQUISHED_WAFFLE, "Squished Waffle");
     }
 }

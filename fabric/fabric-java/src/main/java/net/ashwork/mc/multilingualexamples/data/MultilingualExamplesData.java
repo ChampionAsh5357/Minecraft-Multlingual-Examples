@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data;
 
+import net.ashwork.mc.multilingualexamples.data.loot.ExampleBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -20,7 +21,10 @@ public final class MultilingualExamplesData implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(final FabricDataGenerator gen) {
         // Add providers
-        gen.addProvider(Localizations::new);
-        gen.addProvider(Models::new);
+        gen.addProvider(ExampleLocalizationProvider::new);
+        gen.addProvider(ExampleModelProvider::new);
+
+        gen.addProvider(ExampleBlockLootTableProvider::new);
+        gen.addProvider(ExampleRecipeProvider::new);
     }
 }

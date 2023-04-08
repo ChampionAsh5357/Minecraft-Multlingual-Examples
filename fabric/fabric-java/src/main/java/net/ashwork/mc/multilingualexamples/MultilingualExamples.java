@@ -6,6 +6,8 @@
 
 package net.ashwork.mc.multilingualexamples;
 
+import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
+import net.ashwork.mc.multilingualexamples.registrar.GeneralRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar;
 import net.fabricmc.api.ModInitializer;
@@ -38,6 +40,8 @@ public final class MultilingualExamples implements ModInitializer {
     @Override
     public void onInitialize() {
         // Add registries
+        LOADERS.add(() -> GeneralRegistrar.WAFFLE);
+        LOADERS.add(() -> BlockRegistrar.SQUISHED_WAFFLE);
         LOADERS.add(() -> ItemRegistrar.ASH);
         LOADERS.add(() -> ParticleTypeRegistrar.DRIPPING_ASH);
         LOADERS.forEach(Supplier::get);

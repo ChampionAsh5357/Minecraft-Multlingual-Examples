@@ -142,7 +142,7 @@ public class ArmorModelManager {
                 ArmorRenderer.renderPart(poseStack, bufferSource, light, stack, handler.getAndSetup(entity, stack, slot, context), handler.getTexture(stack, entity, slot));
             }
         };
-        ItemRegistrar.CUSTOM_ARMOR_MODEL_ITEMS.forEach(item -> ArmorRenderer.register(renderer, item));
+        ItemRegistrar.registerRenderers(item -> ArmorRenderer.register(renderer, item));
 
         /*
         This registers the definitions that allow us to create the models for
