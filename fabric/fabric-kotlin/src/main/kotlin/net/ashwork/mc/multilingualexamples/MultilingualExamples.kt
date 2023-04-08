@@ -22,20 +22,14 @@ const val ID: String = "multilingual_examples"
 internal object MultilingualExamples : ModInitializer {
 
     /**
-     * A list of class loaders used to initialize the registry objects.
-     */
-    private val LOADERS: MutableList<() -> Any> = mutableListOf()
-
-    /**
      * Initializes the called data once Minecraft is considered to be in a
      * mod-load-ready state.
      */
     override fun onInitialize() {
         // Add registries
-        LOADERS.add { WAFFLE_FOOD }
-        LOADERS.add { SQUISHED_WAFFLE }
-        LOADERS.add { ASH }
-        LOADERS.add { DRIPPING_ASH }
-        LOADERS.forEach { it.invoke() }
+        registerGeneral()
+        registerBlocks()
+        registerItems()
+        registerParticleTypes()
     }
 }

@@ -18,6 +18,11 @@ import net.minecraft.resources.ResourceLocation;
  */
 public final class ParticleTypeRegistrar {
 
+    /**
+     * A dummy method used to load the static objects in this class.
+     */
+    public static void register() {}
+
     public static final SimpleParticleType DRIPPING_ASH = register("dripping_ash", FabricParticleTypes.simple());
 
     /**

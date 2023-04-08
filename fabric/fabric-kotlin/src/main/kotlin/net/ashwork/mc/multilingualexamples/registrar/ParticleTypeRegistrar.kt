@@ -14,6 +14,11 @@ import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
 
+/**
+ * A dummy method used to load the static objects in this class.
+ */
+fun registerParticleTypes() {}
+
 val DRIPPING_ASH: SimpleParticleType = register("dripping_ash", FabricParticleTypes.simple())
 
 /**

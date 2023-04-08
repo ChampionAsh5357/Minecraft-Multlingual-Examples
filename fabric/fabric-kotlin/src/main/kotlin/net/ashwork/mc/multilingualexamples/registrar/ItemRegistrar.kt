@@ -16,6 +16,13 @@ import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import org.jetbrains.annotations.ApiStatus.Internal
 
+/**
+ * A dummy method used to load the static objects in this class.
+ */
+fun registerItems() {
+    registerBlockItems { name, obj -> register(name, obj) }
+}
+
 @Internal
 private val customArmorModelItems: MutableList<ArmorItem> = mutableListOf()
 
@@ -25,8 +32,6 @@ private val customArmorModelItems: MutableList<ArmorItem> = mutableListOf()
  * @param rendererRegistry the registry holding the renderers
  */
 fun registerRenderers(rendererRegistry: (ArmorItem) -> Unit) = customArmorModelItems.forEach(rendererRegistry)
-
-private val blockItems: Unit = registerBlockItems { name, obj -> register(name, obj) }
 
 val ASH: Item = register("ash", Item(Item.Properties().tab(CreativeModeTab.TAB_BREWING)))
 val COLLAGE_HELMET: ArmorItem = registerCustomArmorModelItem("collage_helmet", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))

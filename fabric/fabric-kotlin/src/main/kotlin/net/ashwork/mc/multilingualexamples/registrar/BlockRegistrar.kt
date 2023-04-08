@@ -17,6 +17,11 @@ import net.minecraft.world.level.material.Material
 import net.minecraft.world.level.material.MaterialColor
 import org.jetbrains.annotations.ApiStatus.Internal
 
+/**
+ * A dummy method used to load the static objects in this class.
+ */
+fun registerBlocks() {}
+
 @Internal
 private val blockItemFactories: MutableList<Pair<String, () -> Item>> = mutableListOf()
 

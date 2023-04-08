@@ -28,6 +28,11 @@ import java.util.function.Supplier;
  */
 public class BlockRegistrar {
 
+    /**
+     * A dummy method used to load the static objects in this class.
+     */
+    public static void register() {}
+
     @ApiStatus.Internal
     private static List<Pair<String, Supplier<? extends Item>>> BLOCK_ITEM_FACTORIES = new ArrayList<>();
 

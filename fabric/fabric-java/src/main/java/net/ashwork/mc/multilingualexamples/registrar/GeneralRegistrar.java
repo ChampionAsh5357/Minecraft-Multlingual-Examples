@@ -10,6 +10,11 @@ import java.util.function.Supplier;
  */
 public class GeneralRegistrar {
 
+    /**
+     * A dummy method used to load the static objects in this class.
+     */
+    public static void register() {}
+
     /*
     We use lazy values here to mitigate issues of weird registry order as depending
     on how some abstractions are written, the non-registry objects can be loaded at

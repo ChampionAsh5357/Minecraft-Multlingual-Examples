@@ -2,6 +2,11 @@ package net.ashwork.mc.multilingualexamples.registrar
 
 import net.minecraft.world.food.FoodProperties
 
+/**
+ * A dummy method used to load the static objects in this class.
+ */
+fun registerGeneral() {}
+
 /*
 We use lazy values here to mitigate issues of weird registry order as depending
 on how some abstractions are written, the non-registry objects can be loaded at

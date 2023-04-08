@@ -25,6 +25,11 @@ import java.util.function.Consumer;
  */
 public final class ItemRegistrar {
 
+    /**
+     * A dummy method used to load the static objects in this class.
+     */
+    public static void register() {}
+
     @ApiStatus.Internal
     private static final List<ArmorItem> CUSTOM_ARMOR_MODEL_ITEMS = new ArrayList<>();
 
