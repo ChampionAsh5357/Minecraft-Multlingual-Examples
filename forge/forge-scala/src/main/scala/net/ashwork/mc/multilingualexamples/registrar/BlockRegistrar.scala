@@ -29,7 +29,7 @@ object BlockRegistrar {
      */
     def register(): Unit = {}
 
-    val SQUISHED_WAFFLE: RegistryObject[SlabBlock] = registerBlockWithSimpleItem("squished_waffle", () =>
+    final val SQUISHED_WAFFLE: RegistryObject[SlabBlock] = registerBlockWithSimpleItem("squished_waffle", () =>
         SlabBlock(BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
             .destroyTime(0.2f).sound(SoundType.WOOL)
             .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
@@ -37,7 +37,7 @@ object BlockRegistrar {
             .isSuffocating((_, _, _) => false)
         ), () => Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
     )
-    val WAFFLE: RegistryObject[FlattenableBlock] = registerBlockWithSimpleItem("waffle", () =>
+    final val WAFFLE: RegistryObject[FlattenableBlock] = registerBlockWithSimpleItem("waffle", () =>
         FlattenableBlock(SQUISHED_WAFFLE.asScala, BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
                 .destroyTime(0.2f).sound(SoundType.WOOL)
                 .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)

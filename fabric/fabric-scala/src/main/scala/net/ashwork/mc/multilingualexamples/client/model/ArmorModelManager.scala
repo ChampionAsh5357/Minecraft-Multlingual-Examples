@@ -105,7 +105,7 @@ class ArmorModelManager {
                 case _ =>
             }
         }
-        ItemRegistrar.CUSTOM_ARMOR_MODEL_ITEMS.foreach(ArmorRenderer.register(renderer, _))
+        ItemRegistrar.registerRenderers(ArmorRenderer.register(renderer, _))
 
         /*
         This registers the definitions that allow us to create the models for

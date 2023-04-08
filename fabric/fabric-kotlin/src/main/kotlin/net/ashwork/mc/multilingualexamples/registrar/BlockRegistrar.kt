@@ -22,7 +22,6 @@ import org.jetbrains.annotations.ApiStatus.Internal
  */
 fun registerBlocks() {}
 
-@Internal
 private val blockItemFactories: MutableList<Pair<String, () -> Item>> = mutableListOf()
 
 /**
@@ -30,6 +29,7 @@ private val blockItemFactories: MutableList<Pair<String, () -> Item>> = mutableL
  *
  * @param itemRegistry a consumer representing the item registry
  */
+@Internal
 fun registerBlockItems(itemRegistry: (String, Item) -> Unit) {
     blockItemFactories.forEach { itemRegistry(it.first, it.second()) }
 

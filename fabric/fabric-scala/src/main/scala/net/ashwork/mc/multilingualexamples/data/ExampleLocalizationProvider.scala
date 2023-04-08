@@ -6,7 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data
 
-import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
+import net.ashwork.mc.multilingualexamples.registrar.{BlockRegistrar, ItemRegistrar}
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 
@@ -15,7 +15,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
  *
  * @param gen the generator being written to
  */
-class Localizations(gen: FabricDataGenerator) extends FabricLanguageProvider(gen) {
+class ExampleLocalizationProvider(gen: FabricDataGenerator) extends FabricLanguageProvider(gen) {
 
     override def generateTranslations(builder: FabricLanguageProvider.TranslationBuilder): Unit = {
         // Add items
@@ -24,5 +24,13 @@ class Localizations(gen: FabricDataGenerator) extends FabricLanguageProvider(gen
         builder.add(ItemRegistrar.COLLAGE_CHESTPLATE, "Rocket")
         builder.add(ItemRegistrar.COLLAGE_LEGGINGS, "Belt")
         builder.add(ItemRegistrar.COLLAGE_BOOTS, "Ankle Guard")
+        builder.add(ItemRegistrar.WAFFLE_MIX, "Waffle Mix")
+        builder.add(ItemRegistrar.WAFFLE_CONE, "Waffle Cone")
+        builder.add(ItemRegistrar.SNOW_CONE, "Snow Cone")
+        builder.add(ItemRegistrar.ICE_CREAM_SANDWICH, "Ice Cream Sandwich")
+
+        // Add blocks
+        builder.add(BlockRegistrar.WAFFLE, "Waffle")
+        builder.add(BlockRegistrar.SQUISHED_WAFFLE, "Squished Waffle")
     }
 }

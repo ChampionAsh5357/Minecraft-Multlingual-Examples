@@ -17,6 +17,11 @@ import net.minecraft.resources.ResourceLocation
  */
 object ParticleTypeRegistrar {
 
+    /**
+     * A dummy method used to load the static objects in this class.
+     */
+    def register(): Unit = {}
+    
     final val DRIPPING_ASH = register("dripping_ash", FabricParticleTypes.simple())
 
     /**

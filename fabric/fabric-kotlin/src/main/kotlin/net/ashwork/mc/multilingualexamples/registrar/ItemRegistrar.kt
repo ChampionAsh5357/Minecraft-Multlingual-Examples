@@ -23,7 +23,6 @@ fun registerItems() {
     registerBlockItems { name, obj -> register(name, obj) }
 }
 
-@Internal
 private val customArmorModelItems: MutableList<ArmorItem> = mutableListOf()
 
 /**
@@ -31,6 +30,7 @@ private val customArmorModelItems: MutableList<ArmorItem> = mutableListOf()
  *
  * @param rendererRegistry the registry holding the renderers
  */
+@Internal
 fun registerRenderers(rendererRegistry: (ArmorItem) -> Unit) = customArmorModelItems.forEach(rendererRegistry)
 
 val ASH: Item = register("ash", Item(Item.Properties().tab(CreativeModeTab.TAB_BREWING)))

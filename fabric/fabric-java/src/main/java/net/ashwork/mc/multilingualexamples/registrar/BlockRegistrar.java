@@ -32,8 +32,7 @@ public class BlockRegistrar {
      * A dummy method used to load the static objects in this class.
      */
     public static void register() {}
-
-    @ApiStatus.Internal
+    
     private static List<Pair<String, Supplier<? extends Item>>> BLOCK_ITEM_FACTORIES = new ArrayList<>();
 
     /**
@@ -41,6 +40,7 @@ public class BlockRegistrar {
      *
      * @param itemRegistry a consumer representing the item registry
      */
+    @ApiStatus.Internal
     public static void registerBlockItems(BiConsumer<String, Item> itemRegistry) {
         BLOCK_ITEM_FACTORIES.forEach(pair -> itemRegistry.accept(pair.getFirst(), pair.getSecond().get()));
 
