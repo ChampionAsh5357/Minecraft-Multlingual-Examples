@@ -6,8 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples
 
-import net.ashwork.mc.multilingualexamples.registrar.ASH
-import net.ashwork.mc.multilingualexamples.registrar.DRIPPING_ASH
+import net.ashwork.mc.multilingualexamples.registrar.*
 import net.fabricmc.api.ModInitializer
 
 /**
@@ -33,6 +32,8 @@ internal object MultilingualExamples : ModInitializer {
      */
     override fun onInitialize() {
         // Add registries
+        LOADERS.add { WAFFLE_FOOD }
+        LOADERS.add { SQUISHED_WAFFLE }
         LOADERS.add { ASH }
         LOADERS.add { DRIPPING_ASH }
         LOADERS.forEach { it.invoke() }

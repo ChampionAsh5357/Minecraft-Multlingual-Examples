@@ -72,7 +72,7 @@ public final class ExampleModelProvider extends FabricModelProvider {
         var bottomSlab = ModelTemplates.SLAB_BOTTOM.create(block, texture, generators.modelOutput);
         generators.blockStateOutput.accept(BlockModelGenerators.createSlab(block, bottomSlab,
                 ModelTemplates.SLAB_TOP.create(block, texture, generators.modelOutput),
-                ModelTemplates.CUBE_BOTTOM_TOP.createWithOverride(BlockRegistrar.SQUISHED_WAFFLE, "_double", texture, generators.modelOutput))
+                ModelTemplates.CUBE_BOTTOM_TOP.createWithOverride(block, "_double", texture, generators.modelOutput))
         );
         generators.delegateItemModel(block, bottomSlab);
     }
