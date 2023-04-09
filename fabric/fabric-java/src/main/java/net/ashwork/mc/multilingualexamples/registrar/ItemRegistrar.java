@@ -28,7 +28,9 @@ public final class ItemRegistrar {
     /**
      * A dummy method used to load the static objects in this class.
      */
-    public static void register() {}
+    public static void register() {
+        BlockRegistrar.registerBlockItems(ItemRegistrar::register);
+    }
     
     private static final List<ArmorItem> CUSTOM_ARMOR_MODEL_ITEMS = new ArrayList<>();
 
@@ -40,10 +42,6 @@ public final class ItemRegistrar {
     @ApiStatus.Internal
     public static void registerRenderers(Consumer<ArmorItem> rendererRegistry) {
         CUSTOM_ARMOR_MODEL_ITEMS.forEach(rendererRegistry);
-    }
-
-    static {
-        BlockRegistrar.registerBlockItems(ItemRegistrar::register);
     }
 
     public static final Item ASH = register("ash", new Item(new Item.Properties().tab(CreativeModeTab.TAB_BREWING)));

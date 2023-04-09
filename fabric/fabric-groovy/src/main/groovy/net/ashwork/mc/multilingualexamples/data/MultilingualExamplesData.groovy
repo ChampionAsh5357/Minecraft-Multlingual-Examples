@@ -6,11 +6,9 @@
 
 package net.ashwork.mc.multilingualexamples.data
 
+import net.ashwork.mc.multilingualexamples.data.loot.ExampleBlockLootTableProvider
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
-
-import java.util.function.Function
-
 /**
  * A class instance used to run providers to generate files necessary by specified
  * objects (e.g. models, localizations, etc.) The fully qualified name of this class
@@ -22,17 +20,10 @@ final class MultilingualExamplesData implements DataGeneratorEntrypoint {
     @Override
     void onInitializeDataGenerator(FabricDataGenerator gen) {
         // Add providers
-        gen.addProvider(new Function<FabricDataGenerator, Localizations>() {
-            @Override
-            Localizations apply(FabricDataGenerator generator) {
-                return new Localizations(generator)
-            }
-        })
-        gen.addProvider(new Function<FabricDataGenerator, Models>() {
-            @Override
-            Models apply(FabricDataGenerator generator) {
-                return new Models(generator)
-            }
-        })
+        gen.addProvider { new ExampleLocalizationProvider(it) }
+        gen.addProvider { new ExampleModelProvider(it) }
+
+        gen.addProvider { new ExampleBlockLootTableProvider(it) }
+        gen.addProvider { new ExampleRecipeProvider(it) }
     }
 }
