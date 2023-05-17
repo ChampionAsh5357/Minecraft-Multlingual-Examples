@@ -58,9 +58,7 @@ class ExampleRecipeProvider(gen: FabricDataGenerator) extends FabricRecipeProvid
     }
 
     /**
-     * Generates a cooking recipe.
-     *
-     * This is a copy of [[RecipeProvider.simpleCookingRecipe()]]
+     * Generates a cooking recipe. This is a copy of [[RecipeProvider.simpleCookingRecipe()]]
      * which fixes the file location for generation of the recipe.
      *
      * @param writer      the writer used to generate the recipe

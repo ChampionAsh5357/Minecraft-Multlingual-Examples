@@ -72,9 +72,7 @@ class ExampleRecipeProvider extends FabricRecipeProvider {
     }
 
     /**
-     * Generates a cooking recipe.
-     *
-     * This is a copy of {@link #simpleCookingRecipe(Consumer, String, net.minecraft.world.item.crafting.SimpleCookingSerializer, int, ItemLike, ItemLike, float)}
+     * Generates a cooking recipe. This is a copy of {@link #simpleCookingRecipe(Consumer, String, net.minecraft.world.item.crafting.SimpleCookingSerializer, int, ItemLike, ItemLike, float)}
      * which fixes the file location for generation of the recipe.
      *
      * @param writer the writer used to generate the recipe
