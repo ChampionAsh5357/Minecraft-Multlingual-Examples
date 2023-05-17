@@ -1,19 +1,17 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
 package net.ashwork.mc.multilingualexamples;
 
+import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
+import net.ashwork.mc.multilingualexamples.registrar.GeneralRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
@@ -37,11 +35,6 @@ public final class MultilingualExamples implements ModInitializer {
     }
 
     /**
-     * A list of class loaders used to initialize the registry objects.
-     */
-    private static final List<Supplier<?>> LOADERS = new ArrayList<>();
-
-    /**
      * Initializes the called data once Minecraft is considered to be in a
      * mod-load-ready state.
      */
@@ -51,8 +44,9 @@ public final class MultilingualExamples implements ModInitializer {
         id = mod.metadata().id();
 
         // Add registries
-        LOADERS.add(() -> ItemRegistrar.ASH);
-        LOADERS.add(() -> ParticleTypeRegistrar.DRIPPING_ASH);
-        LOADERS.forEach(Supplier::get);
+        GeneralRegistrar.register();
+        BlockRegistrar.register();
+        ItemRegistrar.register();
+        ParticleTypeRegistrar.register();
     }
 }

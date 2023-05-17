@@ -8,7 +8,6 @@ package net.ashwork.mc.multilingualexamples.registrar;
 
 import com.mojang.datafixers.util.Pair;
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
-import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import org.jetbrains.annotations.ApiStatus;
@@ -38,7 +36,7 @@ public class BlockRegistrar {
      * A dummy method used to load the static objects in this class.
      */
     public static void register() {}
-    
+
     private static List<Pair<String, Supplier<? extends Item>>> BLOCK_ITEM_FACTORIES = new ArrayList<>();
 
     /**
@@ -63,31 +61,13 @@ public class BlockRegistrar {
                     .isSuffocating((state, getter, pos) -> false)),
             () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
 
-    public static final Block WAFFLE = registerFlattenableWithSimpleItem("waffle",
+    public static final Block WAFFLE = registerBlockWithSimpleItem("waffle",
             new Block(BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
                     .destroyTime(0.2f).sound(SoundType.WOOL)
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                     .isValidSpawn((state, getter, pos, type) -> false)
                     .isSuffocating((state, getter, pos) -> false)),
-            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()),
-            SQUISHED_WAFFLE.defaultBlockState());
-
-    /**
-     * Registers an object to the block registry with a {@link BlockItem}.
-     * The block can be flattened with a shovel.
-     *
-     * @param name the registry name of the object
-     * @param obj the block instance
-     * @param itemProperties the properties of the block item
-     * @param flattened the flattened state of this block
-     * @param <T> the type of the block
-     * @return the object instance being registered
-     */
-    private static <T extends Block> T registerFlattenableWithSimpleItem(final String name, final T obj, final Supplier<Item.Properties> itemProperties, final BlockState flattened) {
-        var block = registerBlockWithSimpleItem(name, obj, itemProperties);
-        FlattenableBlockRegistry.register(block, flattened);
-        return block;
-    }
+            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
 
     /**
      * Registers an object to the block registry with a {@link BlockItem}.
@@ -113,7 +93,7 @@ public class BlockRegistrar {
      * @return the object instance being registered
      */
     private static <T extends Block, I extends Item> T registerBlockWithItem(final String name, final T obj, final Function<T, I> itemFactory) {
-        var block = Registry.register(Registry.BLOCK, new ResourceLocation(MultilingualExamples.ID, name), obj);
+        var block = Registry.register(Registry.BLOCK, new ResourceLocation(MultilingualExamples.id(), name), obj);
         BLOCK_ITEM_FACTORIES.add(Pair.of(name, () -> itemFactory.apply(block)));
         return block;
     }
