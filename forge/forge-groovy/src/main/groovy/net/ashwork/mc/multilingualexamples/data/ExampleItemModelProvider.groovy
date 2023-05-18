@@ -9,13 +9,12 @@ package net.ashwork.mc.multilingualexamples.data
 import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraftforge.client.model.generators.ItemModelProvider
 import net.minecraftforge.common.data.ExistingFileHelper
 import net.minecraftforge.registries.RegistryObject
-
 /**
  * A data provider which generates item models for the mod.
  */
@@ -25,11 +24,11 @@ final class ExampleItemModelProvider extends ItemModelProvider {
     /**
      * A simple constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      * @param efh a resource holder for linking existing files
      */
-    ExampleItemModelProvider(final DataGenerator gen, final ExistingFileHelper efh) {
-        super(gen, MultilingualExamples.ID, efh)
+    ExampleItemModelProvider(final PackOutput output, final ExistingFileHelper efh) {
+        super(output, MultilingualExamples.ID, efh)
     }
 
     @Override
@@ -51,7 +50,7 @@ final class ExampleItemModelProvider extends ItemModelProvider {
      * @param item the item whose model is being generated
      */
     private void simpleItem(final RegistryObject<? extends Item> item) {
-        this.simpleItem(item, item.getId())
+        this.simpleItem(item, item.id)
     }
 
     /**
@@ -65,7 +64,7 @@ final class ExampleItemModelProvider extends ItemModelProvider {
      * @param layer0 the name of the layer0 texture living in {@code textures/item}
      */
     private void simpleItem(final RegistryObject<? extends Item> item, final ResourceLocation layer0) {
-        this.withExistingParent(item.getId().toString(), 'item/generated')
-                .texture('layer0', MultilingualExamples.prefixPath(layer0, this.folder))
+        this.withExistingParent(item.id.toString(), 'item/generated')
+                .texture('layer0', layer0.withPrefix("${this.folder}/"))
     }
 }

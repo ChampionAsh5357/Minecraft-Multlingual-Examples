@@ -107,7 +107,7 @@ class ArmorModelManager {
      */
     private void registerPlayerArmorModel(ArmorMaterial material, Closure<?> register, Closure<ModelHandler> handler, String... types) {
         for (String type : types) {
-            var mll = new ModelLayerLocation(new ResourceLocation("player_$type"), material.getName())
+            var mll = new ModelLayerLocation(new ResourceLocation("player_$type"), material.name)
             register(mll)
             this.playerArmorModels.put(type, material, handler(mll))
         }
@@ -124,7 +124,7 @@ class ArmorModelManager {
      * @param <T> the type of the armor model
      */
     private static <T extends Model> Closure<ModelHandler> createSingleModel(ArmorMaterial material, Closure<T> modelFactory, Closure<?> setup) {
-        var split = material.getName().split(':')
+        var split = material.name.split(':')
         var texture = "${split[0]}:textures/models/armor/${split[1]}.png"
         return { ModelLayerLocation mll -> new SingleModelHandler<>({ EntityModelSet entityModelSet -> modelFactory(entityModelSet.bakeLayer(mll)) }, setup, texture) }
     }
@@ -232,8 +232,8 @@ class ArmorModelManager {
         be (and already is in some loaders/mods), so it is best to update them
         with the new models to render according to their rendered definitions.
          */
-        this.playerArmorModels.values().forEach() {it.constructModel(event.getEntityModels()) }
-        this.entityArmorModels.values().forEach() {it.constructModel(event.getEntityModels()) }
+        this.playerArmorModels.values().forEach() {it.constructModel(event.entityModels) }
+        this.entityArmorModels.values().forEach() {it.constructModel(event.entityModels) }
     }
 
     /**
@@ -248,7 +248,7 @@ class ArmorModelManager {
      */
     private ModelHandler getHandler(ArmorMaterial material, Entity entity) {
         ModelHandler handler = entity instanceof AbstractClientPlayer ? this.playerArmorModels.get(((AbstractClientPlayer) entity).getModelName(), material)
-                : this.entityArmorModels.get(entity.getType(), material)
+                : this.entityArmorModels.get(entity.type, material)
 
         return handler ?: this.playerArmorModels.get('default', material)
     }

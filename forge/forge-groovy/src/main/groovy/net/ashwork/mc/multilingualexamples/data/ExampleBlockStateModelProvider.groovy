@@ -9,7 +9,7 @@ package net.ashwork.mc.multilingualexamples.data
 import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
@@ -28,19 +28,19 @@ class ExampleBlockStateModelProvider extends BlockStateProvider {
     /**
      * Default constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      * @param efh a resource holder for linking existing files
      */
-    ExampleBlockStateModelProvider(DataGenerator gen, ExistingFileHelper efh) {
-        super(gen, MultilingualExamples.ID, efh)
+    ExampleBlockStateModelProvider(PackOutput output, ExistingFileHelper efh) {
+        super(output, MultilingualExamples.ID, efh)
     }
 
     @Override
     protected void registerStatesAndModels() {
         this.cubeAllItem(BlockRegistrar.WAFFLE)
         this.blockWithItem(BlockRegistrar.SQUISHED_WAFFLE) { ResourceLocation name, SlabBlock block ->
-            ResourceLocation waffle = MultilingualExamples.prefixPath(BlockRegistrar.WAFFLE.getId(), ModelProvider.BLOCK_FOLDER)
-            ResourceLocation squishedWaffle = MultilingualExamples.prefixPath(name, ModelProvider.BLOCK_FOLDER)
+            ResourceLocation waffle = BlockRegistrar.WAFFLE.id.withPrefix("${ModelProvider.BLOCK_FOLDER}/")
+            ResourceLocation squishedWaffle = name.withPrefix("${ModelProvider.BLOCK_FOLDER}/")
             def regularSlab = this.models().slab(name.toString(), squishedWaffle, waffle, waffle)
             this.slabBlock(block, regularSlab, this.models().slabTop("${name}_top", squishedWaffle, waffle, waffle), this.models().cubeBottomTop("${name}_double", squishedWaffle, waffle, waffle))
             return regularSlab

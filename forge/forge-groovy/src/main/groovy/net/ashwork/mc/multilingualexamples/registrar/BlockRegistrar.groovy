@@ -9,7 +9,6 @@ package net.ashwork.mc.multilingualexamples.registrar
 import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.block.FlattenableBlock
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
@@ -18,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.Material
 import net.minecraft.world.level.material.MaterialColor
 import net.minecraftforge.registries.RegistryObject
-
 /**
  * A utility class used to hold and register all blocks for this mod.
  */
@@ -38,7 +36,7 @@ final class BlockRegistrar {
                     .isValidSpawn({state, getter, pos, type -> false })
                     .isSuffocating({ state, getter, pos  -> false }))
             }) {
-        new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
+        new Item.Properties().food(GeneralRegistrar.WAFFLE)
     }
     static final RegistryObject<FlattenableBlock> WAFFLE = registerBlockWithSimpleItem("waffle",
             { ->
@@ -52,7 +50,7 @@ final class BlockRegistrar {
                         }
                 )
             }) {
-        new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
+        new Item.Properties().food(GeneralRegistrar.WAFFLE)
     }
 
     /**
