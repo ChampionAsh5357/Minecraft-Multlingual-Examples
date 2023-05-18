@@ -6,12 +6,11 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
-import groovy.transform.CompileStatic
+
 import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
 import net.minecraft.client.particle.ParticleEngine
-import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent
 import net.minecraftforge.eventbus.api.EventPriority
@@ -20,7 +19,6 @@ import net.minecraftforge.eventbus.api.IEventBus
  * An isolated class for initialization of anything the mod needs specifically
  * for the client. This should only be referenced through a sided check.
  */
-@CompileStatic
 class MultilingualExamplesClient {
 
     private static MultilingualExamplesClient _instance

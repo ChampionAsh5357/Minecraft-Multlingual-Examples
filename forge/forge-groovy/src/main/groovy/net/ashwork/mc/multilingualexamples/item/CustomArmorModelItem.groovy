@@ -6,7 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.item
 
-import groovy.transform.CompileStatic
+
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
 import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.minecraft.client.model.HumanoidModel
@@ -28,7 +28,6 @@ import java.util.function.Consumer
  * A generic armor item class to use custom armor models managed by the
  * {@link ArmorModelManager}.
  */
-@CompileStatic
 class CustomArmorModelItem extends ArmorItem {
 
     /**

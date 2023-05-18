@@ -9,7 +9,6 @@ package net.ashwork.mc.multilingualexamples.client.model
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 import com.mojang.blaze3d.vertex.PoseStack
-import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer
@@ -32,11 +31,9 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.ItemStack
-
 /**
  * A manager used for handling armor models on any given entity.
  */
-@CompileStatic
 class ArmorModelManager {
 
     private final Table<EntityType<? extends Entity>, ArmorMaterial, ModelHandler> entityArmorModels

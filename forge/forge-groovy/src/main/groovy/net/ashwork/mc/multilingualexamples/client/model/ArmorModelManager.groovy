@@ -8,7 +8,6 @@ package net.ashwork.mc.multilingualexamples.client.model
 
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
-import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
 import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.model.Model
@@ -32,7 +31,6 @@ import net.minecraftforge.registries.ForgeRegistries
 /**
  * A manager used for handling armor models on any given entity.
  */
-@CompileStatic
 class ArmorModelManager {
 
     private final Table<EntityType<? extends Entity>, ArmorMaterial, ModelHandler> entityArmorModels

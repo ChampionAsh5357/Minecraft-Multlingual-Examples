@@ -6,7 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.block
 
-import groovy.transform.CompileStatic
+
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.block.Block
@@ -20,7 +20,6 @@ import net.minecraftforge.common.ToolActions
  * A generic block class that allows the block to be flattened into a slab by a
  * tool with the {@link ToolActions#SHOVEL_FLATTEN} action.
  */
-@CompileStatic
 class FlattenableBlock extends Block {
 
     private final Closure<? extends SlabBlock> flattenedBlock
