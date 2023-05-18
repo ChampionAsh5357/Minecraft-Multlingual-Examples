@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data;
 
+import net.ashwork.mc.multilingualexamples.data.attachment.ExampleRegistryEntryAttachmentProvider;
 import net.ashwork.mc.multilingualexamples.data.loot.ExampleBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: CC0-1.0
  */
 
-package net.ashwork.mc.multilingualexamples.data;
+package net.ashwork.mc.multilingualexamples.data.attachment;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * A {@link DataProvider} for {@link RegistryEntryAttachment}s.
  *
- * <p>To use this provided, extend this class and implement {@link #addAttachments()}.
+ * <p>To use this provider, extend this class and implement {@link #addAttachments()}.
  * Then, register an instance using {@link DataGenerator#addProvider(boolean, DataProvider)}
  * through a {@link net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint}.
  *
@@ -41,13 +41,9 @@ import java.util.Objects;
  *     @Override
  *     public void addAttachments() {
  *         this.attach(BlockContentRegistries.FLATTENABLE_BLOCK)
- *             .addObject(
- *                 Blocks.DIAMOND_BLOCK,
- *                 Blocks.DIAMOND_ORE.defaultBlockState()
- *             ).addTag(
- *                 BlockTags.SAND,
- *                 Blocks.GLASS.defaultBlockState()
- *             ).addOptionalObject(
+ *             .addObject(Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE.defaultBlockState())
+ *             .addTag(BlockTags.SAND, Blocks.GLASS.defaultBlockState())
+ *             .addOptionalObject(
  *                 new ResourceLocation("examplemod:example_block"),
  *                 Blocks.GOLD_BLOCK.defaultBlockState()
  *             ).addTag(
@@ -160,7 +156,7 @@ public abstract class RegistryEntryAttachmentProvider implements DataProvider {
          * Adds an object that may not be present by its {@link ResourceLocation}
          * with an attachable value.
          *
-         * @param obj the object being attached to
+         * @param obj the name of the object being attached to
          * @param value the value attached to the object
          * @return the chainable attachment object
          */
@@ -183,7 +179,7 @@ public abstract class RegistryEntryAttachmentProvider implements DataProvider {
         /**
          * Adds a tag by its {@link ResourceLocation} with an attachable value.
          *
-         * @param tag the tag being attached to
+         * @param tag the name of the tag being attached to
          * @param value the value attached to the object
          * @return the chainable attachment object
          */
@@ -208,6 +204,7 @@ public abstract class RegistryEntryAttachmentProvider implements DataProvider {
                 var encoded = this.attachment.codec().encodeStart(JsonOps.INSTANCE, value).getOrThrow(false, str -> {});
                 vals.add(key, encoded);
             });
+            obj.add("values", vals);
 
             DataProvider.saveStable(output, obj, attachmentPathProvider.json(new ResourceLocation(
                     this.attachment.id().getNamespace(),

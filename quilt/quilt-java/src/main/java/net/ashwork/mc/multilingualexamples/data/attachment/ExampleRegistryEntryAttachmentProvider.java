@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: CC0-1.0
  */
 
-package net.ashwork.mc.multilingualexamples.data;
+package net.ashwork.mc.multilingualexamples.data.attachment;
 
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
 import net.minecraft.data.DataGenerator;
