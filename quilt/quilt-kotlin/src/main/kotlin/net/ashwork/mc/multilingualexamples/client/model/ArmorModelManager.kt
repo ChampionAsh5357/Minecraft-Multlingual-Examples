@@ -9,7 +9,7 @@ package net.ashwork.mc.multilingualexamples.client.model
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
-import net.ashwork.mc.multilingualexamples.registrar.CUSTOM_ARMOR_MODEL_ITEMS
+import net.ashwork.mc.multilingualexamples.registrar.registerRenderers
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.minecraft.client.model.HumanoidModel
@@ -111,7 +111,7 @@ class ArmorModelManager {
                 ArmorRenderer.renderPart(poseStack, bufferSource, light, stack, handler.getAndSetup(entity, stack, slot, context), handler.getTexture(stack, entity, slot))
             }
         }
-        CUSTOM_ARMOR_MODEL_ITEMS.forEach { ArmorRenderer.register(renderer, it) }
+        registerRenderers { ArmorRenderer.register(renderer, it) }
 
         /*
         This registers the definitions that allow us to create the models for

@@ -6,8 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples
 
-import net.ashwork.mc.multilingualexamples.registrar.ASH
-import net.ashwork.mc.multilingualexamples.registrar.DRIPPING_ASH
+import net.ashwork.mc.multilingualexamples.registrar.*
 import org.quiltmc.loader.api.ModContainer
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer
 
@@ -22,11 +21,6 @@ private var id: String = ""
  * @return the modid of our mod
  */
 fun id(): String = id
-
-/**
- * A list of class loaders used to initialize the registry objects.
- */
-private val LOADERS: MutableList<() -> Any> = mutableListOf()
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
@@ -44,8 +38,9 @@ internal class MultilingualExamples : ModInitializer {
         id = mod.metadata().id()
 
         // Add registries
-        LOADERS.add { ASH }
-        LOADERS.add { DRIPPING_ASH }
-        LOADERS.forEach { it.invoke() }
+        registerGeneral()
+        registerBlocks()
+        registerItems()
+        registerParticleTypes()
     }
 }

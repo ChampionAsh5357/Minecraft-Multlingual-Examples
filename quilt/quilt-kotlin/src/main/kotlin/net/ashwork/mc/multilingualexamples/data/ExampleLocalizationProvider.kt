@@ -15,7 +15,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
  *
  * @param gen the generator being written to
  */
-class Localizations(gen: FabricDataGenerator): FabricLanguageProvider(gen) {
+class ExampleLocalizationProvider(gen: FabricDataGenerator): FabricLanguageProvider(gen) {
 
     override fun generateTranslations(builder: TranslationBuilder) {
         // Add items
@@ -24,5 +24,13 @@ class Localizations(gen: FabricDataGenerator): FabricLanguageProvider(gen) {
         builder.add(COLLAGE_CHESTPLATE, "Rocket")
         builder.add(COLLAGE_LEGGINGS, "Belt")
         builder.add(COLLAGE_BOOTS, "Ankle Guard")
+        builder.add(WAFFLE_MIX, "Waffle Mix")
+        builder.add(WAFFLE_CONE, "Waffle Cone")
+        builder.add(SNOW_CONE, "Snow Cone")
+        builder.add(ICE_CREAM_SANDWICH, "Ice Cream Sandwich")
+
+        // Add blocks
+        builder.add(WAFFLE, "Waffle")
+        builder.add(SQUISHED_WAFFLE, "Squished Waffle")
     }
 }
