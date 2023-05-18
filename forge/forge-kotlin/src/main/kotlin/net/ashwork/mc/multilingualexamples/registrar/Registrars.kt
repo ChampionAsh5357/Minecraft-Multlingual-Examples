@@ -7,6 +7,8 @@
 package net.ashwork.mc.multilingualexamples.registrar
 
 import net.ashwork.mc.multilingualexamples.ID
+import net.minecraft.world.item.CreativeModeTabs
+import net.minecraftforge.event.CreativeModeTabEvent.BuildContents
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
@@ -45,4 +47,32 @@ internal fun initRegistrars(modBus: IEventBus) {
     registerBlocks()
     registerItems()
     registerParticleTypes()
+
+    // Add events
+    modBus.addListener(::buildTabContents)
+}
+
+/**
+ * An event listener that, when fired, adds contents to a [net.minecraft.world.item.CreativeModeTab].
+ *
+ * @param event the [BuildContents] event
+ */
+private fun buildTabContents(event: BuildContents) {
+    when (event.tab) {
+        CreativeModeTabs.INGREDIENTS -> event.accept(ASH)
+        CreativeModeTabs.COMBAT -> {
+            event.accept(COLLAGE_HELMET)
+            event.accept(COLLAGE_CHESTPLATE)
+            event.accept(COLLAGE_LEGGINGS)
+            event.accept(COLLAGE_BOOTS)
+        }
+        CreativeModeTabs.FOOD_AND_DRINKS -> {
+            event.accept(SQUISHED_WAFFLE)
+            event.accept(WAFFLE)
+            event.accept(WAFFLE_MIX)
+            event.accept(WAFFLE_CONE)
+            event.accept(SNOW_CONE)
+            event.accept(ICE_CREAM_SANDWICH)
+        }
+    }
 }

@@ -8,17 +8,20 @@ package net.ashwork.mc.multilingualexamples.data
 
 import net.ashwork.mc.multilingualexamples.ID
 import net.ashwork.mc.multilingualexamples.registrar.*
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraftforge.common.data.LanguageProvider
 
 /**
  * A data provider which generates an 'en_us' localization for the mod.
  *
- * @param gen the generator being written to
+ * @param output the output of the data generator
  */
-internal class ExampleLocalizationProvider(gen: DataGenerator) : LanguageProvider(gen, ID, "en_us") {
+internal class ExampleLocalizationProvider(output: PackOutput) : LanguageProvider(output, ID, "en_us") {
 
     override fun addTranslations() {
+        // Add pack description
+        this.add("pack.$ID.description", "Multilingual Examples Resources")
+
         // Add items
         this.addItem(ASH, "Ash")
         this.addItem(COLLAGE_HELMET, "Hat")

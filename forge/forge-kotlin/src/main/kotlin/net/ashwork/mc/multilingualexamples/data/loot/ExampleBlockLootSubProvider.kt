@@ -9,18 +9,19 @@ package net.ashwork.mc.multilingualexamples.data.loot
 import net.ashwork.mc.multilingualexamples.registrar.BLOCK_REGISTRAR
 import net.ashwork.mc.multilingualexamples.registrar.SQUISHED_WAFFLE
 import net.ashwork.mc.multilingualexamples.registrar.WAFFLE
-import net.minecraft.data.loot.BlockLoot
+import net.minecraft.data.loot.BlockLootSubProvider
+import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 
 /**
  * A loot table provider for [LootContextParamSets.BLOCK].
  */
-class ExampleBlockLoot: BlockLoot() {
+class ExampleBlockLootSubProvider: BlockLootSubProvider(emptySet(), FeatureFlags.REGISTRY.allFlags()) {
 
-    override fun addTables() {
+    override fun generate() {
         this.dropSelf(WAFFLE.get())
-        this.add(SQUISHED_WAFFLE.get(), BlockLoot::createSlabItemTable)
+        this.add(SQUISHED_WAFFLE.get(), ::createSlabItemTable)
     }
 
     /*
