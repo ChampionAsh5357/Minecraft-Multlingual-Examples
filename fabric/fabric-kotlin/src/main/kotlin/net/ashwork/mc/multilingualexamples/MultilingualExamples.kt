@@ -1,13 +1,12 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
 package net.ashwork.mc.multilingualexamples
 
-import net.ashwork.mc.multilingualexamples.registrar.ASH
-import net.ashwork.mc.multilingualexamples.registrar.DRIPPING_ASH
+import net.ashwork.mc.multilingualexamples.registrar.*
 import net.fabricmc.api.ModInitializer
 
 /**
@@ -23,18 +22,14 @@ const val ID: String = "multilingual_examples"
 internal object MultilingualExamples : ModInitializer {
 
     /**
-     * A list of class loaders used to initialize the registry objects.
-     */
-    private val LOADERS: MutableList<() -> Any> = mutableListOf()
-
-    /**
      * Initializes the called data once Minecraft is considered to be in a
      * mod-load-ready state.
      */
     override fun onInitialize() {
         // Add registries
-        LOADERS.add { ASH }
-        LOADERS.add { DRIPPING_ASH }
-        LOADERS.forEach { it.invoke() }
+        registerGeneral()
+        registerBlocks()
+        registerItems()
+        registerParticleTypes()
     }
 }

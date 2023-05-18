@@ -1,6 +1,6 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
@@ -11,15 +11,14 @@ import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.registries.{DeferredRegister, ForgeRegistries}
 
 /**
- * A utility class used to hold and register all particle types for this mod.
+ * A utility object used to hold and register all particle types for this mod.
  */
 object ParticleTypeRegistrar {
 
     /**
-     * The registrar used to register the particle types for this mod. Must be attached
-     * to the mod event bus through some call within the main mod constructor.
+     * A dummy method used to load the static objects in this class.
      */
-    final val REGISTRAR = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MultilingualExamples.ID)
+    def register(): Unit = {}
 
-    final val DRIPPING_ASH = REGISTRAR.register("dripping_ash", () => SimpleParticleType(false))
+    final val DRIPPING_ASH = Registrars.PARTICLE_TYPE_REGISTRAR.register("dripping_ash", () => SimpleParticleType(false))
 }

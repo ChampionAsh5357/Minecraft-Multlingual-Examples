@@ -1,16 +1,12 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
 package net.ashwork.mc.multilingualexamples.registrar;
 
-import net.ashwork.mc.multilingualexamples.MultilingualExamples;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
@@ -19,10 +15,9 @@ import net.minecraftforge.registries.RegistryObject;
 public final class ParticleTypeRegistrar {
 
     /**
-     * The registrar used to register the particle types for this mod. Must be attached
-     * to the mod event bus through some call within the main mod constructor.
+     * A dummy method used to load the static objects in this class.
      */
-    public static final DeferredRegister<ParticleType<?>> REGISTRAR = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, MultilingualExamples.ID);
+    public static void register() {}
 
-    public static final RegistryObject<SimpleParticleType> DRIPPING_ASH = REGISTRAR.register("dripping_ash", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> DRIPPING_ASH = Registrars.PARTICLE_TYPES.register("dripping_ash", () -> new SimpleParticleType(false));
 }

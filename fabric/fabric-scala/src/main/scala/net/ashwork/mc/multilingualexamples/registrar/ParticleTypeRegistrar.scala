@@ -1,6 +1,6 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
@@ -17,6 +17,11 @@ import net.minecraft.resources.ResourceLocation
  */
 object ParticleTypeRegistrar {
 
+    /**
+     * A dummy method used to load the static objects in this class.
+     */
+    def register(): Unit = {}
+    
     final val DRIPPING_ASH = register("dripping_ash", FabricParticleTypes.simple())
 
     /**

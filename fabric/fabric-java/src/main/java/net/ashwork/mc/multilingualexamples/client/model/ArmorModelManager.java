@@ -1,6 +1,6 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
@@ -142,7 +142,7 @@ public class ArmorModelManager {
                 ArmorRenderer.renderPart(poseStack, bufferSource, light, stack, handler.getAndSetup(entity, stack, slot, context), handler.getTexture(stack, entity, slot));
             }
         };
-        ItemRegistrar.CUSTOM_ARMOR_MODEL_ITEMS.forEach(item -> ArmorRenderer.register(renderer, item));
+        ItemRegistrar.registerRenderers(item -> ArmorRenderer.register(renderer, item));
 
         /*
         This registers the definitions that allow us to create the models for

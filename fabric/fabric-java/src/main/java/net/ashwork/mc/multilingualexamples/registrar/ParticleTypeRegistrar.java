@@ -1,6 +1,6 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
@@ -17,6 +17,11 @@ import net.minecraft.resources.ResourceLocation;
  * A utility class used to hold and register all particle types for this mod.
  */
 public final class ParticleTypeRegistrar {
+
+    /**
+     * A dummy method used to load the static objects in this class.
+     */
+    public static void register() {}
 
     public static final SimpleParticleType DRIPPING_ASH = register("dripping_ash", FabricParticleTypes.simple());
 

@@ -1,14 +1,14 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
 package net.ashwork.mc.multilingualexamples
 
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
-import net.ashwork.mc.multilingualexamples.data.{ItemModels, Localizations}
-import net.ashwork.mc.multilingualexamples.registrar.{ItemRegistrar, ParticleTypeRegistrar}
+import net.ashwork.mc.multilingualexamples.data.{ExampleBlockStateModelProvider, ExampleItemModelProvider, ExampleLocalizationProvider, ExampleLootTableProvider, ExampleRecipeProvider}
+import net.ashwork.mc.multilingualexamples.registrar.{ItemRegistrar, ParticleTypeRegistrar, Registrars}
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.DistExecutor
@@ -29,8 +29,7 @@ final class MultilingualExamples {
     private final val forgeBus = MinecraftForge.EVENT_BUS
 
     // Add registries
-    ItemRegistrar.REGISTRAR.register(modBus)
-    ParticleTypeRegistrar.REGISTRAR.register(modBus)
+    Registrars.init(modBus)
 
     // Add client
     if (FMLEnvironment.dist == Dist.CLIENT) MultilingualExamplesClient.init(modBus, forgeBus)
@@ -54,8 +53,15 @@ final class MultilingualExamples {
 
         // Add client providers
         if (event.includeClient) {
-            gen.addProvider(true, ItemModels(gen, efh))
-            gen.addProvider(true, Localizations(gen))
+            gen.addProvider(true, ExampleBlockStateModelProvider(gen, efh))
+            gen.addProvider(true, ExampleItemModelProvider(gen, efh))
+            gen.addProvider(true, ExampleLocalizationProvider(gen))
+        }
+
+        // Add server providers
+        if (event.includeServer()) {
+            gen.addProvider(true, ExampleLootTableProvider(gen))
+            gen.addProvider(true, ExampleRecipeProvider(gen))
         }
     }
 }

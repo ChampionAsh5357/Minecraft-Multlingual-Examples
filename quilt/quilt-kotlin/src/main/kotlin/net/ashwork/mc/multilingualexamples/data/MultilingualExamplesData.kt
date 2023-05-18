@@ -1,11 +1,13 @@
 /*
  * Multilingual Examples
- * Written 2021-2022 by ChampionAsh5357
+ * Written 2021-2023 by ChampionAsh5357
  * SPDX-License-Identifier: CC0-1.0
  */
 
 package net.ashwork.mc.multilingualexamples.data
 
+import net.ashwork.mc.multilingualexamples.data.attachment.ExampleRegistryEntryAttachmentProvider
+import net.ashwork.mc.multilingualexamples.data.loot.ExampleBlockLootTableProvider
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 
@@ -19,7 +21,11 @@ internal class MultilingualExamplesData: DataGeneratorEntrypoint {
 
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
         // Add providers
-        gen.addProvider(::Localizations)
-        gen.addProvider(::Models)
+        gen.addProvider(::ExampleLocalizationProvider)
+        gen.addProvider(::ExampleModelProvider)
+
+        gen.addProvider(::ExampleBlockLootTableProvider)
+        gen.addProvider(::ExampleRecipeProvider)
+        gen.addProvider(::ExampleRegistryEntryAttachmentProvider)
     }
 }
