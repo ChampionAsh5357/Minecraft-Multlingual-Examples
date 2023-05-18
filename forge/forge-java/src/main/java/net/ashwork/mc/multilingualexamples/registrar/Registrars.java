@@ -59,7 +59,7 @@ public class Registrars {
     /**
      * An event listener that, when fired, adds content to a {@link net.minecraft.world.item.CreativeModeTab}.
      *
-     * @param event the {@link net.minecraftforge.event.CreativeModeTabEvent.BuildContents} event
+     * @param event the {@link CreativeModeTabEvent.BuildContents} event
      */
     private static void buildTabContents(CreativeModeTabEvent.BuildContents event) {
         if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
