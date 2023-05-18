@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.block
 
+import groovy.transform.CompileStatic
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.block.Block
@@ -19,6 +20,7 @@ import net.minecraftforge.common.ToolActions
  * A generic block class that allows the block to be flattened into a slab by a
  * tool with the {@link ToolActions#SHOVEL_FLATTEN} action.
  */
+@CompileStatic
 class FlattenableBlock extends Block {
 
     private final Closure<? extends SlabBlock> flattenedBlock
@@ -37,7 +39,7 @@ class FlattenableBlock extends Block {
     @Override
     BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
         return toolAction == ToolActions.SHOVEL_FLATTEN ?
-                this.flattenedBlock().defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, switch (context.clickedFace) {
+                flattenedBlock().defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, switch (context.clickedFace) {
                     case Direction.UP -> SlabType.BOTTOM
                     case Direction.DOWN -> SlabType.TOP // This will never be executed because of how flattening works
                     default -> context.clickLocation.y - context.clickedPos.y.toDouble() < 0.5 ? SlabType.BOTTOM : SlabType.TOP

@@ -6,10 +6,12 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
 import net.minecraft.client.particle.ParticleEngine
+import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent
 import net.minecraftforge.eventbus.api.EventPriority
@@ -18,6 +20,7 @@ import net.minecraftforge.eventbus.api.IEventBus
  * An isolated class for initialization of anything the mod needs specifically
  * for the client. This should only be referenced through a sided check.
  */
+@CompileStatic
 class MultilingualExamplesClient {
 
     private static MultilingualExamplesClient _instance
@@ -70,6 +73,6 @@ class MultilingualExamplesClient {
          * Textures referenced in the JSON will be in the 'particle' directory within textures.
          */
        event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(),
-               { new DrippingAshParticle.DrippingAshParticleProvider(it) } as ParticleEngine.SpriteParticleRegistration<SimpleParticleType>)
+               { SpriteSet sprites -> new DrippingAshParticle.DrippingAshParticleProvider(sprites) } as ParticleEngine.SpriteParticleRegistration<SimpleParticleType>)
     }
 }

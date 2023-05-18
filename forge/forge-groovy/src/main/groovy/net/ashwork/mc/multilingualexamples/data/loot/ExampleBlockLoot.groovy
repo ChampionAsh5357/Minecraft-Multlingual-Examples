@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data.loot
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.ashwork.mc.multilingualexamples.registrar.Registrars
 import net.minecraft.data.loot.BlockLoot
@@ -15,6 +16,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 /**
  * A loot table provider for {@link LootContextParamSets#BLOCK}.
  */
+@CompileStatic
 class ExampleBlockLoot extends BlockLoot {
 
     @Override

@@ -25,6 +25,7 @@ import java.util.function.Supplier
 /**
  * A data provider which generates loot tables for this mod.
  */
+@CompileStatic
 class ExampleLootTableProvider extends LootTableProvider {
 
     /**

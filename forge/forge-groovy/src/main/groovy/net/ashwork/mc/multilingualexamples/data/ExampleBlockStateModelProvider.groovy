@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.minecraft.data.DataGenerator
@@ -21,6 +22,7 @@ import net.minecraftforge.registries.RegistryObject
  * A data provider which generates block state, block, and item models for blocks
  * in this mod.
  */
+@CompileStatic
 class ExampleBlockStateModelProvider extends BlockStateProvider {
 
     /**
@@ -37,8 +39,8 @@ class ExampleBlockStateModelProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         this.cubeAllItem(BlockRegistrar.WAFFLE)
         this.blockWithItem(BlockRegistrar.SQUISHED_WAFFLE) { ResourceLocation name, SlabBlock block ->
-            ResourceLocation waffle = BlockRegistrar.WAFFLE.getId().prefix(ModelProvider.BLOCK_FOLDER)
-            ResourceLocation squishedWaffle = name.prefix(ModelProvider.BLOCK_FOLDER)
+            ResourceLocation waffle = MultilingualExamples.prefixPath(BlockRegistrar.WAFFLE.getId(), ModelProvider.BLOCK_FOLDER)
+            ResourceLocation squishedWaffle = MultilingualExamples.prefixPath(name, ModelProvider.BLOCK_FOLDER)
             def regularSlab = this.models().slab(name.toString(), squishedWaffle, waffle, waffle)
             this.slabBlock(block, regularSlab, this.models().slabTop("${name}_top", squishedWaffle, waffle, waffle), this.models().cubeBottomTop("${name}_double", squishedWaffle, waffle, waffle))
             return regularSlab

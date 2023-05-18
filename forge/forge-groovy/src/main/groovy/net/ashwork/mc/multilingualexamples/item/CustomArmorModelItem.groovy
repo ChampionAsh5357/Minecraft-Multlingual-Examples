@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.item
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
 import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.minecraft.client.model.HumanoidModel
@@ -27,6 +28,7 @@ import java.util.function.Consumer
  * A generic armor item class to use custom armor models managed by the
  * {@link ArmorModelManager}.
  */
+@CompileStatic
 class CustomArmorModelItem extends ArmorItem {
 
     /**
@@ -43,10 +45,11 @@ class CustomArmorModelItem extends ArmorItem {
     @Override
     void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
+            @NotNull
             @Override
-            @NotNull Model getGenericArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<? extends LivingEntity> original) {
+            Model getGenericArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<? extends LivingEntity> original) {
                 // Check sides in case of illegal calling
-                return FMLEnvironment.dist == Dist.CLIENT ? MultilingualExamplesClient.instance().armorModelManager().getArmorModel(CustomArmorModelItem.this.material, entity, stack, slot, original)
+                return FMLEnvironment.dist === Dist.CLIENT ? MultilingualExamplesClient.instance().armorModelManager().getArmorModel(CustomArmorModelItem.this.material, entity, stack, slot, original)
                         : super.getGenericArmorModel(entity, stack, slot, original)
             }
         })
@@ -55,7 +58,7 @@ class CustomArmorModelItem extends ArmorItem {
     @Override
     @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         // Check sides in case of illegal calling
-        return FMLEnvironment.dist == Dist.CLIENT ? MultilingualExamplesClient.instance().armorModelManager().getTexture(this.material, stack, entity, slot, type)
+        return FMLEnvironment.dist === Dist.CLIENT ? MultilingualExamplesClient.instance().armorModelManager().getTexture(this.material, stack, entity, slot, type)
                 : super.getArmorTexture(stack, entity, slot, type)
     }
 }

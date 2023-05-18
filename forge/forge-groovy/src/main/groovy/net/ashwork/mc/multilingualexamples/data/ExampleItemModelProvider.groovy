@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
 import net.minecraft.data.DataGenerator
@@ -18,6 +19,7 @@ import net.minecraftforge.registries.RegistryObject
 /**
  * A data provider which generates item models for the mod.
  */
+@CompileStatic
 final class ExampleItemModelProvider extends ItemModelProvider {
 
     /**
@@ -64,6 +66,6 @@ final class ExampleItemModelProvider extends ItemModelProvider {
      */
     private void simpleItem(final RegistryObject<? extends Item> item, final ResourceLocation layer0) {
         this.withExistingParent(item.getId().toString(), 'item/generated')
-                .texture('layer0', layer0.prefix(this.folder))
+                .texture('layer0', MultilingualExamples.prefixPath(layer0, this.folder))
     }
 }

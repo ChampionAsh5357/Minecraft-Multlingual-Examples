@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.item
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
@@ -17,6 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries
 /**
  * An enum containing the armor materials for this mod.
  */
+@CompileStatic
 enum ExampleArmorMaterials implements ArmorMaterial {
     COLLAGE('collage', 1, [1, 1, 2, 1], 0, new ResourceLocation('item.armor.equip_leather'), 0.0F, 0.0F, { -> Ingredient.EMPTY })
 
