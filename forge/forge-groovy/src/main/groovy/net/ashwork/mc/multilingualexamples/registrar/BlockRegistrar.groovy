@@ -23,7 +23,7 @@ import net.minecraftforge.registries.RegistryObject
  * A utility class used to hold and register all blocks for this mod.
  */
 @CompileStatic
-class BlockRegistrar {
+final class BlockRegistrar {
 
     /**
      * A dummy method used to load the static objects in this class.

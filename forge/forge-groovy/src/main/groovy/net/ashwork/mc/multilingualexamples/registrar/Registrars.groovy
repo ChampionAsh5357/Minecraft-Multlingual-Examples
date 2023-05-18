@@ -21,7 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries
  * constructor.
  */
 @CompileStatic
-class Registrars {
+final class Registrars {
 
     static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MultilingualExamples.ID)
     static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MultilingualExamples.ID)
