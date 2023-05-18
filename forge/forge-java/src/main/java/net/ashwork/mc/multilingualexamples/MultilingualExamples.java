@@ -10,10 +10,18 @@ import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient;
 import net.ashwork.mc.multilingualexamples.data.ExampleBlockStateModelProvider;
 import net.ashwork.mc.multilingualexamples.data.ExampleItemModelProvider;
 import net.ashwork.mc.multilingualexamples.data.ExampleLocalizationProvider;
-import net.ashwork.mc.multilingualexamples.data.ExampleLootTableProvider;
 import net.ashwork.mc.multilingualexamples.data.ExampleRecipeProvider;
+import net.ashwork.mc.multilingualexamples.data.loot.ExampleBlockLootSubProvider;
 import net.ashwork.mc.multilingualexamples.registrar.Registrars;
+import net.minecraft.DetectedVersion;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.metadata.PackMetadataGenerator;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -22,6 +30,12 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * The main mod class. This is where the initialization of the mod happens.
@@ -68,17 +82,27 @@ public final class MultilingualExamples {
         final DataGenerator gen = event.getGenerator();
         final ExistingFileHelper efh = event.getExistingFileHelper();
 
+        gen.addProvider(true, (DataProvider.Factory<PackMetadataGenerator>) output -> new PackMetadataGenerator(output)
+                .add(PackMetadataSection.TYPE, new PackMetadataSection(
+                        Component.translatable("pack." + MultilingualExamples.ID + ".description"),
+                        PackType.CLIENT_RESOURCES.getVersion(DetectedVersion.BUILT_IN),
+                        Arrays.stream(PackType.values()).collect(Collectors.toMap(Function.identity(), type -> type.getVersion(DetectedVersion.BUILT_IN)))
+                ))
+        );
+
         // Add client providers
         if (event.includeClient()) {
-            gen.addProvider(true, new ExampleBlockStateModelProvider(gen, efh));
-            gen.addProvider(true, new ExampleItemModelProvider(gen, efh));
-            gen.addProvider(true, new ExampleLocalizationProvider(gen));
+            gen.addProvider(true, (DataProvider.Factory<ExampleBlockStateModelProvider>) output -> new ExampleBlockStateModelProvider(output, efh));
+            gen.addProvider(true, (DataProvider.Factory<ExampleItemModelProvider>) output -> new ExampleItemModelProvider(output, efh));
+            gen.addProvider(true, (DataProvider.Factory<ExampleLocalizationProvider>) ExampleLocalizationProvider::new);
         }
 
         // Add server providers
         if (event.includeServer()) {
-            gen.addProvider(true, new ExampleLootTableProvider(gen));
-            gen.addProvider(true, new ExampleRecipeProvider(gen));
+            gen.addProvider(true, (DataProvider.Factory<LootTableProvider>) output -> new LootTableProvider(output, Collections.emptySet(), List.of(
+                    new LootTableProvider.SubProviderEntry(ExampleBlockLootSubProvider::new, LootContextParamSets.BLOCK)
+            )));
+            gen.addProvider(true, (DataProvider.Factory<ExampleRecipeProvider>) ExampleRecipeProvider::new);
         }
     }
 }

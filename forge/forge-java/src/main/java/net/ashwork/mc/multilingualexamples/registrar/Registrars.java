@@ -8,8 +8,10 @@ package net.ashwork.mc.multilingualexamples.registrar;
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -49,5 +51,31 @@ public class Registrars {
         BlockRegistrar.register();
         ItemRegistrar.register();
         ParticleTypeRegistrar.register();
+
+        // Add events
+        modBus.addListener(Registrars::buildTabContents);
+    }
+
+    /**
+     * An event listener that, when fired, adds contents to a {@link net.minecraft.world.item.CreativeModeTab}.
+     *
+     * @param event the {@link net.minecraftforge.event.CreativeModeTabEvent.BuildContents} event
+     */
+    private static void buildTabContents(CreativeModeTabEvent.BuildContents event) {
+        if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ItemRegistrar.ASH);
+        } else if (event.getTab() == CreativeModeTabs.COMBAT) {
+            event.accept(ItemRegistrar.COLLAGE_HELMET);
+            event.accept(ItemRegistrar.COLLAGE_CHESTPLATE);
+            event.accept(ItemRegistrar.COLLAGE_LEGGINGS);
+            event.accept(ItemRegistrar.COLLAGE_BOOTS);
+        } else if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            event.accept(BlockRegistrar.SQUISHED_WAFFLE);
+            event.accept(BlockRegistrar.WAFFLE);
+            event.accept(ItemRegistrar.WAFFLE_MIX);
+            event.accept(ItemRegistrar.WAFFLE_CONE);
+            event.accept(ItemRegistrar.SNOW_CONE);
+            event.accept(ItemRegistrar.ICE_CREAM_SANDWICH);
+        }
     }
 }

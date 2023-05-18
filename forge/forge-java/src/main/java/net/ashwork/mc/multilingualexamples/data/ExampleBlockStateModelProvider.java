@@ -8,7 +8,7 @@ package net.ashwork.mc.multilingualexamples.data;
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -23,24 +23,24 @@ import java.util.function.BiFunction;
  * A data provider which generates block state, block, and item models for blocks
  * in this mod.
  */
-public final class ExampleBlockStateModelProvider extends BlockStateProvider implements ModelProviderExtension {
+public final class ExampleBlockStateModelProvider extends BlockStateProvider {
 
     /**
      * Default constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      * @param efh a resource holder for linking existing files
      */
-    public ExampleBlockStateModelProvider(final DataGenerator gen, final ExistingFileHelper efh) {
-        super(gen, MultilingualExamples.ID, efh);
+    public ExampleBlockStateModelProvider(final PackOutput output, final ExistingFileHelper efh) {
+        super(output, MultilingualExamples.ID, efh);
     }
 
     @Override
     protected void registerStatesAndModels() {
         this.cubeAllItem(BlockRegistrar.WAFFLE);
         this.blockWithItem(BlockRegistrar.SQUISHED_WAFFLE, (name, block) -> {
-            var waffle = this.prefix(BlockRegistrar.WAFFLE.getId(), ModelProvider.BLOCK_FOLDER);
-            var squishedWaffle = this.prefix(name, ModelProvider.BLOCK_FOLDER);
+            var waffle = BlockRegistrar.WAFFLE.getId().withPrefix(ModelProvider.BLOCK_FOLDER + "/");
+            var squishedWaffle = name.withPrefix(ModelProvider.BLOCK_FOLDER + "/");
             var regularSlab = this.models().slab(name.toString(), squishedWaffle, waffle, waffle);
             this.slabBlock(block, regularSlab, this.models().slabTop(name + "_top", squishedWaffle, waffle, waffle), this.models().cubeBottomTop(name + "_double", squishedWaffle, waffle, waffle));
             return regularSlab;
