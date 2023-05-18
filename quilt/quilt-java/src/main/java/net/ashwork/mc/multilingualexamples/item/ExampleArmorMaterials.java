@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -119,16 +120,19 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
         return this.enchantmentValue;
     }
 
+    @NotNull
     @Override
     public SoundEvent getEquipSound() {
         return this.sound.get();
     }
 
+    @NotNull
     @Override
     public Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
 
+    @NotNull
     @Override
     public String getName() {
         return this.name;
