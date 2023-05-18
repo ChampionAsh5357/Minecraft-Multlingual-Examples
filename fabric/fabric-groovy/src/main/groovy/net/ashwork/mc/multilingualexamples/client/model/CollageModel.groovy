@@ -7,6 +7,7 @@
 package net.ashwork.mc.multilingualexamples.client.model
 
 import com.google.common.collect.ImmutableList
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
 import net.minecraft.client.model.AgeableListModel
 import net.minecraft.client.model.HumanoidModel
@@ -32,6 +33,7 @@ import java.util.function.Function
  * It has basic logic for scaling to baby forms of entities, so it is an ease
  * of convenience.
  */
+@CompileStatic
 class CollageModel extends AgeableListModel<LivingEntity> {
 
     protected final ModelPart head

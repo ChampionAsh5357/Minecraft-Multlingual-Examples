@@ -6,7 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.registrar
 
-
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
 import net.minecraft.core.Registry
@@ -19,6 +19,7 @@ import org.jetbrains.annotations.ApiStatus
 /**
  * A utility class used to hold and register all items for this mod.
  */
+@CompileStatic
 final class ItemRegistrar {
 
     /**

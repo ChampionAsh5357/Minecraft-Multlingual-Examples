@@ -13,7 +13,7 @@ import net.minecraft.world.food.FoodProperties
  * A utility class used to hold any non-registry objects for this mod.
  */
 @CompileStatic
-class GeneralRegistrar {
+final class GeneralRegistrar {
 
     /**
      * A dummy method used to load the static objects in this class.
