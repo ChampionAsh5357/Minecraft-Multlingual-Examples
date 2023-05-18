@@ -8,8 +8,7 @@ package net.ashwork.mc.multilingualexamples.data
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
-import net.ashwork.mc.multilingualexamples.util.MultilingualExtensions.prefix
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraftforge.client.model.generators.{BlockStateProvider, ModelFile, ModelProvider}
@@ -20,16 +19,16 @@ import net.minecraftforge.registries.RegistryObject
  * A data provider which generates block state, block, and item models for blocks
  * in this mod.
  *
- * @param gen the generator being written to
+ * @param output the output of the data generator
  * @param efh a resource holder for linking existing files
  */
-class ExampleBlockStateModelProvider(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStateProvider(gen, MultilingualExamples.ID, efh) {
+class ExampleBlockStateModelProvider(output: PackOutput, efh: ExistingFileHelper) extends BlockStateProvider(output, MultilingualExamples.ID, efh) {
 
     override def registerStatesAndModels(): Unit = {
         this.cubeAllItem(BlockRegistrar.WAFFLE)
         this.blockWithItem(BlockRegistrar.SQUISHED_WAFFLE, (name, block) => {
-            val waffle = BlockRegistrar.WAFFLE.getId prefix ModelProvider.BLOCK_FOLDER
-            val squishedWaffle = name prefix ModelProvider.BLOCK_FOLDER
+            val waffle = BlockRegistrar.WAFFLE.getId.withPrefix(s"${ModelProvider.BLOCK_FOLDER}/")
+            val squishedWaffle = name.withPrefix(s"${ModelProvider.BLOCK_FOLDER}/")
             val regularSlab = models().slab(name.toString, squishedWaffle, waffle, waffle)
             slabBlock(block, regularSlab, models().slabTop(s"${name}_top", squishedWaffle, waffle, waffle), models().cubeBottomTop(s"${name}_double", squishedWaffle, waffle, waffle))
             regularSlab

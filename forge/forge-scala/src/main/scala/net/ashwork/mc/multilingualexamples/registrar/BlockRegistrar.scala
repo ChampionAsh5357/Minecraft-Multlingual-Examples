@@ -9,7 +9,7 @@ package net.ashwork.mc.multilingualexamples.registrar
 import net.ashwork.mc.multilingualexamples.block.FlattenableBlock
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.{BlockItem, CreativeModeTab, Item}
+import net.minecraft.world.item.{BlockItem, Item}
 import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.state.{BlockBehaviour, BlockState}
@@ -35,7 +35,7 @@ object BlockRegistrar {
             .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
             .isValidSpawn((_, _, _, _) => false)
             .isSuffocating((_, _, _) => false)
-        ), () => Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
+        ), () => Item.Properties().food(GeneralRegistrar.WAFFLE)
     )
     final val WAFFLE: RegistryObject[FlattenableBlock] = registerBlockWithSimpleItem("waffle", () =>
         FlattenableBlock(SQUISHED_WAFFLE.asScala, BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
@@ -43,7 +43,7 @@ object BlockRegistrar {
                 .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                 .isValidSpawn((_, _, _, _) => false)
                 .isSuffocating((_, _, _) => false)
-        ), () => Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
+        ), () => Item.Properties().food(GeneralRegistrar.WAFFLE)
     )
     
     /**
