@@ -6,7 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples
 
-import net.ashwork.mc.multilingualexamples.registrar.{ItemRegistrar, ParticleTypeRegistrar}
+import net.ashwork.mc.multilingualexamples.registrar.{BlockRegistrar, GeneralRegistrar, ItemRegistrar, ParticleTypeRegistrar}
 import org.quiltmc.loader.api.ModContainer
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer
 
@@ -28,9 +28,10 @@ class MultilingualExamples extends ModInitializer {
         MultilingualExamples._id = mod.metadata().id()
 
         // Add registries
-        MultilingualExamples.LOADERS.addOne(() => ItemRegistrar.ASH)
-        MultilingualExamples.LOADERS.addOne(() => ParticleTypeRegistrar.DRIPPING_ASH)
-        MultilingualExamples.LOADERS.foreach(it => it.apply())
+        GeneralRegistrar.register()
+        BlockRegistrar.register()
+        ItemRegistrar.register()
+        ParticleTypeRegistrar.register()
     }
 }
 object MultilingualExamples {
@@ -45,9 +46,4 @@ object MultilingualExamples {
      * @return the modid of our mod
      */
     def id(): String = _id
-
-    /**
-     * A list of class loaders used to initialize the registry objects.
-     */
-    private final val LOADERS: ListBuffer[() => Unit] = ListBuffer.empty
 }
