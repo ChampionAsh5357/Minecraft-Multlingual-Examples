@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.Block
 /**
  * A data provider which generates models for this mod.
  */
+@CompileStatic
 final class ExampleModelProvider extends FabricModelProvider {
 
     /**

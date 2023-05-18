@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar
@@ -18,6 +19,7 @@ import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer
  * for the client. The fully qualified name of this class must match that within
  * {@code entrypoints.client_init}. Any client entry point must implement {@link ClientModInitializer}.
  */
+@CompileStatic
 class MultilingualExamplesClient implements ClientModInitializer {
 
     private static MultilingualExamplesClient _instance
