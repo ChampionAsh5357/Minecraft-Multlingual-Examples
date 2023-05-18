@@ -82,7 +82,8 @@ public final class MultilingualExamples {
         final DataGenerator gen = event.getGenerator();
         final ExistingFileHelper efh = event.getExistingFileHelper();
 
-        gen.addProvider(true, (DataProvider.Factory<PackMetadataGenerator>) output -> new PackMetadataGenerator(output)
+        // Add pack.mcmeta provider
+        addProvider(gen, output -> new PackMetadataGenerator(output)
                 .add(PackMetadataSection.TYPE, new PackMetadataSection(
                         Component.translatable("pack." + MultilingualExamples.ID + ".description"),
                         PackType.CLIENT_RESOURCES.getVersion(DetectedVersion.BUILT_IN),
@@ -92,17 +93,29 @@ public final class MultilingualExamples {
 
         // Add client providers
         if (event.includeClient()) {
-            gen.addProvider(true, (DataProvider.Factory<ExampleBlockStateModelProvider>) output -> new ExampleBlockStateModelProvider(output, efh));
-            gen.addProvider(true, (DataProvider.Factory<ExampleItemModelProvider>) output -> new ExampleItemModelProvider(output, efh));
-            gen.addProvider(true, (DataProvider.Factory<ExampleLocalizationProvider>) ExampleLocalizationProvider::new);
+            addProvider(gen, output -> new ExampleBlockStateModelProvider(output, efh));
+            addProvider(gen, output -> new ExampleItemModelProvider(output, efh));
+            addProvider(gen, ExampleLocalizationProvider::new);
         }
 
         // Add server providers
         if (event.includeServer()) {
-            gen.addProvider(true, (DataProvider.Factory<LootTableProvider>) output -> new LootTableProvider(output, Collections.emptySet(), List.of(
+            addProvider(gen, output -> new LootTableProvider(output, Collections.emptySet(), List.of(
                     new LootTableProvider.SubProviderEntry(ExampleBlockLootSubProvider::new, LootContextParamSets.BLOCK)
             )));
-            gen.addProvider(true, (DataProvider.Factory<ExampleRecipeProvider>) ExampleRecipeProvider::new);
+            addProvider(gen, ExampleRecipeProvider::new);
         }
+    }
+
+    /**
+     * A helper method for registering a factory without encountering an ambiguous lambda
+     * compile error.
+     *
+     * @param generator the generator to add the provider to
+     * @param factory the factory to construct the provider
+     * @param <T> the type of the provider
+     */
+    private static <T extends DataProvider> void addProvider(DataGenerator generator, DataProvider.Factory<T> factory) {
+        generator.addProvider(true, factory);
     }
 }
