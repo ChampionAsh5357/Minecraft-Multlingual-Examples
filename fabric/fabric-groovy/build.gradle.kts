@@ -22,8 +22,7 @@ version = "${extra["base.version"]}.${extra["${loaderId}.${languageId}.version"]
 sourceSets["main"].resources {
     srcDirs(
         commonResources,
-        generatedResources,
-        rootProject.file("shared-resources/forge")
+        generatedResources
     )
     exclude(".cache/")
 }
