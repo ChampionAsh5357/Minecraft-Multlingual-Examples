@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
 import net.ashwork.mc.multilingualexamples.data.*
 import net.ashwork.mc.multilingualexamples.registrar.Registrars
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment
  * The main mod class. This is where the initialization of the mod happens.
  * The mod id supplied in the annotation must match that within the {@code mods.toml}.
  */
+@CompileStatic
 @Mod(MultilingualExamples.ID)
 final class MultilingualExamples {
 
@@ -36,12 +38,6 @@ final class MultilingualExamples {
      * The mod constructor. All event bus attachments should be present here.
      */
     MultilingualExamples() {
-        // Extension methods during runtime
-        ResourceLocation.metaClass.prefix = { String prefix ->
-            ResourceLocation rl = (ResourceLocation) delegate
-            rl.getPath().contains('/') ? rl : new ResourceLocation(rl.getNamespace(), "${prefix}/${rl.getPath()}")
-        }
-
         // Get the event buses
         final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus(),
                 forgeBus = MinecraftForge.EVENT_BUS
@@ -50,9 +46,20 @@ final class MultilingualExamples {
         Registrars.init(modBus)
 
         // Add client
-        if (FMLEnvironment.dist == Dist.CLIENT) new MultilingualExamplesClient(modBus, forgeBus)
+        if (FMLEnvironment.dist === Dist.CLIENT) new MultilingualExamplesClient(modBus, forgeBus)
 
         modBus.addListener(EventPriority.NORMAL, false, GatherDataEvent, this::attachDataProviders)
+    }
+
+    /**
+     * Prefixes a path if it has not already been prefixed.
+     *
+     * @param loc the name being prefixed
+     * @param prefix the prefix to attach to the path
+     * @return a prefixed {@link ResourceLocation}
+     */
+    static ResourceLocation prefixPath(ResourceLocation loc, String prefix) {
+        loc.getPath().contains('/') ? loc : new ResourceLocation(loc.getNamespace(), "$prefix/${loc.getPath()}")
     }
 
     /**

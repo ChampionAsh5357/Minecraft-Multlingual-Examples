@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.registrar
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
 import net.minecraft.core.Registry
@@ -17,6 +18,7 @@ import net.minecraft.resources.ResourceLocation
 /**
  * A utility class used to hold and register all particle types for this mod.
  */
+@CompileStatic
 final class ParticleTypeRegistrar {
 
     /**

@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -27,6 +28,7 @@ import java.util.function.Consumer
 /**
  * A data provider which generates recipes for this mod.
  */
+@CompileStatic
 class ExampleRecipeProvider extends FabricRecipeProvider {
 
     /**

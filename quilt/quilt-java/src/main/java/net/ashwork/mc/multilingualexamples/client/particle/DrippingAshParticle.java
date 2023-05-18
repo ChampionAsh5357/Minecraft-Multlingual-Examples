@@ -15,14 +15,12 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * The base particle class. All rendering related to the particle occurs here.
  */
-@ParametersAreNonnullByDefault
 public class DrippingAshParticle extends TextureSheetParticle {
 
     private final SpriteSet sprites;
@@ -60,6 +58,7 @@ public class DrippingAshParticle extends TextureSheetParticle {
         this.setSpriteFromAge(this.sprites);
     }
 
+    @NotNull
     @Override
     public ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;

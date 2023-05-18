@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client
 
+
 import net.ashwork.mc.multilingualexamples.client.model.ArmorModelManager
 import net.ashwork.mc.multilingualexamples.client.particle.DrippingAshParticle
 import net.ashwork.mc.multilingualexamples.registrar.ParticleTypeRegistrar

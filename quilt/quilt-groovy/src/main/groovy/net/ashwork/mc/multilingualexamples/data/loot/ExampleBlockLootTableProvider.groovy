@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data.loot
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
@@ -15,6 +16,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 /**
  * A loot table provider for {@link LootContextParamSets#BLOCK}.
  */
+@CompileStatic
 class ExampleBlockLootTableProvider extends FabricBlockLootTableProvider {
 
     /**

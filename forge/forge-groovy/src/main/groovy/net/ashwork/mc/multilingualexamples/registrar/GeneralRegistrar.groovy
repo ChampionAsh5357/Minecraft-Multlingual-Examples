@@ -6,12 +6,14 @@
 
 package net.ashwork.mc.multilingualexamples.registrar
 
+import groovy.transform.CompileStatic
 import net.minecraft.world.food.FoodProperties
 
 /**
  * A utility class used to hold any non-registry objects for this mod.
  */
-class GeneralRegistrar {
+@CompileStatic
+final class GeneralRegistrar {
 
     /**
      * A dummy method used to load the static objects in this class.

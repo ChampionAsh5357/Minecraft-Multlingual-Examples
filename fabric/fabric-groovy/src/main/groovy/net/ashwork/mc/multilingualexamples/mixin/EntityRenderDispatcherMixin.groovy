@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.mixin
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher
 import net.minecraft.client.renderer.entity.EntityRendererProvider
@@ -19,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture
 /**
  * A mixin used to inject logic into {@link EntityRenderDispatcher}.
  */
+@CompileStatic
 @Mixin(EntityRenderDispatcher.class)
 class EntityRenderDispatcherMixin {
 

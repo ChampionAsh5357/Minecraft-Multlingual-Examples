@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.registrar
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.block.FlattenableBlock
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
@@ -21,7 +22,8 @@ import net.minecraftforge.registries.RegistryObject
 /**
  * A utility class used to hold and register all blocks for this mod.
  */
-class BlockRegistrar {
+@CompileStatic
+final class BlockRegistrar {
 
     /**
      * A dummy method used to load the static objects in this class.

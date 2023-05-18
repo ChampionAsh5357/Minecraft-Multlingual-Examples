@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -14,6 +15,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 /**
  * A data provider which generates an {@code en_us} localization for the mod.
  */
+@CompileStatic
 final class ExampleLocalizationProvider extends FabricLanguageProvider {
 
     /**

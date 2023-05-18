@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.data
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.data.loot.ExampleBlockLootTableProvider
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -15,6 +16,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
  * must match that within {@code entrypoints.fabric-datagen}. Any data entry point
  * must implement {@link net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint}.
  */
+@CompileStatic
 final class MultilingualExamplesData implements DataGeneratorEntrypoint {
 
     @Override

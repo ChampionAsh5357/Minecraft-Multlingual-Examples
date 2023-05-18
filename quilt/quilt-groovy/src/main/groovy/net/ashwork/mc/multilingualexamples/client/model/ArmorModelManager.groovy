@@ -17,6 +17,7 @@ import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.model.Model
 import net.minecraft.client.model.geom.EntityModelSet
 import net.minecraft.client.model.geom.ModelLayerLocation
+import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.player.AbstractClientPlayer
@@ -30,7 +31,6 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.ItemStack
-
 /**
  * A manager used for handling armor models on any given entity.
  */
@@ -212,13 +212,15 @@ class ArmorModelManager {
         Closure<?> basicCollageLayerDef = { ModelLayerLocation mll ->
             EntityModelLayerRegistry.registerModelLayer(mll) { LayerDefinition.create(CollageModel.createMesh(CubeDeformation.NONE, 0F), 64, 32) }
         }
-        this.registerArmorModel(ExampleArmorMaterials.COLLAGE, basicCollageLayerDef, CollageModel::new, CollageModel::copyAndSet,
+        Closure<CollageModel> collageFactory = { ModelPart part -> new CollageModel(part) }
+        Closure<?> collageCopyAndSet = { CollageModel model, HumanoidModel<? extends LivingEntity> original, EquipmentSlot slot -> model.copyAndSet(original, slot) }
+        this.registerArmorModel(ExampleArmorMaterials.COLLAGE, basicCollageLayerDef, collageFactory, collageCopyAndSet,
                 EntityType.DROWNED, EntityType.GIANT, EntityType.HUSK, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.SKELETON,
                 EntityType.STRAY, EntityType.WITHER_SKELETON, EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN)
         this.registerArmorModel(ExampleArmorMaterials.COLLAGE,
                 { ModelLayerLocation mll -> EntityModelLayerRegistry.registerModelLayer(mll) { LayerDefinition.create(CollageModel.createMesh(CubeDeformation.NONE, 1F, 0F, -1F, -1F), 64, 32) } },
-                CollageModel::new, CollageModel::copyAndSet, EntityType.ARMOR_STAND)
-        this.registerPlayerArmorModel(ExampleArmorMaterials.COLLAGE, basicCollageLayerDef, CollageModel::new, CollageModel::copyAndSet,
+                collageFactory, collageCopyAndSet, EntityType.ARMOR_STAND)
+        this.registerPlayerArmorModel(ExampleArmorMaterials.COLLAGE, basicCollageLayerDef, collageFactory, collageCopyAndSet,
                 'default', 'slim')
     }
 

@@ -1,5 +1,6 @@
 package net.ashwork.mc.multilingualexamples.data.attachment
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.minecraft.data.DataGenerator
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries
@@ -7,6 +8,7 @@ import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries
 /**
  * A data provider which generates registry entry attachments for this mod.
  */
+@CompileStatic
 class ExampleRegistryEntryAttachmentProvider extends RegistryEntryAttachmentProvider {
 
     /**

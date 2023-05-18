@@ -3,37 +3,38 @@ minecraft = "1.19.2"
 
 # Latest Forge Versions
 # https://files.minecraftforge.net/net/minecraftforge/forge/
-forge = "1.19.2-43.1.33"
+forge = "1.19.2-43.2.11"
 forge_gradle = "5.1.+"
 
 # Latest Fabric Versions
 # https://fabricmc.net/develop/
-fabric_loom = "1.0-SNAPSHOT"
-fabric_loader = "0.14.9"
-fabric_api = "0.62.0+1.19.2"
+fabric_loom = "1.1-SNAPSHOT"
+fabric_loader = "0.14.19"
+fabric_api = "0.76.0+1.19.2"
 
 # Latest Quilt Versions
 # https://lambdaurora.dev/tools/import_quilt.html
-quilt_loom = "0.12.+"
-quilt_loader = "0.17.5-beta.3"
-quilted_fabric_api = "4.0.0-beta.13+0.62.0-1.19.2"
+quilt_loom = "1.+"
+quilt_loader = "0.19.0-beta.13"
+quilted_fabric_api = "4.0.0-beta.30+0.76.0-1.19.2"
 
 # Latest Kotlin Versions
 # https://kotlinlang.org/docs/home.html
-kotlin = "1.7.20"
+kotlin = "1.8.21"
 
 # https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/
-fabric_kotlin = "1.8.4+kotlin.1.7.20"
+fabric_kotlin = "1.9.4+kotlin.1.8.21"
 
 # Latest Scala Versions
 # https://docs.scala-lang.org/api/all.html
-scala = "3.2.0"
+scala = "3.2.2"
 
 # Latest Groovy Versions
 # https://groovy.apache.org/download.html
-groovy = "4.0.5"
+groovy = "4.0.12"
 
 # Licenser
+# https://plugins.gradle.org/plugin/org.cadixdev.licenser
 licenser = "0.6.1"
 
 [libraries]

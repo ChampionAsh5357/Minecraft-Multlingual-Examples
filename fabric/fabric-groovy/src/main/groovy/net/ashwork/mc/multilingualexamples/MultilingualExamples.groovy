@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples
 
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.ashwork.mc.multilingualexamples.registrar.GeneralRegistrar
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
@@ -16,6 +17,7 @@ import net.fabricmc.api.ModInitializer
  * The fully qualified name of this class must match that within {@code entrypoints.main}.
  * Any entry point must implement {@link ModInitializer}.
  */
+@CompileStatic
 final class MultilingualExamples implements ModInitializer {
 
     /**

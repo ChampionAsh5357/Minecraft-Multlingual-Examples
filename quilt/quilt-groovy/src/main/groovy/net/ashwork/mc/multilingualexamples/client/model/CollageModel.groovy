@@ -7,6 +7,7 @@
 package net.ashwork.mc.multilingualexamples.client.model
 
 import com.google.common.collect.ImmutableList
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
 import net.minecraft.client.model.AgeableListModel
 import net.minecraft.client.model.HumanoidModel
@@ -32,6 +33,7 @@ import java.util.function.Function
  * It has basic logic for scaling to baby forms of entities, so it is an ease
  * of convenience.
  */
+@CompileStatic
 class CollageModel extends AgeableListModel<LivingEntity> {
 
     protected final ModelPart head
@@ -191,25 +193,25 @@ class CollageModel extends AgeableListModel<LivingEntity> {
         this.leftLeg.copyFrom(original.leftLeg)
 
         // Set the visibilities of the necessary parts
-        this.head.visible = slot == EquipmentSlot.HEAD
+        this.head.visible = slot === EquipmentSlot.HEAD
 
         /*
         Parents must be visible for their children to be visible. As such,
         never have a parent for a child that will not be visible for the given
         equipment slot.
          */
-        this.body.visible = slot == EquipmentSlot.CHEST || slot == EquipmentSlot.LEGS
-        this.rocket.visible = slot == EquipmentSlot.CHEST
-        this.bodyBelt.visible = slot == EquipmentSlot.LEGS
+        this.body.visible = slot === EquipmentSlot.CHEST || slot === EquipmentSlot.LEGS
+        this.rocket.visible = slot === EquipmentSlot.CHEST
+        this.bodyBelt.visible = slot === EquipmentSlot.LEGS
 
-        this.rightLeg.visible = slot == EquipmentSlot.LEGS || slot == EquipmentSlot.FEET
-        this.leftLeg.visible = slot == EquipmentSlot.LEGS || slot == EquipmentSlot.FEET
+        this.rightLeg.visible = slot === EquipmentSlot.LEGS || slot === EquipmentSlot.FEET
+        this.leftLeg.visible = slot === EquipmentSlot.LEGS || slot === EquipmentSlot.FEET
 
-        this.leftLegBelt.visible = slot == EquipmentSlot.LEGS
-        this.rightLegBelt.visible = slot == EquipmentSlot.LEGS
+        this.leftLegBelt.visible = slot === EquipmentSlot.LEGS
+        this.rightLegBelt.visible = slot === EquipmentSlot.LEGS
 
-        this.leftAnkle.visible = slot == EquipmentSlot.FEET
-        this.rightAnkle.visible = slot == EquipmentSlot.FEET
+        this.leftAnkle.visible = slot === EquipmentSlot.FEET
+        this.rightAnkle.visible = slot === EquipmentSlot.FEET
     }
 
     @Override

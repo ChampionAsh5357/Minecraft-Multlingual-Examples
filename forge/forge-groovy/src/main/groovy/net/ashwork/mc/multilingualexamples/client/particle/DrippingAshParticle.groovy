@@ -6,6 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.client.particle
 
+import groovy.transform.CompileStatic
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.Particle
 import net.minecraft.client.particle.ParticleProvider
@@ -18,6 +19,7 @@ import org.jetbrains.annotations.Nullable
 /**
  * The base particle class. All rendering related to the particle occurs here.
  */
+@CompileStatic
 class DrippingAshParticle extends TextureSheetParticle {
 
     private final SpriteSet sprites

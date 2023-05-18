@@ -6,7 +6,7 @@
 
 package net.ashwork.mc.multilingualexamples.registrar
 
-
+import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.item.CustomArmorModelItem
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
 import net.minecraft.world.entity.EquipmentSlot
@@ -16,6 +16,7 @@ import net.minecraftforge.registries.RegistryObject
 /**
  * A utility class used to hold and register all items for this mod.
  */
+@CompileStatic
 final class ItemRegistrar {
 
     /**
@@ -26,16 +27,16 @@ final class ItemRegistrar {
     static final RegistryObject<Item> ASH = Registrars.ITEMS.register('ash') {
         new Item(new Item.Properties().tab(CreativeModeTab.TAB_BREWING))
     }
-    static final RegistryObject<Item> COLLAGE_HELMET = Registrars.ITEMS.register('collage_helmet') {
+    static final RegistryObject<CustomArmorModelItem> COLLAGE_HELMET = Registrars.ITEMS.register('collage_helmet') {
         new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))
     }
-    static final RegistryObject<Item> COLLAGE_CHESTPLATE = Registrars.ITEMS.register('collage_chestplate') {
+    static final RegistryObject<CustomArmorModelItem> COLLAGE_CHESTPLATE = Registrars.ITEMS.register('collage_chestplate') {
         new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))
     }
-    static final RegistryObject<Item> COLLAGE_LEGGINGS = Registrars.ITEMS.register('collage_leggings') {
+    static final RegistryObject<CustomArmorModelItem> COLLAGE_LEGGINGS = Registrars.ITEMS.register('collage_leggings') {
         new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))
     }
-    static final RegistryObject<Item> COLLAGE_BOOTS = Registrars.ITEMS.register('collage_boots') {
+    static final RegistryObject<CustomArmorModelItem> COLLAGE_BOOTS = Registrars.ITEMS.register('collage_boots') {
         new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT))
     }
     static final RegistryObject<Item> WAFFLE_MIX = Registrars.ITEMS.register("waffle_mix") {

@@ -6,12 +6,13 @@
 
 package net.ashwork.mc.multilingualexamples.registrar
 
-
+import groovy.transform.CompileStatic
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraftforge.registries.RegistryObject
 /**
  * A utility class used to hold and register all particle types for this mod.
  */
+@CompileStatic
 final class ParticleTypeRegistrar {
 
     /**

@@ -25,7 +25,7 @@ All versions supported can be found as a branch on the repository. They will alw
 
 ### Supported Languages and Loaders
 
-Each language/loader combination will be considered a sub-project within the gradle environment. Each subproject is labeled as `<loader>/<loader>-<language>`. Language version is specified for non-Java projects as many versions of other JVM languages can compile to one Java language.
+Each language/loader combination will be considered a subproject within the gradle environment. Each subproject is labeled as `<loader>/<loader>-<language>`. Language version is specified for non-Java projects as many versions of other JVM languages can compile to one Java language.
 
 ### License
 

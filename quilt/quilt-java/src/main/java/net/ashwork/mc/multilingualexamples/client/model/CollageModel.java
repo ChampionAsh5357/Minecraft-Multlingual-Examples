@@ -21,8 +21,8 @@ import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Function;
 
 /**
@@ -33,7 +33,6 @@ import java.util.function.Function;
  * It has basic logic for scaling to baby forms of entities, so it is an ease
  * of convenience.
  */
-@ParametersAreNonnullByDefault
 public class CollageModel extends AgeableListModel<LivingEntity> {
 	protected final ModelPart head;
 	protected final ModelPart body;
@@ -216,6 +215,7 @@ public class CollageModel extends AgeableListModel<LivingEntity> {
 	@Override
 	public void setupAnim(LivingEntity entity, float animationPosition, float animationSpeed, float bob, float yHeadRot, float xHeadRot) {}
 
+	@NotNull
 	@Override
 	protected Iterable<ModelPart> headParts() {
 		/*
@@ -225,6 +225,7 @@ public class CollageModel extends AgeableListModel<LivingEntity> {
 		return ImmutableList.of(this.head);
 	}
 
+	@NotNull
 	@Override
 	protected Iterable<ModelPart> bodyParts() {
 		return ImmutableList.of(this.body, this.rightLeg, this.leftLeg);
