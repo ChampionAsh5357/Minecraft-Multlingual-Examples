@@ -44,7 +44,7 @@ authors = "ChampionAsh5357"
 
 # Mandatory: The description text for the mod (multi line!)
 description = '''
-An example mod for Minecraft 1.19.x in the Kotlin programming language via the Forge Mod Loader.
+An example mod for Minecraft 1.19.3 in the Kotlin programming language via the Forge Mod Loader.
 '''
 
 # Optional: A dependency for your mod to rely on, use the '.' to indicate dependency for a specific modid
