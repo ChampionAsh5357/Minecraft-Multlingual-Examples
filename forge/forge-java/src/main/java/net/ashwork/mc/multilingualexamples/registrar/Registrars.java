@@ -57,7 +57,7 @@ public class Registrars {
     }
 
     /**
-     * An event listener that, when fired, adds contents to a {@link net.minecraft.world.item.CreativeModeTab}.
+     * An event listener that, when fired, adds content to a {@link net.minecraft.world.item.CreativeModeTab}.
      *
      * @param event the {@link net.minecraftforge.event.CreativeModeTabEvent.BuildContents} event
      */

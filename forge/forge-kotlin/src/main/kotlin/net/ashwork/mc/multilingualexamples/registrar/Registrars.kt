@@ -53,7 +53,7 @@ internal fun initRegistrars(modBus: IEventBus) {
 }
 
 /**
- * An event listener that, when fired, adds contents to a [net.minecraft.world.item.CreativeModeTab].
+ * An event listener that, when fired, adds content to a [net.minecraft.world.item.CreativeModeTab].
  *
  * @param event the [BuildContents] event
  */
