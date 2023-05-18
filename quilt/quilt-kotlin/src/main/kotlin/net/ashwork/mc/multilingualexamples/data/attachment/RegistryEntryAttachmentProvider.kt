@@ -82,7 +82,7 @@ abstract class RegistryEntryAttachmentProvider(generator: DataGenerator): DataPr
      * @param V the type of the attached value
      * @return a chainable attachment object that can be encoded
      */
-    fun <R, V> attach(attachment: RegistryEntryAttachment<R, V>): AttachmentData<R, V> = AttachmentData(attachment).also {
+    protected fun <R, V> attach(attachment: RegistryEntryAttachment<R, V>): AttachmentData<R, V> = AttachmentData(attachment).also {
         this.attachments.add(it)
     }
 }

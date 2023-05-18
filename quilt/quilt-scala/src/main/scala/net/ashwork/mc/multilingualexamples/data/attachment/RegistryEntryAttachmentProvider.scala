@@ -78,7 +78,7 @@ abstract class RegistryEntryAttachmentProvider(generator: DataGenerator) extends
      * @tparam V         the type of the attached value
      * @return a chainable attachment object that can be encoded
      */
-    def attach[R, V](attachment: RegistryEntryAttachment[R, V]): AttachmentData[R, V] = {
+    protected def attach[R, V](attachment: RegistryEntryAttachment[R, V]): AttachmentData[R, V] = {
         val data = AttachmentData(attachment)
         this.attachments.addOne(data)
         data

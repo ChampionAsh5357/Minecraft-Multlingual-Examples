@@ -39,7 +39,7 @@ import java.util.Objects;
  *
  * <pre>{@code
  *     @Override
- *     public void addAttachments() {
+ *     protected void addAttachments() {
  *         this.attach(BlockContentRegistries.FLATTENABLE_BLOCK)
  *             .addObject(Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE.defaultBlockState())
  *             .addTag(BlockTags.SAND, Blocks.GLASS.defaultBlockState())
@@ -104,7 +104,7 @@ public abstract class RegistryEntryAttachmentProvider implements DataProvider {
      * @param <R> the type of the entries in the registry
      * @param <V> the type of the attached value
      */
-    public <R, V> AttachmentData<R, V> attach(RegistryEntryAttachment<R, V> attachment) {
+    protected <R, V> AttachmentData<R, V> attach(RegistryEntryAttachment<R, V> attachment) {
         var data = new AttachmentData<>(attachment);
         this.attachments.add(data);
         return data;
