@@ -8,14 +8,17 @@ package net.ashwork.mc.multilingualexamples.item;
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumMap;
 import java.util.function.Supplier;
 
 /**
@@ -23,10 +26,15 @@ import java.util.function.Supplier;
  */
 @MethodsReturnNonnullByDefault
 public enum ExampleArmorMaterials implements ArmorMaterial {
-    COLLAGE("collage", 1, new int[]{1, 1, 2, 1}, 0, new ResourceLocation("item.armor.equip_leather"), 0.0F, 0.0F, () -> Ingredient.EMPTY);
+    COLLAGE("collage", 1, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+        map.put(ArmorItem.Type.HELMET, 1);
+        map.put(ArmorItem.Type.CHESTPLATE, 2);
+        map.put(ArmorItem.Type.LEGGINGS, 1);
+        map.put(ArmorItem.Type.BOOTS, 1);
+    }), 0, new ResourceLocation("item.armor.equip_leather"), 0.0F, 0.0F, () -> Ingredient.EMPTY);
     private final String name;
-    private final int[] durabilities;
-    private final int[] slotProtections;
+    private final EnumMap<ArmorItem.Type, Integer> durabilities;
+    private final EnumMap<ArmorItem.Type, Integer> typeDefenses;
     private final int enchantmentValue;
     private final Supplier<? extends SoundEvent> sound;
     private final float toughness;
@@ -35,60 +43,65 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
-     * armor base durabilities of 13, 15, 16, and 11 for the feet, legs, chest,
-     * and head slots respectively. The sound is provided by its registry name.
+     * armor base durabilities of 11, 16, 15, and 13 for the head, chest, legs,
+     * and feet slots respectively. The sound is provided by its registry name.
      *
      * @param name the name of the material, concatenated with the mod id
      * @param durabilityMultiplier the armor material multiplier for the default durabilities
-     * @param slotProtections the additive armor attribute modifiers for the feet, legs, chest, and head slots respectively
+     * @param typeDefenses the additive armor attribute modifiers for the armor types
      * @param enchantmentValue the enchantibility of the armor material
      * @param soundName the name of the armor material equip sound
      * @param toughness the additive armor toughness attribute modifier
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
-        this(name, durabilityMultiplier, slotProtections, enchantmentValue, () -> ForgeRegistries.SOUND_EVENTS.getValue(soundName), toughness, knockbackResistance, repairIngredient);
+    ExampleArmorMaterials(String name, int durabilityMultiplier, EnumMap<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
+        this(name, durabilityMultiplier, typeDefenses, enchantmentValue, () -> ForgeRegistries.SOUND_EVENTS.getValue(soundName), toughness, knockbackResistance, repairIngredient);
     }
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
-     * armor base durabilities of 13, 15, 16, and 11 for the feet, legs, chest,
-     * and head slots respectively.
+     * armor base durabilities of 11, 16, 15, and 13 for the head, chest, legs,
+     * and feet slots respectively.
      *
      * @param name the name of the material, concatenated with the mod id
      * @param durabilityMultiplier the armor material multiplier for the default durabilities
-     * @param slotProtections the additive armor attribute modifiers for the feet, legs, chest, and head slots respectively
+     * @param typeDefenses the additive armor attribute modifiers for the armor types
      * @param enchantmentValue the enchantibility of the armor material
      * @param sound the armor material equip sound
      * @param toughness the additive armor toughness attribute modifier
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, Supplier<? extends SoundEvent> sound, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
-        this(name, new int[]{13 * durabilityMultiplier, 15 * durabilityMultiplier, 16 * durabilityMultiplier, 11 * durabilityMultiplier}, slotProtections, enchantmentValue, sound, toughness, knockbackResistance, repairIngredient);
+    ExampleArmorMaterials(String name, int durabilityMultiplier, EnumMap<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, Supplier<? extends SoundEvent> sound, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
+        this(name, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+            map.put(ArmorItem.Type.HELMET, 11 * durabilityMultiplier);
+            map.put(ArmorItem.Type.CHESTPLATE, 16 * durabilityMultiplier);
+            map.put(ArmorItem.Type.LEGGINGS, 15 * durabilityMultiplier);
+            map.put(ArmorItem.Type.BOOTS, 13 * durabilityMultiplier);
+        }), typeDefenses, enchantmentValue, sound, toughness, knockbackResistance, repairIngredient);
     }
 
     /**
      * Default constructor.
      *
      * @param name the name of the material, concatenated with the mod id
-     * @param durabilities the armor durabilities for the feet, legs, chest, and head slots respectively
-     * @param slotProtections the additive armor attribute modifiers for the feet, legs, chest, and head slots respectively
+     * @param durabilities the armor durabilities for the armor types
+     * @param typeDefenses the additive armor attribute modifiers for the armor types
      * @param enchantmentValue the enchantibility of the armor material
      * @param sound the armor material equip sound
      * @param toughness the additive armor toughness attribute modifier
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, int[] durabilities, int[] slotProtections, int enchantmentValue, Supplier<? extends SoundEvent> sound, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
+    ExampleArmorMaterials(String name, EnumMap<ArmorItem.Type, Integer> durabilities, EnumMap<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, Supplier<? extends SoundEvent> sound, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
         /*
         All names must have their mod id prefixed. This is used as the default
         armor texture prefix for '*_layer_(1/2)'.
          */
         this.name = MultilingualExamples.ID + ":" + name;
         this.durabilities = durabilities;
-        this.slotProtections = slotProtections;
+        this.typeDefenses = typeDefenses;
         this.enchantmentValue = enchantmentValue;
         /*
         Although sound events are registered before items, there is the off
@@ -107,13 +120,13 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
     }
 
     @Override
-    public int getDurabilityForSlot(EquipmentSlot slot) {
-        return this.durabilities[slot.getIndex()];
+    public int getDurabilityForType(@NotNull ArmorItem.Type type) {
+        return this.durabilities.get(type);
     }
 
     @Override
-    public int getDefenseForSlot(EquipmentSlot slot) {
-        return this.slotProtections[slot.getIndex()];
+    public int getDefenseForType(@NotNull ArmorItem.Type type) {
+        return this.typeDefenses.get(type);
     }
 
     @Override
