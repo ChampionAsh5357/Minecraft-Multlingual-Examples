@@ -10,9 +10,9 @@ import com.mojang.datafixers.util.Pair
 import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
@@ -41,7 +41,7 @@ final class BlockRegistrar {
      */
     @ApiStatus.Internal
     static void registerBlockItems(Closure<?> itemRegistry) {
-        BLOCK_ITEM_FACTORIES.forEach { itemRegistry(it.getFirst(), it.getSecond()()) }
+        BLOCK_ITEM_FACTORIES.forEach { itemRegistry(it.first, it.getSecond()()) }
 
         // Invalidate factories after registration
         BLOCK_ITEM_FACTORIES.clear()
@@ -54,7 +54,7 @@ final class BlockRegistrar {
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                     .isValidSpawn {state, getter, pos, type -> false }
                     .isSuffocating {state, getter, pos -> false })) {
-        new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
+        new Item.Properties().food(GeneralRegistrar.WAFFLE)
     }
 
     static final Block WAFFLE = registerBlockWithSimpleItem('waffle',
@@ -63,7 +63,7 @@ final class BlockRegistrar {
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                     .isValidSpawn {state, getter, pos, type -> false }
                     .isSuffocating {state, getter, pos -> false })) {
-        new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
+        new Item.Properties().food(GeneralRegistrar.WAFFLE)
     }
 
     /**
@@ -92,7 +92,7 @@ final class BlockRegistrar {
      * @return the object instance being registered
      */
     private static <T extends Block, I extends Item> T registerBlockWithItem(final String name, final T obj, final Closure<I> itemFactory) {
-        var block = Registry.register(Registry.BLOCK, new ResourceLocation(MultilingualExamples.id(), name), obj)
+        var block = Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(MultilingualExamples.id(), name), obj)
         BLOCK_ITEM_FACTORIES.add(Pair.of(name) { itemFactory(block) })
         return block
     }
