@@ -8,7 +8,7 @@ package net.ashwork.mc.multilingualexamples.registrar
 
 import net.ashwork.mc.multilingualexamples.item.CustomArmorModelItem
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
-import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.Item
 import net.minecraftforge.registries.RegistryObject
 
@@ -25,16 +25,16 @@ val ASH: RegistryObject<Item> = ITEM_REGISTRAR.register("ash") {
     Item(Item.Properties())
 }
 val COLLAGE_HELMET: RegistryObject<Item> = ITEM_REGISTRAR.register("collage_helmet") {
-    CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, Item.Properties())
+    CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.HELMET, Item.Properties())
 }
 val COLLAGE_CHESTPLATE: RegistryObject<Item> = ITEM_REGISTRAR.register("collage_chestplate") {
-    CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, Item.Properties())
+    CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.CHESTPLATE, Item.Properties())
 }
 val COLLAGE_LEGGINGS: RegistryObject<Item> = ITEM_REGISTRAR.register("collage_leggings") {
-    CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, Item.Properties())
+    CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.LEGGINGS, Item.Properties())
 }
 val COLLAGE_BOOTS: RegistryObject<Item> = ITEM_REGISTRAR.register("collage_boots") {
-    CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, Item.Properties())
+    CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.BOOTS, Item.Properties())
 }
 val WAFFLE_MIX: RegistryObject<Item> = ITEM_REGISTRAR.register("waffle_mix") {
     Item(Item.Properties())

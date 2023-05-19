@@ -72,8 +72,8 @@ internal class MultilingualExamples {
         addProvider(gen) { output ->
             PackMetadataGenerator(output).add(PackMetadataSection.TYPE, PackMetadataSection(
                 Component.translatable("pack.$ID.description"),
-                PackType.CLIENT_RESOURCES.getVersion(DetectedVersion.BUILT_IN),
-                PackType.values().associateWith { it.getVersion(DetectedVersion.BUILT_IN) }
+                DetectedVersion.BUILT_IN.getPackVersion(PackType.CLIENT_RESOURCES),
+                PackType.values().associateWith(DetectedVersion.BUILT_IN::getPackVersion)
             ))
         }
 
