@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Item
@@ -68,10 +67,10 @@ final class ItemRegistrar {
     }
 
     static final Item ASH = register("ash", new Item(new Item.Properties()))
-    static final ArmorItem COLLAGE_HELMET = registerCustomArmorModelItem("collage_helmet", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, new Item.Properties()))
-    static final ArmorItem COLLAGE_CHESTPLATE = registerCustomArmorModelItem("collage_chestplate", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, new Item.Properties()))
-    static final ArmorItem COLLAGE_LEGGINGS = registerCustomArmorModelItem("collage_leggings", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties()))
-    static final ArmorItem COLLAGE_BOOTS = registerCustomArmorModelItem("collage_boots", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties()))
+    static final ArmorItem COLLAGE_HELMET = registerCustomArmorModelItem("collage_helmet", new ArmorItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.HELMET, new Item.Properties()))
+    static final ArmorItem COLLAGE_CHESTPLATE = registerCustomArmorModelItem("collage_chestplate", new ArmorItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.CHESTPLATE, new Item.Properties()))
+    static final ArmorItem COLLAGE_LEGGINGS = registerCustomArmorModelItem("collage_leggings", new ArmorItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.LEGGINGS, new Item.Properties()))
+    static final ArmorItem COLLAGE_BOOTS = registerCustomArmorModelItem("collage_boots", new ArmorItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.BOOTS, new Item.Properties()))
     static final Item WAFFLE_MIX = register('waffle_mix', new Item(new Item.Properties()))
     static final Item WAFFLE_CONE = register('waffle_cone', new Item(new Item.Properties().food(GeneralRegistrar.WAFFLE_CONE)))
     static final Item SNOW_CONE = register('snow_cone', new Item(new Item.Properties().food(GeneralRegistrar.SNOW_CONE)))

@@ -8,7 +8,7 @@
 
         "metadata": {
             "name": "Multilingual Examples - Quilt Groovy",
-            "description": "An example mod for Minecraft 1.19.3 in the Groovy programming language via the Quilt Mod Loader.",
+            "description": "An example mod for Minecraft 1.19.4 in the Groovy programming language via the Quilt Mod Loader.",
             "contributors": {
                 "ChampionAsh5357": "Owner"
             },
@@ -34,11 +34,11 @@
             },
             {
                 "id": "quilted_fabric_api",
-                "versions": ">=5.0.0-"
+                "versions": ">=6.0.0-"
             },
             {
                 "id": "minecraft",
-                "versions": ">=1.19.3"
+                "versions": ">=1.19.4"
             }
         ]
     },
