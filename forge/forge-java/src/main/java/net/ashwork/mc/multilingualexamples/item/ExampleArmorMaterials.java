@@ -43,8 +43,8 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
-     * armor base durabilities of 11, 16, 15, and 13 for the head, chest, legs,
-     * and feet slots respectively. The sound is provided by its registry name.
+     * armor base durabilities of 11, 16, 15, and 13 for the helmet, chestplate,
+     * leggings, and boots respectively. The sound is provided by its registry name.
      *
      * @param name the name of the material, concatenated with the mod id
      * @param durabilityMultiplier the armor material multiplier for the default durabilities
@@ -61,8 +61,8 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
-     * armor base durabilities of 11, 16, 15, and 13 for the head, chest, legs,
-     * and feet slots respectively.
+     * armor base durabilities of 11, 16, 15, and 13 for the helmet, chestplate,
+     * leggings, and boots respectively.
      *
      * @param name the name of the material, concatenated with the mod id
      * @param durabilityMultiplier the armor material multiplier for the default durabilities
