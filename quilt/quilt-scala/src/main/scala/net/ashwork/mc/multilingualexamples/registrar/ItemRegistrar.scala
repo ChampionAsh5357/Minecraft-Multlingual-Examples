@@ -9,10 +9,12 @@ package net.ashwork.mc.multilingualexamples.registrar
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar.registerCustomArmorModelItem
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EquipmentSlot
-import net.minecraft.world.item.{ArmorItem, CreativeModeTab, Item}
+import net.minecraft.world.item.{ArmorItem, CreativeModeTab, CreativeModeTabs, Item}
 import org.jetbrains.annotations.ApiStatus.Internal
 
 import scala.collection.mutable.ListBuffer
@@ -27,6 +29,25 @@ object ItemRegistrar {
      */
     def register(): Unit = {
         BlockRegistrar.registerBlockItems(ItemRegistrar.register(_, _))
+
+        // Add items to tabs
+        ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) => {
+            tab match
+                case CreativeModeTabs.INGREDIENTS => entries.accept(ASH)
+                case CreativeModeTabs.COMBAT =>
+                    entries.accept(COLLAGE_HELMET)
+                    entries.accept(COLLAGE_CHESTPLATE)
+                    entries.accept(COLLAGE_LEGGINGS)
+                    entries.accept(COLLAGE_BOOTS)
+                case CreativeModeTabs.FOOD_AND_DRINKS =>
+                    entries.accept(BlockRegistrar.SQUISHED_WAFFLE)
+                    entries.accept(BlockRegistrar.WAFFLE)
+                    entries.accept(WAFFLE_MIX)
+                    entries.accept(WAFFLE_CONE)
+                    entries.accept(SNOW_CONE)
+                    entries.accept(ICE_CREAM_SANDWICH)
+                case _ =>
+        })
     }
 
     private final val CUSTOM_ARMOR_MODEL_ITEMS: ListBuffer[ArmorItem] = ListBuffer()
@@ -39,15 +60,15 @@ object ItemRegistrar {
     @Internal
     def registerRenderers(rendererRegistry: ArmorItem => Unit): Unit = CUSTOM_ARMOR_MODEL_ITEMS.foreach(rendererRegistry)
 
-    final val ASH = register("ash", new Item(new Item.Properties().tab(CreativeModeTab.TAB_BREWING)))
-    final val COLLAGE_HELMET = registerCustomArmorModelItem("collage_helmet", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))
-    final val COLLAGE_CHESTPLATE = registerCustomArmorModelItem("collage_chestplate", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))
-    final val COLLAGE_LEGGINGS = registerCustomArmorModelItem("collage_leggings", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))
-    final val COLLAGE_BOOTS = registerCustomArmorModelItem("collage_boots", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))
-    final val WAFFLE_MIX = register("waffle_mix", Item(Item.Properties().tab(CreativeModeTab.TAB_FOOD)))
-    final val WAFFLE_CONE = register("waffle_cone", Item(Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE_CONE)))
-    final val SNOW_CONE = register("snow_cone", Item(Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.SNOW_CONE)))
-    final val ICE_CREAM_SANDWICH = register("ice_cream_sandwich", Item(Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.ICE_CREAM_SANDWICH)))
+    final val ASH = register("ash", new Item(new Item.Properties()))
+    final val COLLAGE_HELMET = registerCustomArmorModelItem("collage_helmet", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, Item.Properties()))
+    final val COLLAGE_CHESTPLATE = registerCustomArmorModelItem("collage_chestplate", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, Item.Properties()))
+    final val COLLAGE_LEGGINGS = registerCustomArmorModelItem("collage_leggings", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, Item.Properties()))
+    final val COLLAGE_BOOTS = registerCustomArmorModelItem("collage_boots", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, Item.Properties()))
+    final val WAFFLE_MIX = register("waffle_mix", Item(Item.Properties()))
+    final val WAFFLE_CONE = register("waffle_cone", Item(Item.Properties().food(GeneralRegistrar.WAFFLE_CONE)))
+    final val SNOW_CONE = register("snow_cone", Item(Item.Properties().food(GeneralRegistrar.SNOW_CONE)))
+    final val ICE_CREAM_SANDWICH = register("ice_cream_sandwich", Item(Item.Properties().food(GeneralRegistrar.ICE_CREAM_SANDWICH)))
 
     /**
      * Registers an object to the item registry.
@@ -58,7 +79,7 @@ object ItemRegistrar {
      * @return the object instance being registered
      */
     private def register[T <: Item](name: String, obj: T): T =
-        Registry.register(Registry.ITEM, ResourceLocation(MultilingualExamples.id(), name), obj)
+        Registry.register(BuiltInRegistries.ITEM, ResourceLocation(MultilingualExamples.id(), name), obj)
 
     /**
      * Registers an armor item to be rendered with a custom model.

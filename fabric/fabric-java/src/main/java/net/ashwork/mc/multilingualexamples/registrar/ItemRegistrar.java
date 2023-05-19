@@ -8,11 +8,13 @@ package net.ashwork.mc.multilingualexamples.registrar;
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -30,6 +32,25 @@ public final class ItemRegistrar {
      */
     public static void register() {
         BlockRegistrar.registerBlockItems(ItemRegistrar::register);
+
+        // Add items to tabs
+        ItemGroupEvents.MODIFY_ENTRIES_ALL.register((tab, entries) -> {
+            if (tab == CreativeModeTabs.INGREDIENTS) {
+                entries.accept(ASH);
+            } else if (tab == CreativeModeTabs.COMBAT) {
+                entries.accept(COLLAGE_HELMET);
+                entries.accept(COLLAGE_CHESTPLATE);
+                entries.accept(COLLAGE_LEGGINGS);
+                entries.accept(COLLAGE_BOOTS);
+            } else if (tab == CreativeModeTabs.FOOD_AND_DRINKS) {
+                entries.accept(BlockRegistrar.SQUISHED_WAFFLE);
+                entries.accept(BlockRegistrar.WAFFLE);
+                entries.accept(WAFFLE_MIX);
+                entries.accept(WAFFLE_CONE);
+                entries.accept(SNOW_CONE);
+                entries.accept(ICE_CREAM_SANDWICH);
+            }
+        });
     }
     
     private static final List<ArmorItem> CUSTOM_ARMOR_MODEL_ITEMS = new ArrayList<>();
@@ -44,15 +65,15 @@ public final class ItemRegistrar {
         CUSTOM_ARMOR_MODEL_ITEMS.forEach(rendererRegistry);
     }
 
-    public static final Item ASH = register("ash", new Item(new Item.Properties().tab(CreativeModeTab.TAB_BREWING)));
-    public static final ArmorItem COLLAGE_HELMET = registerCustomArmorModelItem("collage_helmet", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
-    public static final ArmorItem COLLAGE_CHESTPLATE = registerCustomArmorModelItem("collage_chestplate", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
-    public static final ArmorItem COLLAGE_LEGGINGS = registerCustomArmorModelItem("collage_leggings", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
-    public static final ArmorItem COLLAGE_BOOTS = registerCustomArmorModelItem("collage_boots", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
-    public static final Item WAFFLE_MIX = register("waffle_mix", new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD)));
-    public static final Item WAFFLE_CONE = register("waffle_cone", new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE_CONE.get())));
-    public static final Item SNOW_CONE = register("snow_cone", new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.SNOW_CONE.get())));
-    public static final Item ICE_CREAM_SANDWICH = register("ice_cream_sandwich", new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.ICE_CREAM_SANDWICH.get())));
+    public static final Item ASH = register("ash", new Item(new Item.Properties()));
+    public static final ArmorItem COLLAGE_HELMET = registerCustomArmorModelItem("collage_helmet", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, new Item.Properties()));
+    public static final ArmorItem COLLAGE_CHESTPLATE = registerCustomArmorModelItem("collage_chestplate", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, new Item.Properties()));
+    public static final ArmorItem COLLAGE_LEGGINGS = registerCustomArmorModelItem("collage_leggings", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties()));
+    public static final ArmorItem COLLAGE_BOOTS = registerCustomArmorModelItem("collage_boots", new ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties()));
+    public static final Item WAFFLE_MIX = register("waffle_mix", new Item(new Item.Properties()));
+    public static final Item WAFFLE_CONE = register("waffle_cone", new Item(new Item.Properties().food(GeneralRegistrar.WAFFLE_CONE.get())));
+    public static final Item SNOW_CONE = register("snow_cone", new Item(new Item.Properties().food(GeneralRegistrar.SNOW_CONE.get())));
+    public static final Item ICE_CREAM_SANDWICH = register("ice_cream_sandwich", new Item(new Item.Properties().food(GeneralRegistrar.ICE_CREAM_SANDWICH.get())));
 
     /**
      * Registers an object to the item registry.
@@ -63,7 +84,7 @@ public final class ItemRegistrar {
      * @return the object instance being registered
      */
     private static <T extends Item> T register(final String name, final T obj) {
-        return Registry.register(Registry.ITEM, new ResourceLocation(MultilingualExamples.ID, name), obj);
+        return Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(MultilingualExamples.ID, name), obj);
     }
 
     /**

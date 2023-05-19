@@ -10,6 +10,7 @@ import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
 import net.minecraft.core.Registry
 import net.minecraft.core.particles.{ParticleOptions, ParticleType}
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 
 /**
@@ -33,5 +34,5 @@ object ParticleTypeRegistrar {
      * @return the object instance being registered
      */
     private def register[T <: ParticleType[_ <: ParticleOptions]](name: String, obj: T): T =
-        Registry.register(Registry.PARTICLE_TYPE, new ResourceLocation(MultilingualExamples.id(), name), obj)
+        Registry.register(BuiltInRegistries.PARTICLE_TYPE, new ResourceLocation(MultilingualExamples.id(), name), obj)
 }

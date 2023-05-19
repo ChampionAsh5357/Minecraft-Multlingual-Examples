@@ -20,7 +20,7 @@ import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.player.AbstractClientPlayer
-import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -63,7 +63,7 @@ class ArmorModelManager {
      */
     private inline fun registerArmorModel(material: ArmorMaterial, register: (ModelLayerLocation) -> Unit, handler: (ModelLayerLocation) -> ModelHandler, vararg types: EntityType<*>) {
         types.forEach {
-            val mll = ModelLayerLocation(Registry.ENTITY_TYPE.getKey(it), material.name)
+            val mll = ModelLayerLocation(BuiltInRegistries.ENTITY_TYPE.getKey(it), material.name)
             register(mll)
             this.entityArmorModels.put(it, material, handler(mll))
         }

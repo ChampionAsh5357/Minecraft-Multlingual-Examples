@@ -8,9 +8,9 @@ package net.ashwork.mc.multilingualexamples.registrar
 
 import net.ashwork.mc.multilingualexamples.id
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.level.block.Block
@@ -49,7 +49,7 @@ val SQUISHED_WAFFLE: SlabBlock = registerBlockWithSimpleItem("squished_waffle",
             .isValidSpawn { _, _, _, _ -> false }
             .isSuffocating { _, _, _ -> false})
 ) {
-    Properties().tab(CreativeModeTab.TAB_FOOD).food(WAFFLE_FOOD)
+    Properties().food(WAFFLE_FOOD)
 }
 val WAFFLE: Block = registerBlockWithSimpleItem("waffle",
     Block(
@@ -59,7 +59,7 @@ val WAFFLE: Block = registerBlockWithSimpleItem("waffle",
             .isValidSpawn { _, _, _, _ -> false }
             .isSuffocating { _, _, _ -> false})
 ) {
-    Properties().tab(CreativeModeTab.TAB_FOOD).food(WAFFLE_FOOD)
+    Properties().food(WAFFLE_FOOD)
 }
 
 /**
@@ -85,4 +85,4 @@ private inline fun <T: Block> registerBlockWithSimpleItem(name: String, obj: T, 
  * @param I the type of the item
  */
 private inline fun <T: Block, I: Item> registerBlockWithItem(name: String, obj: T, crossinline itemFactory: (T) -> I): T =
-    Registry.register(Registry.BLOCK, ResourceLocation(id(), name), obj).also { blockItemFactories.add(Pair(name) { itemFactory(it) } ) }
+    Registry.register(BuiltInRegistries.BLOCK, ResourceLocation(id(), name), obj).also { blockItemFactories.add(Pair(name) { itemFactory(it) } ) }

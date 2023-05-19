@@ -9,7 +9,7 @@ package net.ashwork.mc.multilingualexamples.data;
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 /**
@@ -20,14 +20,17 @@ public final class ExampleLocalizationProvider extends LanguageProvider {
     /**
      * A simple constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      */
-    public ExampleLocalizationProvider(final DataGenerator gen) {
-        super(gen, MultilingualExamples.ID, "en_us");
+    public ExampleLocalizationProvider(final PackOutput output) {
+        super(output, MultilingualExamples.ID, "en_us");
     }
 
     @Override
     protected void addTranslations() {
+        // Add pack description
+        this.add("pack." + MultilingualExamples.ID + ".description", "Multilingual Examples Resources");
+
         // Add items
         this.addItem(ItemRegistrar.ASH, "Ash");
         this.addItem(ItemRegistrar.COLLAGE_HELMET, "Hat");

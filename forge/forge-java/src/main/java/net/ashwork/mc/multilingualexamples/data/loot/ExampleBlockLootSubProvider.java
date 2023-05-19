@@ -8,21 +8,28 @@ package net.ashwork.mc.multilingualexamples.data.loot;
 
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.Registrars;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+
 /**
  * A loot table provider for {@link LootContextParamSets#BLOCK}.
  */
-public class ExampleBlockLoot extends BlockLoot {
+public class ExampleBlockLootSubProvider extends BlockLootSubProvider {
+
+    public ExampleBlockLootSubProvider() {
+        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
+    }
 
     @Override
-    protected void addTables() {
+    protected void generate() {
         this.dropSelf(BlockRegistrar.WAFFLE.get());
-        this.add(BlockRegistrar.SQUISHED_WAFFLE.get(), BlockLoot::createSlabItemTable);
+        this.add(BlockRegistrar.SQUISHED_WAFFLE.get(), this::createSlabItemTable);
     }
 
     @NotNull

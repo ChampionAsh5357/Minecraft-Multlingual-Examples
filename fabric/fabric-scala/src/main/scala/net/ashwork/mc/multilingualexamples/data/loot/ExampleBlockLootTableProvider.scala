@@ -7,19 +7,35 @@
 package net.ashwork.mc.multilingualexamples.data.loot
 
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
-import net.minecraft.data.loot.BlockLoot
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.storage.loot.LootTable
+
+import java.util.function.BiConsumer
 
 /**
  * A loot table provider for [[LootContextParamSets.BLOCK]].
  *
- * @param gen the generator being written to
+ * @param output the output of the data generator
  */
-class ExampleBlockLootTableProvider(gen: FabricDataGenerator) extends FabricBlockLootTableProvider(gen) {
+class ExampleBlockLootTableProvider(output: FabricDataOutput) extends FabricBlockLootTableProvider(output) {
 
-    override def generateBlockLootTables(): Unit = {
+    override def generate(): Unit = {
         this.dropSelf(BlockRegistrar.WAFFLE)
-        this.add(BlockRegistrar.SQUISHED_WAFFLE, BlockLoot.createSlabItemTable _)
+        this.add(BlockRegistrar.SQUISHED_WAFFLE, this.createSlabItemTable _)
     }
+
+    /*
+    Fabric has a weird bug that requires this implementation. Essentially,
+    #accept is #generate in Yarn mappings. The provider implemented a
+    consumer, meaning that #accept in Yarn mappings was properly overridden.
+    However, in MojMaps, this is not the case and the method needs to be
+    manually delegated.
+    
+    This would probably never come about during testing in a normal situation.
+    This method would need to be removed when in Yarn mappings as otherwise it
+    would be a recursive call.
+     */
+    override def accept(writer: BiConsumer[ResourceLocation, LootTable.Builder]): Unit = this.generate(writer)
 }

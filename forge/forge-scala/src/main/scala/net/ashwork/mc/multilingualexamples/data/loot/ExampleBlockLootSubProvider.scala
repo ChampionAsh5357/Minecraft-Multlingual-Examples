@@ -7,22 +7,24 @@
 package net.ashwork.mc.multilingualexamples.data.loot
 
 import net.ashwork.mc.multilingualexamples.registrar.{BlockRegistrar, Registrars}
-import net.minecraft.data.loot.BlockLoot
+import net.minecraft.data.loot.BlockLootSubProvider
+import net.minecraft.world.flag.FeatureFlags
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 
 import java.lang
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.*
 
 
 /**
  * A loot table provider for [[LootContextParamSets.BLOCK]].
  */
-class ExampleBlockLoot extends BlockLoot {
+class ExampleBlockLootSubProvider extends BlockLootSubProvider(Set.empty[Item].asJava, FeatureFlags.REGISTRY.allFlags) {
 
-    override def addTables(): Unit = {
+    override def generate(): Unit = {
         this.dropSelf(BlockRegistrar.WAFFLE.get)
-        this.add(BlockRegistrar.SQUISHED_WAFFLE.get, BlockLoot.createSlabItemTable _)
+        this.add(BlockRegistrar.SQUISHED_WAFFLE.get, this.createSlabItemTable _)
     }
 
     /*

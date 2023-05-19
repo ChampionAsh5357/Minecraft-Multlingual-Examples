@@ -121,7 +121,7 @@ class CollageModel extends AgeableListModel<LivingEntity> {
     static MeshDefinition createMesh(CubeDeformation deformation, float yHeadOffset, float yBodyOffset, float yRightLegOffset, float yLeftLegOffset) {
         // Create the mesh definition and get the root
         MeshDefinition mesh = new MeshDefinition()
-        PartDefinition root = mesh.getRoot()
+        PartDefinition root = mesh.root
 
         /*
         Head parts. The easiest method to apply transforms from the parent

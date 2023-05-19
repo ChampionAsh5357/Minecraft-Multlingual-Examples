@@ -9,6 +9,7 @@ package net.ashwork.mc.multilingualexamples.registrar
 import com.mojang.datafixers.util.Pair
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.{BlockItem, CreativeModeTab, Item}
 import net.minecraft.world.level.block.{Block, SlabBlock, SoundType}
@@ -36,7 +37,7 @@ object BlockRegistrar {
                 .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                 .isValidSpawn((_, _, _, _) => false)
                 .isSuffocating((_, _, _) => false)
-        ), () => Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
+        ), () => Item.Properties().food(GeneralRegistrar.WAFFLE)
     )
     final val WAFFLE: Block = registerBlockWithSimpleItem("waffle",
         Block(BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
@@ -44,7 +45,7 @@ object BlockRegistrar {
                 .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                 .isValidSpawn((_, _, _, _) => false)
                 .isSuffocating((_, _, _) => false)
-        ), () => Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE)
+        ), () => Item.Properties().food(GeneralRegistrar.WAFFLE)
     )
 
     /**
@@ -80,7 +81,7 @@ object BlockRegistrar {
      * @return the object instance being registered
      */
     private def registerBlockWithItem[T <: Block, I <: Item](name: String, obj: T, itemFactory: T => I): T = {
-        val block = Registry.register(Registry.BLOCK, ResourceLocation(MultilingualExamples.id(), name), obj)
+        val block = Registry.register(BuiltInRegistries.BLOCK, ResourceLocation(MultilingualExamples.id(), name), obj)
         BLOCK_ITEM_FACTORIES.addOne(Pair.of(name, () => itemFactory.apply(block)))
         block
     }

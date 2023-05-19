@@ -106,12 +106,12 @@ enum ExampleArmorMaterials implements ArmorMaterial {
 
     @Override
     int getDurabilityForSlot(EquipmentSlot slot) {
-        return this.durabilities[slot.getIndex()]
+        return this.durabilities[slot.index]
     }
 
     @Override
     int getDefenseForSlot(EquipmentSlot slot) {
-        return this.slotProtections[slot.getIndex()]
+        return this.slotProtections[slot.index]
     }
 
     @Override

@@ -8,16 +8,17 @@ package net.ashwork.mc.multilingualexamples.data;
 
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -33,28 +34,28 @@ public class ExampleRecipeProvider extends RecipeProvider {
     /**
      * Default constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      */
-    public ExampleRecipeProvider(DataGenerator gen) {
-        super(gen);
+    public ExampleRecipeProvider(PackOutput output) {
+        super(output);
     }
 
     @Override
-    protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> writer) {
-        ShapelessRecipeBuilder.shapeless(ItemRegistrar.WAFFLE_MIX.get()).requires(Items.EGG, 3)
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> writer) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemRegistrar.WAFFLE_MIX.get()).requires(Items.EGG, 3)
                 .unlockedBy("has_egg", has(Items.EGG)).save(writer);
         cookingFood(writer, ItemRegistrar.WAFFLE_MIX.get(), BlockRegistrar.WAFFLE.get(), 0.35f, 200);
-        ShapedRecipeBuilder.shaped(ItemRegistrar.WAFFLE_CONE.get(), 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ItemRegistrar.WAFFLE_CONE.get(), 3)
                 .pattern("W W")
                 .pattern(" W ")
                 .define('W', BlockRegistrar.WAFFLE.get())
                 .unlockedBy("has_waffle", has(BlockRegistrar.WAFFLE.get())).save(writer);
-        ShapedRecipeBuilder.shaped(ItemRegistrar.SNOW_CONE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ItemRegistrar.SNOW_CONE.get())
                 .pattern("S")
                 .pattern("W")
                 .define('S', Items.SNOWBALL).define('W', ItemRegistrar.WAFFLE_CONE.get())
                 .unlockedBy("has_snowball", has(Items.SNOWBALL)).unlockedBy("has_waffle_cone", has(ItemRegistrar.WAFFLE_CONE.get())).save(writer);
-        ShapedRecipeBuilder.shaped(ItemRegistrar.ICE_CREAM_SANDWICH.get(), 6)
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, ItemRegistrar.ICE_CREAM_SANDWICH.get(), 6)
                 .pattern("WWW")
                 .pattern("MMM")
                 .pattern("WWW")
@@ -79,7 +80,7 @@ public class ExampleRecipeProvider extends RecipeProvider {
     }
 
     /**
-     * Generates a cooking recipe. This is a copy of {@link #simpleCookingRecipe(Consumer, String, SimpleCookingSerializer, int, ItemLike, ItemLike, float)}
+     * Generates a cooking recipe. This is a copy of {@link #simpleCookingRecipe(Consumer, String, RecipeSerializer, int, ItemLike, ItemLike, float)}
      * which fixes the file location for generation of the recipe.
      *
      * @param writer the writer used to generate the recipe
@@ -90,7 +91,7 @@ public class ExampleRecipeProvider extends RecipeProvider {
      * @param output the output of the cooked {@code input}
      * @param experience the amount of experience to gain after collecting the {@code output}
      */
-    protected static void cookingRecipe(Consumer<FinishedRecipe> writer, String type, SimpleCookingSerializer<?> serializer, int cookingTime, ItemLike input, ItemLike output, float experience) {
-        SimpleCookingRecipeBuilder.cooking(Ingredient.of(input), output, experience, cookingTime, serializer).unlockedBy(getHasName(input), has(input)).save(writer, Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(output.asItem())) + "_from_" + type);
+    protected static void cookingRecipe(Consumer<FinishedRecipe> writer, String type, RecipeSerializer<? extends AbstractCookingRecipe> serializer, int cookingTime, ItemLike input, ItemLike output, float experience) {
+        SimpleCookingRecipeBuilder.generic(Ingredient.of(input), RecipeCategory.FOOD, output, experience, cookingTime, serializer).unlockedBy(getHasName(input), has(input)).save(writer, Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(output.asItem())) + "_from_" + type);
     }
 }

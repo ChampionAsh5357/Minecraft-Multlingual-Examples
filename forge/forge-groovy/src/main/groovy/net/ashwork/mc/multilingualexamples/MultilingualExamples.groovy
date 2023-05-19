@@ -8,10 +8,21 @@ package net.ashwork.mc.multilingualexamples
 
 import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
-import net.ashwork.mc.multilingualexamples.data.*
+import net.ashwork.mc.multilingualexamples.data.ExampleBlockStateModelProvider
+import net.ashwork.mc.multilingualexamples.data.ExampleItemModelProvider
+import net.ashwork.mc.multilingualexamples.data.ExampleLocalizationProvider
+import net.ashwork.mc.multilingualexamples.data.ExampleRecipeProvider
+import net.ashwork.mc.multilingualexamples.data.loot.ExampleBlockLootSubProvider
 import net.ashwork.mc.multilingualexamples.registrar.Registrars
+import net.minecraft.DetectedVersion
 import net.minecraft.data.DataGenerator
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.data.DataProvider
+import net.minecraft.data.loot.LootTableProvider
+import net.minecraft.data.metadata.PackMetadataGenerator
+import net.minecraft.network.chat.Component
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.data.ExistingFileHelper
@@ -26,13 +37,13 @@ import net.minecraftforge.fml.loading.FMLEnvironment
  * The mod id supplied in the annotation must match that within the {@code mods.toml}.
  */
 @CompileStatic
-@Mod(MultilingualExamples.ID)
+@Mod(ID)
 final class MultilingualExamples {
 
     /**
      * The modid of our mod.
      */
-    static final String ID = 'multilingual_examples'
+    public static final String ID = 'multilingual_examples'
 
     /**
      * The mod constructor. All event bus attachments should be present here.
@@ -52,17 +63,6 @@ final class MultilingualExamples {
     }
 
     /**
-     * Prefixes a path if it has not already been prefixed.
-     *
-     * @param loc the name being prefixed
-     * @param prefix the prefix to attach to the path
-     * @return a prefixed {@link ResourceLocation}
-     */
-    static ResourceLocation prefixPath(ResourceLocation loc, String prefix) {
-        loc.getPath().contains('/') ? loc : new ResourceLocation(loc.getNamespace(), "$prefix/${loc.getPath()}")
-    }
-
-    /**
      * An event listener that, when fired, attaches the providers to the
      * data generator to generate the associated files.
      *
@@ -73,20 +73,45 @@ final class MultilingualExamples {
      */
     private static void attachDataProviders(final GatherDataEvent event) {
         // Grab common data from event
-        final DataGenerator gen = event.getGenerator()
-        final ExistingFileHelper efh = event.getExistingFileHelper()
+        final DataGenerator gen = event.generator
+        final ExistingFileHelper efh = event.existingFileHelper
+
+        // Add pack.mcmeta provider
+        addProvider(gen) {
+            new PackMetadataGenerator(it).add(PackMetadataSection.TYPE, new PackMetadataSection(
+                    Component.translatable("pack.${ID}.description"),
+                    PackType.CLIENT_RESOURCES.getVersion(DetectedVersion.BUILT_IN),
+                    PackType.values().collectEntries { [it, it.getVersion(DetectedVersion.BUILT_IN)] }
+            ))
+        }
 
         // Add client providers
         if (event.includeClient()) {
-            gen.addProvider(true, new ExampleBlockStateModelProvider(gen, efh))
-            gen.addProvider(true, new ExampleItemModelProvider(gen, efh))
-            gen.addProvider(true, new ExampleLocalizationProvider(gen))
+            addProvider(gen) { new ExampleBlockStateModelProvider(it, efh) }
+            addProvider(gen) { new ExampleItemModelProvider(it, efh) }
+            addProvider(gen, ExampleLocalizationProvider::new)
         }
 
         // Add server providers
         if (event.includeServer()) {
-            gen.addProvider(true, new ExampleLootTableProvider(gen))
-            gen.addProvider(true, new ExampleRecipeProvider(gen))
+            addProvider(gen) {
+                new LootTableProvider(it, Collections.emptySet(), [
+                        new LootTableProvider.SubProviderEntry(ExampleBlockLootSubProvider::new, LootContextParamSets.BLOCK)
+                ])
+            }
+            addProvider(gen, ExampleRecipeProvider::new)
         }
+    }
+
+    /**
+     * A helper method for registering a factory without encountering an ambiguous lambda
+     * compile error.
+     *
+     * @param generator the generator to add the provider to
+     * @param factory the factory to construct the provider
+     * @param T the type of the provider
+     */
+    private static <T extends DataProvider> void addProvider(DataGenerator generator, DataProvider.Factory<T> factory) {
+        generator.addProvider(true, factory)
     }
 }

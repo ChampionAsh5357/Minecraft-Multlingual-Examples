@@ -8,7 +8,6 @@ package net.ashwork.mc.multilingualexamples.registrar
 
 import net.ashwork.mc.multilingualexamples.block.FlattenableBlock
 import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SlabBlock
@@ -34,7 +33,7 @@ val SQUISHED_WAFFLE: RegistryObject<SlabBlock> = registerBlockWithSimpleItem("sq
         .isValidSpawn { _, _, _, _ -> false }
         .isSuffocating { _, _, _ -> false})
     }) {
-    Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(WAFFLE_FOOD)
+    Item.Properties().food(WAFFLE_FOOD)
 }
 val WAFFLE: RegistryObject<FlattenableBlock> = registerBlockWithSimpleItem("waffle",
     { FlattenableBlock(BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
@@ -43,7 +42,7 @@ val WAFFLE: RegistryObject<FlattenableBlock> = registerBlockWithSimpleItem("waff
         .isValidSpawn { _, _, _, _ -> false }
         .isSuffocating { _, _, _ -> false}) { SQUISHED_WAFFLE.get() }
     }) {
-    Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(WAFFLE_FOOD)
+    Item.Properties().food(WAFFLE_FOOD)
 }
 
 /**

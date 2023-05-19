@@ -8,7 +8,6 @@ package net.ashwork.mc.multilingualexamples.registrar;
 
 import net.ashwork.mc.multilingualexamples.block.FlattenableBlock;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -37,7 +36,7 @@ public class BlockRegistrar {
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                     .isValidSpawn((state, getter, pos, type) -> false)
                     .isSuffocating((state, getter, pos) -> false)),
-            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
+            () -> new Item.Properties().food(GeneralRegistrar.WAFFLE.get()));
 
     public static final RegistryObject<FlattenableBlock> WAFFLE = registerBlockWithSimpleItem("waffle",
             () -> new FlattenableBlock(SQUISHED_WAFFLE, BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
@@ -45,7 +44,7 @@ public class BlockRegistrar {
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                     .isValidSpawn((state, getter, pos, type) -> false)
                     .isSuffocating((state, getter, pos) -> false)),
-            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
+            () -> new Item.Properties().food(GeneralRegistrar.WAFFLE.get()));
 
     /**
      * Registers a block with a {@link BlockItem}.

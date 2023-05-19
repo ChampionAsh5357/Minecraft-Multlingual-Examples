@@ -58,7 +58,7 @@ subprojects {
         }
 
         afterEvaluate {
-            tasks.jar {
+            tasks.withType<Jar> {
                 from(rootProject.file("LICENSE"))
 
                 manifest.attributes(

@@ -7,7 +7,7 @@
 package net.ashwork.mc.multilingualexamples.item
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
-import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.entity.EquipmentSlot
@@ -60,7 +60,7 @@ enum ExampleArmorMaterials(name: String, private val durabilities: Array[Int],
     def this(name: String, durabilityMultiplier: Int, slotProtections: Array[Int], enchantmentValue: Int,
              soundName: ResourceLocation, toughness: Float, knockbackResistance: Float, repairIngredient: () => Ingredient) =
         this(name, durabilityMultiplier, slotProtections, enchantmentValue, toughness, knockbackResistance,
-            () => Registry.SOUND_EVENT.get(soundName), repairIngredient)
+            () => BuiltInRegistries.SOUND_EVENT.get(soundName), repairIngredient)
 
     /*
     All names must have their mod id prefixed. This is used as the default

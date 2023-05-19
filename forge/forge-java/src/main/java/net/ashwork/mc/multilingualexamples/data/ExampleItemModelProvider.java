@@ -8,7 +8,7 @@ package net.ashwork.mc.multilingualexamples.data;
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -20,16 +20,16 @@ import java.util.Objects;
 /**
  * A data provider which generates item models for items in this mod.
  */
-public final class ExampleItemModelProvider extends ItemModelProvider implements ModelProviderExtension {
+public final class ExampleItemModelProvider extends ItemModelProvider {
 
     /**
      * Default constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      * @param efh a resource holder for linking existing files
      */
-    public ExampleItemModelProvider(final DataGenerator gen, final ExistingFileHelper efh) {
-        super(gen, MultilingualExamples.ID, efh);
+    public ExampleItemModelProvider(final PackOutput output, final ExistingFileHelper efh) {
+        super(output, MultilingualExamples.ID, efh);
     }
 
     @Override
@@ -67,6 +67,6 @@ public final class ExampleItemModelProvider extends ItemModelProvider implements
      */
     private void simpleItem(final RegistryObject<? extends Item> item, final ResourceLocation layer0) {
         this.withExistingParent(Objects.requireNonNull(item.getId()).toString(), "item/generated")
-                .texture("layer0", this.prefix(layer0, this.folder));
+                .texture("layer0", layer0.withPrefix(this.folder + "/"));
     }
 }

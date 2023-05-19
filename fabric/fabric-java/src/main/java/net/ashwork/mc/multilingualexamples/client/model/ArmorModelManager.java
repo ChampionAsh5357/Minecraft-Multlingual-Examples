@@ -21,7 +21,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -77,7 +77,7 @@ public class ArmorModelManager {
      */
     private void registerArmorModel(ArmorMaterial material, Consumer<ModelLayerLocation> register, Function<ModelLayerLocation, ModelHandler> handler, EntityType<?>... types) {
         for (EntityType<?> type : types) {
-            var mll = new ModelLayerLocation(Objects.requireNonNull(Registry.ENTITY_TYPE.getKey(type)), material.getName());
+            var mll = new ModelLayerLocation(Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(type)), material.getName());
             register.accept(mll);
             this.entityArmorModels.put(type, material, handler.apply(mll));
         }

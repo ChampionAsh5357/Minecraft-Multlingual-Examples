@@ -8,9 +8,18 @@ package net.ashwork.mc.multilingualexamples
 
 import net.ashwork.mc.multilingualexamples.client.MultilingualExamplesClient
 import net.ashwork.mc.multilingualexamples.data.*
-import net.ashwork.mc.multilingualexamples.data.ExampleItemModelProvider
-import net.ashwork.mc.multilingualexamples.data.ExampleLocalizationProvider
+import net.ashwork.mc.multilingualexamples.data.loot.ExampleBlockLootSubProvider
 import net.ashwork.mc.multilingualexamples.registrar.initRegistrars
+import net.minecraft.DetectedVersion
+import net.minecraft.data.DataGenerator
+import net.minecraft.data.DataProvider
+import net.minecraft.data.DataProvider.Factory
+import net.minecraft.data.loot.LootTableProvider
+import net.minecraft.data.metadata.PackMetadataGenerator
+import net.minecraft.network.chat.Component
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.data.event.GatherDataEvent
@@ -59,17 +68,41 @@ internal class MultilingualExamples {
         val gen = event.generator
         val efh = event.existingFileHelper
 
+        // Add pack.mcmeta provider
+        addProvider(gen) { output ->
+            PackMetadataGenerator(output).add(PackMetadataSection.TYPE, PackMetadataSection(
+                Component.translatable("pack.$ID.description"),
+                PackType.CLIENT_RESOURCES.getVersion(DetectedVersion.BUILT_IN),
+                PackType.values().associateWith { it.getVersion(DetectedVersion.BUILT_IN) }
+            ))
+        }
+
         // Add client providers
         if (event.includeClient()) {
-            gen.addProvider(true, ExampleBlockStateModelProvider(gen, efh))
-            gen.addProvider(true, ExampleItemModelProvider(gen, efh))
-            gen.addProvider(true, ExampleLocalizationProvider(gen))
+            addProvider(gen) { ExampleBlockStateModelProvider(it, efh) }
+            addProvider(gen) { ExampleItemModelProvider(it, efh) }
+            addProvider(gen, ::ExampleLocalizationProvider)
         }
 
         // Add server providers
         if (event.includeServer()) {
-            gen.addProvider(true, ExampleLootTableProvider(gen))
-            gen.addProvider(true, ExampleRecipeProvider(gen))
+            addProvider(gen) {
+                LootTableProvider(it, emptySet(), listOf(
+                    LootTableProvider.SubProviderEntry(::ExampleBlockLootSubProvider, LootContextParamSets.BLOCK)
+                ))
+            }
+            addProvider(gen, ::ExampleRecipeProvider)
         }
     }
 }
+
+/**
+ * A helper method for registering a factory without encountering an ambiguous lambda
+ * compile error.
+ *
+ * @param generator the generator to add the provider to
+ * @param factory the factory to construct the provider
+ * @param T the type of the provider
+ */
+private fun <T: DataProvider> addProvider(generator: DataGenerator, factory: Factory<T>) =
+    generator.addProvider(true, factory)

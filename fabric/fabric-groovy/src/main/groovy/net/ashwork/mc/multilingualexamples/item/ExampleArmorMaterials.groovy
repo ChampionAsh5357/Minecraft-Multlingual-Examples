@@ -8,13 +8,12 @@ package net.ashwork.mc.multilingualexamples.item
 
 import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
-import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.crafting.Ingredient
-
 /**
  * An enum containing the armor materials for this mod.
  */
@@ -46,7 +45,7 @@ enum ExampleArmorMaterials implements ArmorMaterial {
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
     ExampleArmorMaterials(String name, int durabilityMultiplier, List<Integer> slotProtections, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Closure<? extends Ingredient> repairIngredient) {
-        this(name, durabilityMultiplier, slotProtections, enchantmentValue, { -> Registry.SOUND_EVENT.get(soundName) }, toughness, knockbackResistance, repairIngredient)
+        this(name, durabilityMultiplier, slotProtections, enchantmentValue, { -> BuiltInRegistries.SOUND_EVENT.get(soundName) }, toughness, knockbackResistance, repairIngredient)
     }
 
     /**
@@ -106,12 +105,12 @@ enum ExampleArmorMaterials implements ArmorMaterial {
 
     @Override
     int getDurabilityForSlot(EquipmentSlot slot) {
-        return this.durabilities[slot.getIndex()]
+        return this.durabilities[slot.index]
     }
 
     @Override
     int getDefenseForSlot(EquipmentSlot slot) {
-        return this.slotProtections[slot.getIndex()]
+        return this.slotProtections[slot.index]
     }
 
     @Override

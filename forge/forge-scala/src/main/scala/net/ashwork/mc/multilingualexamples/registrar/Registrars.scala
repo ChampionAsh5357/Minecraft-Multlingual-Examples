@@ -8,8 +8,9 @@ package net.ashwork.mc.multilingualexamples.registrar
 
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.minecraft.core.particles.ParticleType
-import net.minecraft.world.item.Item
+import net.minecraft.world.item.{CreativeModeTabs, Item}
 import net.minecraft.world.level.block.Block
+import net.minecraftforge.event.CreativeModeTabEvent.BuildContents
 import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.registries.{DeferredRegister, ForgeRegistries}
 
@@ -48,5 +49,31 @@ object Registrars {
         BlockRegistrar.register()
         ItemRegistrar.register()
         ParticleTypeRegistrar.register()
+
+        // Add events
+        modBus.addListener(this.buildTabContents)
+    }
+
+    /**
+     * An event listener that, when fired, adds content to a [[net.minecraft.world.item.CreativeModeTab]].
+     *
+     * @param event the [[BuildContents]] event
+     */
+    private def buildTabContents(event: BuildContents): Unit = {
+        event.getTab match
+            case CreativeModeTabs.INGREDIENTS => event.accept(ItemRegistrar.ASH)
+            case CreativeModeTabs.COMBAT =>
+                event.accept(ItemRegistrar.COLLAGE_HELMET)
+                event.accept(ItemRegistrar.COLLAGE_CHESTPLATE)
+                event.accept(ItemRegistrar.COLLAGE_LEGGINGS)
+                event.accept(ItemRegistrar.COLLAGE_BOOTS)
+            case CreativeModeTabs.FOOD_AND_DRINKS =>
+                event.accept(BlockRegistrar.SQUISHED_WAFFLE)
+                event.accept(BlockRegistrar.WAFFLE)
+                event.accept(ItemRegistrar.WAFFLE_MIX)
+                event.accept(ItemRegistrar.WAFFLE_CONE)
+                event.accept(ItemRegistrar.SNOW_CONE)
+                event.accept(ItemRegistrar.ICE_CREAM_SANDWICH)
+            case _ =>
     }
 }

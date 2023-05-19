@@ -8,26 +8,27 @@ package net.ashwork.mc.multilingualexamples.data.attachment;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.JsonOps;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import org.jetbrains.annotations.NotNull;
 import org.quiltmc.qsl.registry.attachment.api.RegistryEntryAttachment;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * A {@link DataProvider} for {@link RegistryEntryAttachment}s.
  *
  * <p>To use this provider, extend this class and implement {@link #addAttachments()}.
- * Then, register an instance using {@link DataGenerator#addProvider(boolean, DataProvider)}
+ * Then, register an instance using {@link net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack#addProvider(FabricDataGenerator.Pack.Factory)}
  * through a {@link net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint}.
  *
  * <p>An attachment can be added using {@link #attach(RegistryEntryAttachment)}.
@@ -40,7 +41,7 @@ import java.util.Objects;
  * <pre>{@code
  *     @Override
  *     protected void addAttachments() {
- *         this.attach(BlockContentRegistries.FLATTENABLE_BLOCK)
+ *         this.attach(BlockContentRegistries.FLATTENABLE)
  *             .addObject(Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE.defaultBlockState())
  *             .addTag(BlockTags.SAND, Blocks.GLASS.defaultBlockState())
  *             .addOptionalObject(
@@ -57,20 +58,19 @@ import java.util.Objects;
  *
  * @see RegistryEntryAttachment
  * @see DataProvider
- * @see DataGenerator
  */
 public abstract class RegistryEntryAttachmentProvider implements DataProvider {
 
     private final List<AttachmentData<?, ?>> attachments;
-    private final DataGenerator.PathProvider attachmentPathProvider;
+    private final PackOutput.PathProvider attachmentPathProvider;
 
     /**
      * Default constructor.
      *
-     * @param generator the generator being written to
+     * @param output the output of the data generator
      */
-    protected RegistryEntryAttachmentProvider(DataGenerator generator) {
-        this.attachmentPathProvider = generator.createPathProvider(DataGenerator.Target.DATA_PACK, "attachments");
+    protected RegistryEntryAttachmentProvider(PackOutput output) {
+        this.attachmentPathProvider = output.createPathProvider(PackOutput.Target.DATA_PACK, "attachments");
         this.attachments = new ArrayList<>();
     }
 
@@ -79,14 +79,17 @@ public abstract class RegistryEntryAttachmentProvider implements DataProvider {
      */
     protected abstract void addAttachments();
 
+    @NotNull
     @Override
-    public void run(@NotNull CachedOutput cachedOutput) throws IOException {
+    public CompletableFuture<?> run(CachedOutput cachedOutput) {
         this.addAttachments();
 
         // Write the attachments to a file
-        for (var attachment : this.attachments) {
-            attachment.generate(cachedOutput, this.attachmentPathProvider);
-        }
+        return CompletableFuture.allOf(
+                this.attachments.stream()
+                .map(data -> data.generate(cachedOutput, this.attachmentPathProvider))
+                .toArray(CompletableFuture[]::new)
+        );
     }
 
     @NotNull
@@ -193,9 +196,9 @@ public abstract class RegistryEntryAttachmentProvider implements DataProvider {
          *
          * @param output the output cache to notify changes for
          * @param attachmentPathProvider the path provider to the {@code attachments} directory
-         * @throws IOException if an error occurs when writing the file
+         * @return a future generating and writing the file
          */
-        public void generate(CachedOutput output, DataGenerator.PathProvider attachmentPathProvider) throws IOException {
+        public CompletableFuture<?> generate(CachedOutput output, PackOutput.PathProvider attachmentPathProvider) {
             var obj = new JsonObject();
             obj.addProperty("replace", this.replace);
 
@@ -206,7 +209,7 @@ public abstract class RegistryEntryAttachmentProvider implements DataProvider {
             });
             obj.add("values", vals);
 
-            DataProvider.saveStable(output, obj, attachmentPathProvider.json(new ResourceLocation(
+            return DataProvider.saveStable(output, obj, attachmentPathProvider.json(new ResourceLocation(
                     this.attachment.id().getNamespace(),
                     this.attachment.registry().key().location().toString().replace(":", "/") + "/" + this.attachment.id().getPath()
             )));

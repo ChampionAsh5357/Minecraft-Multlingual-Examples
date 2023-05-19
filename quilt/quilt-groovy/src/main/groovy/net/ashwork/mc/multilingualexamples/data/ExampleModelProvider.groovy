@@ -9,7 +9,7 @@ package net.ashwork.mc.multilingualexamples.data
 import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.ItemModelGenerators
@@ -18,7 +18,6 @@ import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
-
 /**
  * A data provider which generates models for this mod.
  */
@@ -28,10 +27,10 @@ final class ExampleModelProvider extends FabricModelProvider {
     /**
      * A simple constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      */
-    ExampleModelProvider(FabricDataGenerator gen) {
-        super(gen)
+    ExampleModelProvider(FabricDataOutput output) {
+        super(output)
     }
 
     @Override

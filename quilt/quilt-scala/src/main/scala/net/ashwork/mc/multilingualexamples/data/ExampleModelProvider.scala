@@ -7,7 +7,7 @@
 package net.ashwork.mc.multilingualexamples.data
 
 import net.ashwork.mc.multilingualexamples.registrar.{BlockRegistrar, ItemRegistrar}
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.data.models.model.{ModelTemplates, TextureMapping, TextureSlot}
 import net.minecraft.data.models.{BlockModelGenerators, ItemModelGenerators}
@@ -17,9 +17,9 @@ import net.minecraft.world.level.block.Block
 /**
  * A data provider which generates models for this mod.
  *
- * @param gen the generator being written to
+ * @param output the output of the data generator
  */
-class ExampleModelProvider(gen: FabricDataGenerator) extends FabricModelProvider(gen) {
+class ExampleModelProvider(output: FabricDataOutput) extends FabricModelProvider(output) {
 
     override def generateBlockStateModels(generators: BlockModelGenerators): Unit = {
         /*
