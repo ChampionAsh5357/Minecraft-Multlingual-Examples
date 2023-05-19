@@ -21,14 +21,14 @@ public final class MultilingualExamplesData implements DataGeneratorEntrypoint {
 
     @Override
     public void onInitializeDataGenerator(final FabricDataGenerator gen) {
-        // Add providers
-        gen.addProvider(ExampleLocalizationProvider::new);
-        gen.addProvider(ExampleModelProvider::new);
-        gen.addProvider(ExampleLocalizationProvider::new);
-        gen.addProvider(ExampleModelProvider::new);
+        var pack = gen.createPack();
 
-        gen.addProvider(ExampleBlockLootTableProvider::new);
-        gen.addProvider(ExampleRecipeProvider::new);
-        gen.addProvider(ExampleRegistryEntryAttachmentProvider::new);
+        // Add providers
+        pack.addProvider(ExampleLocalizationProvider::new);
+        pack.addProvider(ExampleModelProvider::new);
+
+        pack.addProvider(ExampleBlockLootTableProvider::new);
+        pack.addProvider(ExampleRecipeProvider::new);
+        pack.addProvider(ExampleRegistryEntryAttachmentProvider::new);
     }
 }

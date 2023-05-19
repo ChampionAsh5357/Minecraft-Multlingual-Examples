@@ -8,7 +8,7 @@ package net.ashwork.mc.multilingualexamples.data;
 
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
 import net.ashwork.mc.multilingualexamples.registrar.ItemRegistrar;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
 /**
@@ -19,10 +19,10 @@ public final class ExampleLocalizationProvider extends FabricLanguageProvider {
     /**
      * A simple constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      */
-    public ExampleLocalizationProvider(final FabricDataGenerator gen) {
-        super(gen);
+    public ExampleLocalizationProvider(final FabricDataOutput output) {
+        super(output);
     }
 
     @Override

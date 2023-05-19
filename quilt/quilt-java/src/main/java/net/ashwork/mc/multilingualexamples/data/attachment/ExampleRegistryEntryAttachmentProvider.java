@@ -7,7 +7,7 @@
 package net.ashwork.mc.multilingualexamples.data.attachment;
 
 import net.ashwork.mc.multilingualexamples.registrar.BlockRegistrar;
-import net.minecraft.data.DataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import org.quiltmc.qsl.block.content.registry.api.BlockContentRegistries;
 
 /**
@@ -18,15 +18,15 @@ public class ExampleRegistryEntryAttachmentProvider extends RegistryEntryAttachm
     /**
      * A simple constructor.
      *
-     * @param gen the generator being written to
+     * @param output the output of the data generator
      */
-    public ExampleRegistryEntryAttachmentProvider(DataGenerator gen) {
-        super(gen);
+    public ExampleRegistryEntryAttachmentProvider(FabricDataOutput output) {
+        super(output);
     }
 
     @Override
     protected void addAttachments() {
-        this.attach(BlockContentRegistries.FLATTENABLE_BLOCK)
+        this.attach(BlockContentRegistries.FLATTENABLE)
                 .addObject(BlockRegistrar.WAFFLE, BlockRegistrar.SQUISHED_WAFFLE.defaultBlockState());
     }
 }

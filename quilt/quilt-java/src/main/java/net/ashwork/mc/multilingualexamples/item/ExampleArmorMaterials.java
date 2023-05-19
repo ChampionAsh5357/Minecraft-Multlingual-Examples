@@ -8,7 +8,7 @@ package net.ashwork.mc.multilingualexamples.item;
 
 import com.google.common.base.Suppliers;
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -47,7 +47,7 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
     ExampleArmorMaterials(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
-        this(name, durabilityMultiplier, slotProtections, enchantmentValue, () -> Registry.SOUND_EVENT.get(soundName), toughness, knockbackResistance, repairIngredient);
+        this(name, durabilityMultiplier, slotProtections, enchantmentValue, () -> BuiltInRegistries.SOUND_EVENT.get(soundName), toughness, knockbackResistance, repairIngredient);
     }
 
     /**
