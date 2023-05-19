@@ -1,3 +1,9 @@
+/*
+ * Multilingual Examples
+ * Written 2021-2023 by ChampionAsh5357
+ * SPDX-License-Identifier: CC0-1.0
+ */
+
 package net.ashwork.mc.multilingualexamples.data.attachment
 
 import net.ashwork.mc.multilingualexamples.registrar.SQUISHED_WAFFLE
