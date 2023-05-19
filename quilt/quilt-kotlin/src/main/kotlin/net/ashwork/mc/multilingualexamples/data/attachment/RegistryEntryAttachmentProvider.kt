@@ -3,18 +3,18 @@ package net.ashwork.mc.multilingualexamples.data.attachment
 import com.google.gson.JsonObject
 import com.mojang.serialization.JsonOps
 import net.minecraft.data.CachedOutput
-import net.minecraft.data.DataGenerator
-import net.minecraft.data.DataGenerator.PathProvider
 import net.minecraft.data.DataProvider
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import org.quiltmc.qsl.registry.attachment.api.RegistryEntryAttachment
+import java.util.concurrent.CompletableFuture
 
 /**
  * A [DataProvider] for [RegistryEntryAttachment]s.
  *
  * To use this provider, extend this class and implement [addAttachments].
- * Then, register an instance using [DataGenerator.addProvider]
+ * Then, register an instance using [net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack.addProvider]
  * through a [net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint].
  *
  * An attachment can be added using [attach].
@@ -26,7 +26,7 @@ import org.quiltmc.qsl.registry.attachment.api.RegistryEntryAttachment
  *
  * ```kotlin
  * override fun addAttachments() {
- *     this.attach(BlockContentRegistries.FLATTENABLE_BLOCK)
+ *     this.attach(BlockContentRegistries.FLATTENABLE)
  *         .addObject(Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE.defaultBlockState())
  *         .addTag(BlockTags.SAND, Blocks.GLASS.defaultBlockState())
  *         .addOptionalObject(
@@ -41,19 +41,18 @@ import org.quiltmc.qsl.registry.attachment.api.RegistryEntryAttachment
  * }
  * ```
  *
- * @param generator the generator being written to
+ * @param output the output of the data generator
  *
  * @see RegistryEntryAttachment
  * @see DataProvider
- * @see DataGenerator
  */
-abstract class RegistryEntryAttachmentProvider(generator: DataGenerator): DataProvider {
+abstract class RegistryEntryAttachmentProvider(output: PackOutput): DataProvider {
 
-    private val attachmentPathProvider: PathProvider
+    private val attachmentPathProvider: PackOutput.PathProvider
     private val attachments: MutableList<AttachmentData<*, *>>
 
     init {
-        this.attachmentPathProvider = generator.createPathProvider(DataGenerator.Target.DATA_PACK, "attachments")
+        this.attachmentPathProvider = output.createPathProvider(PackOutput.Target.DATA_PACK, "attachments")
         this.attachments = mutableListOf()
     }
 
@@ -62,13 +61,15 @@ abstract class RegistryEntryAttachmentProvider(generator: DataGenerator): DataPr
      */
     abstract fun addAttachments()
 
-    override fun run(cachedOutput: CachedOutput) {
+    override fun run(cachedOutput: CachedOutput): CompletableFuture<*> {
         this.addAttachments()
 
         // Write the attachments to a file
-        this.attachments.forEach {
-            it.generate(cachedOutput, this.attachmentPathProvider)
-        }
+        return CompletableFuture.allOf(
+            *this.attachments
+                .map { it.generate(cachedOutput, this.attachmentPathProvider) }
+                .toTypedArray()
+        )
     }
 
     override fun getName(): String = "Registry Entry Attachments"
@@ -156,9 +157,9 @@ class AttachmentData<R, V>(private val attachment: RegistryEntryAttachment<R, V>
      *
      * @param output the output cache to notify changes for
      * @param attachmentPathProvider the path provider to the {@code attachments} directory
-     * @throws java.io.IOException if an error occurs when writing the file
+     * @return a future generating and writing the file
      */
-    fun generate(output: CachedOutput, attachmentPathProvider: PathProvider) {
+    fun generate(output: CachedOutput, attachmentPathProvider: PackOutput.PathProvider): CompletableFuture<*> {
         val obj = JsonObject()
         obj.addProperty("replace", this.replace)
 
@@ -169,7 +170,7 @@ class AttachmentData<R, V>(private val attachment: RegistryEntryAttachment<R, V>
         }
         obj.add("values", vals)
 
-        DataProvider.saveStable(output, obj, attachmentPathProvider.json(ResourceLocation(
+        return DataProvider.saveStable(output, obj, attachmentPathProvider.json(ResourceLocation(
             this.attachment.id().namespace,
             "${this.attachment.registry().key().location().toString().replace(":", "/")}/${this.attachment.id().path}"
         )))

@@ -8,11 +8,13 @@ package net.ashwork.mc.multilingualexamples.registrar
 
 import net.ashwork.mc.multilingualexamples.id
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.ArmorItem
-import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Item
 import org.jetbrains.annotations.ApiStatus
 
@@ -21,6 +23,27 @@ import org.jetbrains.annotations.ApiStatus
  */
 fun registerItems() {
     registerBlockItems { name, obj -> register(name, obj) }
+
+    // Add items to tabs
+    ItemGroupEvents.MODIFY_ENTRIES_ALL.register { tab, entries ->
+        when (tab) {
+            CreativeModeTabs.INGREDIENTS -> entries.accept(ASH)
+            CreativeModeTabs.COMBAT -> {
+                entries.accept(COLLAGE_HELMET)
+                entries.accept(COLLAGE_CHESTPLATE)
+                entries.accept(COLLAGE_LEGGINGS)
+                entries.accept(COLLAGE_BOOTS)
+            }
+            CreativeModeTabs.FOOD_AND_DRINKS -> {
+                entries.accept(SQUISHED_WAFFLE)
+                entries.accept(WAFFLE)
+                entries.accept(WAFFLE_MIX)
+                entries.accept(WAFFLE_CONE)
+                entries.accept(SNOW_CONE)
+                entries.accept(ICE_CREAM_SANDWICH)
+            }
+        }
+    }
 }
 
 private val customArmorModelItems: MutableList<ArmorItem> = mutableListOf()
@@ -33,15 +56,15 @@ private val customArmorModelItems: MutableList<ArmorItem> = mutableListOf()
 @ApiStatus.Internal
 fun registerRenderers(rendererRegistry: (ArmorItem) -> Unit) = customArmorModelItems.forEach(rendererRegistry)
 
-val ASH: Item = register("ash", Item(Item.Properties().tab(CreativeModeTab.TAB_BREWING)))
-val COLLAGE_HELMET: ArmorItem = registerCustomArmorModelItem("collage_helmet", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))
-val COLLAGE_CHESTPLATE: ArmorItem = registerCustomArmorModelItem("collage_chestplate", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))
-val COLLAGE_LEGGINGS: ArmorItem = registerCustomArmorModelItem("collage_leggings", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))
-val COLLAGE_BOOTS: ArmorItem = registerCustomArmorModelItem("collage_boots", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, Item.Properties().tab(CreativeModeTab.TAB_COMBAT)))
-val WAFFLE_MIX = register("waffle_mix", Item(Item.Properties().tab(CreativeModeTab.TAB_FOOD)))
-val WAFFLE_CONE = register("waffle_cone", Item(Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(WAFFLE_CONE_FOOD)))
-val SNOW_CONE = register("snow_cone", Item(Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(SNOW_CONE_FOOD)))
-val ICE_CREAM_SANDWICH = register("ice_cream_sandwich", Item(Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(ICE_CREAM_SANDWICH_FOOD)))
+val ASH: Item = register("ash", Item(Item.Properties()))
+val COLLAGE_HELMET: ArmorItem = registerCustomArmorModelItem("collage_helmet", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, Item.Properties()))
+val COLLAGE_CHESTPLATE: ArmorItem = registerCustomArmorModelItem("collage_chestplate", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, Item.Properties()))
+val COLLAGE_LEGGINGS: ArmorItem = registerCustomArmorModelItem("collage_leggings", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, Item.Properties()))
+val COLLAGE_BOOTS: ArmorItem = registerCustomArmorModelItem("collage_boots", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, Item.Properties()))
+val WAFFLE_MIX = register("waffle_mix", Item(Item.Properties()))
+val WAFFLE_CONE = register("waffle_cone", Item(Item.Properties().food(WAFFLE_CONE_FOOD)))
+val SNOW_CONE = register("snow_cone", Item(Item.Properties().food(SNOW_CONE_FOOD)))
+val ICE_CREAM_SANDWICH = register("ice_cream_sandwich", Item(Item.Properties().food(ICE_CREAM_SANDWICH_FOOD)))
 
 /**
  * Registers an object to the item registry.
@@ -52,7 +75,7 @@ val ICE_CREAM_SANDWICH = register("ice_cream_sandwich", Item(Item.Properties().t
  * @return the object instance being registered
  */
 private fun <T: Item> register(name: String, obj: T): T =
-    Registry.register(Registry.ITEM, ResourceLocation(id(), name), obj)
+    Registry.register(BuiltInRegistries.ITEM, ResourceLocation(id(), name), obj)
 
 /**
  * Registers an armor item to be rendered with a custom model.
