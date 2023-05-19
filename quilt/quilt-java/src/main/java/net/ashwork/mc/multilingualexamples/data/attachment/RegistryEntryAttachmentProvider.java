@@ -41,7 +41,7 @@ import java.util.concurrent.CompletableFuture;
  * <pre>{@code
  *     @Override
  *     protected void addAttachments() {
- *         this.attach(BlockContentRegistries.FLATTENABLE_BLOCK)
+ *         this.attach(BlockContentRegistries.FLATTENABLE)
  *             .addObject(Blocks.DIAMOND_BLOCK, Blocks.DIAMOND_ORE.defaultBlockState())
  *             .addTag(BlockTags.SAND, Blocks.GLASS.defaultBlockState())
  *             .addOptionalObject(
