@@ -34,6 +34,6 @@ class EntityRenderDispatcherMixin {
      */
     @Inject(at = @At("TAIL"), method = "onResourceManagerReload", locals = LocalCapture.CAPTURE_FAILHARD)
     private void resourceReload(ResourceManager manager, CallbackInfo ci, EntityRendererProvider.Context context) {
-        MultilingualExamplesClient.instance().armorModelManager().reloadModels(context.getModelSet())
+        MultilingualExamplesClient.instance().armorModelManager().reloadModels(context.modelSet)
     }
 }
