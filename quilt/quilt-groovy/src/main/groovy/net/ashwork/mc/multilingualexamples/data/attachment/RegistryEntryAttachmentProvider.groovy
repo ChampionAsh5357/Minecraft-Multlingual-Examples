@@ -69,9 +69,8 @@ abstract class RegistryEntryAttachmentProvider implements DataProvider {
 
         // Write the attachments to a file
         return CompletableFuture.allOf(
-                this.attachments.collect {
-                    it.generate(cachedOutput, this.attachmentPathProvider)
-                }.toArray(CompletableFuture[]::new)
+                this.attachments*.generate(cachedOutput, this.attachmentPathProvider)
+                        .toArray(CompletableFuture[]::new)
         )
     }
 
