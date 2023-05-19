@@ -71,8 +71,8 @@ final class MultilingualExamples {
         // Add pack.mcmeta provider
         addProvider(gen, PackMetadataGenerator(_).add(PackMetadataSection.TYPE, PackMetadataSection(
             Component.translatable(s"pack.${MultilingualExamples.ID}.description"),
-            PackType.CLIENT_RESOURCES.getVersion(DetectedVersion.BUILT_IN),
-            PackType.values.map(`type` => (`type`, Integer.valueOf(`type`.getVersion(DetectedVersion.BUILT_IN)))).toMap.asJava
+            DetectedVersion.BUILT_IN.getPackVersion(PackType.CLIENT_RESOURCES),
+            PackType.values.map(`type` => (`type`, Integer.valueOf(DetectedVersion.BUILT_IN.getPackVersion(`type`)))).toMap.asJava
         )))
 
         // Add client providers

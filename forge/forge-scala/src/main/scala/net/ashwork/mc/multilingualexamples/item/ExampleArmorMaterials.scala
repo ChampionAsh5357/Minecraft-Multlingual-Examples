@@ -9,57 +9,74 @@ package net.ashwork.mc.multilingualexamples.item
 import net.ashwork.mc.multilingualexamples.MultilingualExamples
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
-import net.minecraft.world.entity.EquipmentSlot
-import net.minecraft.world.item.ArmorMaterial
+import net.minecraft.world.item.{ArmorItem, ArmorMaterial}
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraftforge.registries.ForgeRegistries
 
 /**
- * An sealed class for containing the armor materials for this mod.
+ * An enum containing the armor materials for this mod.
+ *
+ * @param name the name of the material, concatenated with the mod id
+ * @param durabilities the armor durabilities for the armor types
+ * @param typeDefenses the additive armor attribute modifiers for the armor types
+ * @param enchantmentValue the enchantibility of the armor material
+ * @param toughness the additive armor toughness attribute modifier
+ * @param knockbackResistance the additive knockback resistance attribute modifier
+ * @param sound the armor material equip sound
+ * @param repairIngredient a supplied ingredient of what items can repair this armor
  */
-enum ExampleArmorMaterials(name: String, private val durabilities: Array[Int],
-                                            private val slotProtections: Array[Int], private val enchantmentValue: Int,
-                                            private val toughness: Float, private val knockbackResistance: Float,
-                                            sound: () => SoundEvent, repairIngredient: () => Ingredient) extends ArmorMaterial {
-    case COLLAGE extends ExampleArmorMaterials("collage", 1, Array(1, 1, 2, 1), 0, new ResourceLocation("item.armor.equip_leather"), 0F, 0F, () => Ingredient.EMPTY)
+enum ExampleArmorMaterials(name: String, private val durabilities: Map[ArmorItem.Type, Int],
+                           private val typeDefenses: Map[ArmorItem.Type, Int], private val enchantmentValue: Int,
+                           private val toughness: Float, private val knockbackResistance: Float,
+                           sound: () => SoundEvent, repairIngredient: () => Ingredient) extends ArmorMaterial {
+    case COLLAGE extends ExampleArmorMaterials("collage", 1, Map(
+        ArmorItem.Type.HELMET -> 1,
+        ArmorItem.Type.CHESTPLATE -> 2,
+        ArmorItem.Type.LEGGINGS -> 1,
+        ArmorItem.Type.BOOTS -> 1
+    ), 0, new ResourceLocation("item.armor.equip_leather"), 0F, 0F, () => Ingredient.EMPTY)
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
-     * armor base durabilities of 13, 15, 16, and 11 for the feet, legs, chest,
-     * and head slots respectively.
+     * armor base durabilities of 11, 16, 15, and 13 for the helmet, chestplate,
+     * leggings, and boots respectively.
      *
-     * @param name the name of the material, concatenated with the mod id
+     * @param name                 the name of the material, concatenated with the mod id
      * @param durabilityMultiplier the armor material multiplier for the default durabilities
-     * @param slotProtections the additive armor attribute modifiers for the feet, legs, chest, and head slots respectively
-     * @param enchantmentValue the enchantibility of the armor material
-     * @param toughness the additive armor toughness attribute modifier
-     * @param knockbackResistance the additive knockback resistance attribute modifier
-     * @param sound the armor material equip sound
-     * @param repairIngredient a supplied ingredient of what items can repair this armor
+     * @param typeDefenses         the additive armor attribute modifiers for the armor types
+     * @param enchantmentValue     the enchantibility of the armor material
+     * @param toughness            the additive armor toughness attribute modifier
+     * @param knockbackResistance  the additive knockback resistance attribute modifier
+     * @param sound                the armor material equip sound
+     * @param repairIngredient     a supplied ingredient of what items can repair this armor
      */
-    def this(name: String, durabilityMultiplier: Int, slotProtections: Array[Int],
+    def this(name: String, durabilityMultiplier: Int, typeDefenses: Map[ArmorItem.Type, Int],
              enchantmentValue: Int, toughness: Float, knockbackResistance: Float,
              sound: () => SoundEvent, repairIngredient: () => Ingredient) =
-        this(name, Array(13 * durabilityMultiplier, 15 * durabilityMultiplier, 16 * durabilityMultiplier, 11 * durabilityMultiplier),
-            slotProtections, enchantmentValue, toughness, knockbackResistance, sound, repairIngredient)
+        this(name, Map(
+            ArmorItem.Type.HELMET -> 11 * durabilityMultiplier,
+            ArmorItem.Type.CHESTPLATE -> 16 * durabilityMultiplier,
+            ArmorItem.Type.LEGGINGS -> 15 * durabilityMultiplier,
+            ArmorItem.Type.BOOTS -> 13 * durabilityMultiplier
+        ), typeDefenses, enchantmentValue, toughness, knockbackResistance, sound, repairIngredient)
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
-     * armor base durabilities of 13, 15, 16, and 11 for the feet, legs, chest,
-     * and head slots respectively. The sound is provided by its registry name.
+     * armor base durabilities of 11, 16, 15, and 13 for the helmet, chestplate,
+     * leggings, and boots respectively. The sound is provided by its registry name.
      *
-     * @param name the name of the material, concatenated with the mod id
+     * @param name                 the name of the material, concatenated with the mod id
      * @param durabilityMultiplier the armor material multiplier for the default durabilities
-     * @param slotProtections the additive armor attribute modifiers for the feet, legs, chest, and head slots respectively
-     * @param enchantmentValue the enchantibility of the armor material
-     * @param soundName the name of the armor material equip sound
-     * @param toughness the additive armor toughness attribute modifier
-     * @param knockbackResistance the additive knockback resistance attribute modifier
-     * @param repairIngredient a supplied ingredient of what items can repair this armor
+     * @param typeDefenses         the additive armor attribute modifiers for the armor types
+     * @param enchantmentValue     the enchantibility of the armor material
+     * @param soundName            the name of the armor material equip sound
+     * @param toughness            the additive armor toughness attribute modifier
+     * @param knockbackResistance  the additive knockback resistance attribute modifier
+     * @param repairIngredient     a supplied ingredient of what items can repair this armor
      */
-    def this(name: String, durabilityMultiplier: Int, slotProtections: Array[Int], enchantmentValue: Int,
+    def this(name: String, durabilityMultiplier: Int, typeDefenses: Map[ArmorItem.Type, Int], enchantmentValue: Int,
              soundName: ResourceLocation, toughness: Float, knockbackResistance: Float, repairIngredient: () => Ingredient) =
-        this(name, durabilityMultiplier, slotProtections, enchantmentValue, toughness, knockbackResistance,
+        this(name, durabilityMultiplier, typeDefenses, enchantmentValue, toughness, knockbackResistance,
             () => ForgeRegistries.SOUND_EVENTS.getValue(soundName), repairIngredient)
 
     /*
@@ -80,9 +97,9 @@ enum ExampleArmorMaterials(name: String, private val durabilities: Array[Int],
     */
     private lazy val _repairIngredient: Ingredient = repairIngredient.apply
 
-    override def getDurabilityForSlot(slot: EquipmentSlot): Int = this.durabilities(slot.getIndex)
+    override def getDurabilityForType(`type`: ArmorItem.Type): Int = this.durabilities(`type`)
 
-    override def getDefenseForSlot(slot: EquipmentSlot): Int = this.slotProtections(slot.getIndex)
+    override def getDefenseForType(`type`: ArmorItem.Type): Int = this.typeDefenses(`type`)
 
     override def getEnchantmentValue: Int = this.enchantmentValue
 

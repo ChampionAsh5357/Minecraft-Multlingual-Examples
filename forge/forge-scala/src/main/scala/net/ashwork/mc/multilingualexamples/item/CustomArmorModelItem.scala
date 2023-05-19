@@ -23,11 +23,11 @@ import java.util.function.Consumer
  * [[ArmorModelManager]].
  *
  * @param material the material of the armor
- * @param slot the slot the armor can be worn in
+ * @param `type` type the type of armor
  * @param properties the item properties
  */
-class CustomArmorModelItem(material: ArmorMaterial, slot: EquipmentSlot, properties: Properties)
-    extends ArmorItem(material, slot, properties) {
+class CustomArmorModelItem(material: ArmorMaterial, `type`: ArmorItem.Type, properties: Properties)
+    extends ArmorItem(material, `type`, properties) {
 
     override def initializeClient(consumer: Consumer[IClientItemExtensions]): Unit = consumer.accept(new IClientItemExtensions {
         override def getGenericArmorModel(entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, original: HumanoidModel[_]): Model =
