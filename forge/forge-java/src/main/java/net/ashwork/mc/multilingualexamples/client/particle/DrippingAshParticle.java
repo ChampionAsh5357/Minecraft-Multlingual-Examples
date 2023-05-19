@@ -76,7 +76,7 @@ public class DrippingAshParticle extends TextureSheetParticle {
 
         /**
          * Constructor to be passed as a method reference to
-         * {@link net.minecraftforge.client.event.RegisterParticleProvidersEvent#register(ParticleType, ParticleEngine.SpriteParticleRegistration)}.
+         * {@link net.minecraftforge.client.event.RegisterParticleProvidersEvent#registerSpriteSet(ParticleType, ParticleEngine.SpriteParticleRegistration)}.
          *
          * @param sprites the referenced sprites that will be used for rendering
          */

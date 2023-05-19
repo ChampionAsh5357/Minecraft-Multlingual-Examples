@@ -86,8 +86,8 @@ public final class MultilingualExamples {
         addProvider(gen, output -> new PackMetadataGenerator(output)
                 .add(PackMetadataSection.TYPE, new PackMetadataSection(
                         Component.translatable("pack." + MultilingualExamples.ID + ".description"),
-                        PackType.CLIENT_RESOURCES.getVersion(DetectedVersion.BUILT_IN),
-                        Arrays.stream(PackType.values()).collect(Collectors.toMap(Function.identity(), type -> type.getVersion(DetectedVersion.BUILT_IN)))
+                        DetectedVersion.BUILT_IN.getPackVersion(PackType.CLIENT_RESOURCES),
+                        Arrays.stream(PackType.values()).collect(Collectors.toMap(Function.identity(), DetectedVersion.BUILT_IN::getPackVersion))
                 ))
         );
 

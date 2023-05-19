@@ -46,7 +46,7 @@ object DrippingAshParticle {
 
     /**
      * The provider used to register the factory to create the rendered [[DrippingAshParticle]] instance.
-     * This is to be passed as a method reference to [[net.minecraft.client.particle.ParticleEngine]].
+     * This is to be passed as a method reference to [[net.minecraftforge.client.event.RegisterParticleProvidersEvent.registerSpriteSet]].
      *
      * @param sprites the referenced sprites that will be used for rendering
      */

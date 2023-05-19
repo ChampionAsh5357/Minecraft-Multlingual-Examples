@@ -12,7 +12,6 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.Item
@@ -57,10 +56,10 @@ private val customArmorModelItems: MutableList<ArmorItem> = mutableListOf()
 fun registerRenderers(rendererRegistry: (ArmorItem) -> Unit) = customArmorModelItems.forEach(rendererRegistry)
 
 val ASH: Item = register("ash", Item(Item.Properties()))
-val COLLAGE_HELMET: ArmorItem = registerCustomArmorModelItem("collage_helmet", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, Item.Properties()))
-val COLLAGE_CHESTPLATE: ArmorItem = registerCustomArmorModelItem("collage_chestplate", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, Item.Properties()))
-val COLLAGE_LEGGINGS: ArmorItem = registerCustomArmorModelItem("collage_leggings", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, Item.Properties()))
-val COLLAGE_BOOTS: ArmorItem = registerCustomArmorModelItem("collage_boots", ArmorItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, Item.Properties()))
+val COLLAGE_HELMET: ArmorItem = registerCustomArmorModelItem("collage_helmet", ArmorItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.HELMET, Item.Properties()))
+val COLLAGE_CHESTPLATE: ArmorItem = registerCustomArmorModelItem("collage_chestplate", ArmorItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.CHESTPLATE, Item.Properties()))
+val COLLAGE_LEGGINGS: ArmorItem = registerCustomArmorModelItem("collage_leggings", ArmorItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.LEGGINGS, Item.Properties()))
+val COLLAGE_BOOTS: ArmorItem = registerCustomArmorModelItem("collage_boots", ArmorItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.BOOTS, Item.Properties()))
 val WAFFLE_MIX = register("waffle_mix", Item(Item.Properties()))
 val WAFFLE_CONE = register("waffle_cone", Item(Item.Properties().food(WAFFLE_CONE_FOOD)))
 val SNOW_CONE = register("snow_cone", Item(Item.Properties().food(SNOW_CONE_FOOD)))

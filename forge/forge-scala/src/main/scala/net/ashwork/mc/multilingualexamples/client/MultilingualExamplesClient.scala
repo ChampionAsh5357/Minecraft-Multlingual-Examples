@@ -55,6 +55,6 @@ object MultilingualExamplesClient {
         *
         * Textures referenced in the JSON will be in the 'particle' directory within textures.
         */
-        event.register(ParticleTypeRegistrar.DRIPPING_ASH.get(), DrippingAshParticle.DrippingAshParticleProvider(_))
+        event.registerSpriteSet(ParticleTypeRegistrar.DRIPPING_ASH.get(), DrippingAshParticle.DrippingAshParticleProvider(_))
     }
 }

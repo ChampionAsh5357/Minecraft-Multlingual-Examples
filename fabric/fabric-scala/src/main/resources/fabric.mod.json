@@ -4,7 +4,7 @@
     "name": "Multlingual Examples - Fabric Scala",
     "id": "multilingual_examples",
     "version": "${version}",
-    "description": "An example mod for Minecraft 1.19.3 in the Scala programming language via the Fabric Mod Loader.",
+    "description": "An example mod for Minecraft 1.19.4 in the Scala programming language via the Fabric Mod Loader.",
 
     "authors": [
         "ChampionAsh5357"
@@ -41,7 +41,7 @@
     "depends": {
         "fabricloader": ">=0.14.19",
         "fabric": "*",
-        "minecraft": "1.19.3",
+        "minecraft": "1.19.4",
         "java": ">=17"
     }
 }

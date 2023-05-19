@@ -26,11 +26,11 @@ import java.util.function.Consumer
  * [ArmorModelManager].
  *
  * @param material the material of the armor
- * @param slot the slot the armor can be worn in
+ * @param type the type of armor
  * @param properties the item properties
  */
-class CustomArmorModelItem(material: ArmorMaterial, slot: EquipmentSlot, properties: Properties):
-    ArmorItem(material, slot, properties) {
+class CustomArmorModelItem(material: ArmorMaterial, type: Type, properties: Properties):
+    ArmorItem(material, type, properties) {
 
     override fun initializeClient(consumer: Consumer<IClientItemExtensions>) {
         consumer.accept(object: IClientItemExtensions {
