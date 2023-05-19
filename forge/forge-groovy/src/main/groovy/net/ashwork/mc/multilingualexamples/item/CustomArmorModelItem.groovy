@@ -34,11 +34,11 @@ class CustomArmorModelItem extends ArmorItem {
      * Default constructor.
      *
      * @param material the material of the armor
-     * @param slot the slot the armor can be worn in
+     * @param type the type of armor
      * @param properties the item properties
      */
-    CustomArmorModelItem(ArmorMaterial material, EquipmentSlot slot, Properties properties) {
-        super(material, slot, properties)
+    CustomArmorModelItem(ArmorMaterial material, Type type, Properties properties) {
+        super(material, type, properties)
     }
 
     @Override

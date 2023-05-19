@@ -9,7 +9,7 @@ package net.ashwork.mc.multilingualexamples.registrar
 import groovy.transform.CompileStatic
 import net.ashwork.mc.multilingualexamples.item.CustomArmorModelItem
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
-import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.Item
 import net.minecraftforge.registries.RegistryObject
 /**
@@ -27,16 +27,16 @@ final class ItemRegistrar {
         new Item(new Item.Properties())
     }
     static final RegistryObject<CustomArmorModelItem> COLLAGE_HELMET = Registrars.ITEMS.register('collage_helmet') {
-        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.HEAD, new Item.Properties())
+        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.HELMET, new Item.Properties())
     }
     static final RegistryObject<CustomArmorModelItem> COLLAGE_CHESTPLATE = Registrars.ITEMS.register('collage_chestplate') {
-        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.CHEST, new Item.Properties())
+        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.CHESTPLATE, new Item.Properties())
     }
     static final RegistryObject<CustomArmorModelItem> COLLAGE_LEGGINGS = Registrars.ITEMS.register('collage_leggings') {
-        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.LEGS, new Item.Properties())
+        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.LEGGINGS, new Item.Properties())
     }
     static final RegistryObject<CustomArmorModelItem> COLLAGE_BOOTS = Registrars.ITEMS.register('collage_boots') {
-        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, EquipmentSlot.FEET, new Item.Properties())
+        new CustomArmorModelItem(ExampleArmorMaterials.COLLAGE, ArmorItem.Type.BOOTS, new Item.Properties())
     }
     static final RegistryObject<Item> WAFFLE_MIX = Registrars.ITEMS.register("waffle_mix") {
         new Item(new Item.Properties())
