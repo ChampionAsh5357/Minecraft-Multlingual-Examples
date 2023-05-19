@@ -22,7 +22,7 @@ import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -73,7 +73,7 @@ class ArmorModelManager {
      */
     private void registerArmorModel(ArmorMaterial material, Closure<?> register, Closure<ModelHandler> handler, EntityType<? extends Entity>... types) {
         for (EntityType<? extends Entity> type : types) {
-            var mll = new ModelLayerLocation(Objects.requireNonNull(Registry.ENTITY_TYPE.getKey(type)), material.getName())
+            var mll = new ModelLayerLocation(Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(type)), material.getName())
             register(mll)
             this.entityArmorModels.put(type, material, handler(mll))
         }
@@ -105,7 +105,7 @@ class ArmorModelManager {
      */
     private void registerPlayerArmorModel(ArmorMaterial material, Closure<?> register, Closure<ModelHandler> handler, String... types) {
         for (String type : types) {
-            var mll = new ModelLayerLocation(new ResourceLocation("player_$type"), material.getName())
+            var mll = new ModelLayerLocation(new ResourceLocation("player_$type"), material.name)
             register(mll)
             this.playerArmorModels.put(type, material, handler(mll))
         }
@@ -122,7 +122,7 @@ class ArmorModelManager {
      * @param <T> the type of the armor model
      */
     private static <T extends Model> Closure<ModelHandler> createSingleModel(ArmorMaterial material, Closure<T> modelFactory, Closure<?> setup) {
-        var split = material.getName().split(':')
+        var split = material.name.split(':')
         var texture = new ResourceLocation("${split[0]}:textures/models/armor/${split[1]}.png")
         return { ModelLayerLocation mll -> new SingleModelHandler<>({ EntityModelSet entityModelSet -> modelFactory(entityModelSet.bakeLayer(mll)) }, setup, texture) }
     }
@@ -133,7 +133,7 @@ class ArmorModelManager {
     void init() {
         // Register the renderer used for the custom armor models for each supported armor item
         ArmorRenderer renderer = { PoseStack poseStack, MultiBufferSource bufferSource, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, HumanoidModel<? extends LivingEntity> context ->
-            if (stack.getItem() instanceof ArmorItem) {
+            if (stack.item instanceof ArmorItem) {
                 var handler = this.getHandler(((ArmorItem) stack.getItem()).getMaterial(), entity)
                 ArmorRenderer.renderPart(poseStack, bufferSource, light, stack, handler.getAndSetup(entity, stack, slot, context), handler.getTexture(stack, entity, slot))
             }
@@ -253,7 +253,7 @@ class ArmorModelManager {
      */
     private ModelHandler getHandler(ArmorMaterial material, Entity entity) {
         ModelHandler handler = entity instanceof AbstractClientPlayer ? this.playerArmorModels.get(((AbstractClientPlayer) entity).getModelName(), material)
-                : this.entityArmorModels.get(entity.getType(), material)
+                : this.entityArmorModels.get(entity.type, material)
 
         return handler ?: this.playerArmorModels.get('default', material)
     }

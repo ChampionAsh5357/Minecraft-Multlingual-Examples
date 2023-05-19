@@ -13,6 +13,7 @@ import net.minecraft.core.Registry
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 
 /**
@@ -36,6 +37,6 @@ final class ParticleTypeRegistrar {
      * @return the object instance being registered
      */
     private static <T extends ParticleType<? extends ParticleOptions>> T register(final String name, final T obj) {
-        return Registry.register(Registry.PARTICLE_TYPE, new ResourceLocation(MultilingualExamples.ID, name), obj)
+        return Registry.register(BuiltInRegistries.PARTICLE_TYPE, new ResourceLocation(MultilingualExamples.ID, name), obj)
     }
 }
