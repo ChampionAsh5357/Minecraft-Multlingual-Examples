@@ -14,7 +14,7 @@ import net.minecraft.client.model.geom.builders.{CubeDeformation, LayerDefinitio
 import net.minecraft.client.model.{HumanoidModel, Model}
 import net.minecraft.client.model.geom.{EntityModelSet, ModelLayerLocation, ModelPart}
 import net.minecraft.client.player.AbstractClientPlayer
-import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.{Entity, EntityType, EquipmentSlot, LivingEntity}
 import net.minecraft.world.item.{ArmorItem, ArmorMaterial, ArmorMaterials, ItemStack}
@@ -55,7 +55,7 @@ class ArmorModelManager {
      */
     private inline def registerArmorModelHandler(material: ArmorMaterial, register: ModelLayerLocation => Unit, handler: ModelLayerLocation => ModelHandler, types: EntityType[_]*): Unit = {
         for (`type` <- types) {
-            val mll = ModelLayerLocation(Registry.ENTITY_TYPE.getKey(`type`), material.getName)
+            val mll = ModelLayerLocation(BuiltInRegistries.ENTITY_TYPE.getKey(`type`), material.getName)
             register(mll)
             entityArmorModels.put(`type`, material, handler(mll))
         }

@@ -7,15 +7,15 @@
 package net.ashwork.mc.multilingualexamples.data
 
 import net.ashwork.mc.multilingualexamples.registrar.{BlockRegistrar, ItemRegistrar}
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 
 /**
  * A data provider which generates an 'en_us' localization for the mod.
  *
- * @param gen the generator being written to
+ * @param output the output of the data generator
  */
-class ExampleLocalizationProvider(gen: FabricDataGenerator) extends FabricLanguageProvider(gen) {
+class ExampleLocalizationProvider(output: FabricDataOutput) extends FabricLanguageProvider(output) {
 
     override def generateTranslations(builder: FabricLanguageProvider.TranslationBuilder): Unit = {
         // Add items
