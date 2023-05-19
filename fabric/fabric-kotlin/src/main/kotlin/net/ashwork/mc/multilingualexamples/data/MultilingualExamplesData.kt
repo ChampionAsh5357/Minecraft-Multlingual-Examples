@@ -19,11 +19,13 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 internal object MultilingualExamplesData: DataGeneratorEntrypoint {
 
     override fun onInitializeDataGenerator(gen: FabricDataGenerator) {
-        // Add providers
-        gen.addProvider(::ExampleLocalizationProvider)
-        gen.addProvider(::ExampleModelProvider)
+        val pack = gen.createPack()
 
-        gen.addProvider(::ExampleBlockLootTableProvider)
-        gen.addProvider(::ExampleRecipeProvider)
+        // Add providers
+        pack.addProvider(::ExampleLocalizationProvider)
+        pack.addProvider(::ExampleModelProvider)
+
+        pack.addProvider(::ExampleBlockLootTableProvider)
+        pack.addProvider(::ExampleRecipeProvider)
     }
 }

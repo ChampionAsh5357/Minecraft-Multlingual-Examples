@@ -12,6 +12,7 @@ import net.minecraft.core.Registry
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 
 /**
@@ -30,4 +31,4 @@ val DRIPPING_ASH: SimpleParticleType = register("dripping_ash", FabricParticleTy
  * @return the object instance being registered
  */
 private fun <T: ParticleType<out ParticleOptions>> register(name: String, obj: T): T =
-    Registry.register(Registry.PARTICLE_TYPE, ResourceLocation(ID, name), obj)
+    Registry.register(BuiltInRegistries.PARTICLE_TYPE, ResourceLocation(ID, name), obj)

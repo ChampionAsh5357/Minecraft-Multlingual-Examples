@@ -7,7 +7,7 @@
 package net.ashwork.mc.multilingualexamples.item
 
 import net.ashwork.mc.multilingualexamples.ID
-import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.entity.EquipmentSlot
@@ -49,7 +49,7 @@ enum class ExampleArmorMaterials(name: String, private val durabilities: IntArra
     constructor(name: String, durabilityMultiplier: Int, slotProtections: IntArray, enchantmentValue: Int,
                 soundName: ResourceLocation, toughness: Float, knockbackResistance: Float, repairIngredient: () -> Ingredient):
             this(name, durabilityMultiplier, slotProtections, enchantmentValue, toughness, knockbackResistance,
-                { Registry.SOUND_EVENT.get(soundName)!! }, repairIngredient)
+                { BuiltInRegistries.SOUND_EVENT.get(soundName)!! }, repairIngredient)
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
