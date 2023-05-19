@@ -10,9 +10,9 @@ import com.mojang.datafixers.util.Pair;
 import net.ashwork.mc.multilingualexamples.MultilingualExamples;
 import net.fabricmc.fabric.api.registry.FlattenableBlockRegistry;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -61,7 +61,7 @@ public class BlockRegistrar {
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                     .isValidSpawn((state, getter, pos, type) -> false)
                     .isSuffocating((state, getter, pos) -> false)),
-            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()));
+            () -> new Item.Properties().food(GeneralRegistrar.WAFFLE.get()));
 
     public static final Block WAFFLE = registerFlattenableWithSimpleItem("waffle",
             new Block(BlockBehaviour.Properties.of(Material.CAKE, MaterialColor.TERRACOTTA_ORANGE)
@@ -69,7 +69,7 @@ public class BlockRegistrar {
                     .friction(0.7f).speedFactor(0.95f).jumpFactor(0.95f)
                     .isValidSpawn((state, getter, pos, type) -> false)
                     .isSuffocating((state, getter, pos) -> false)),
-            () -> new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(GeneralRegistrar.WAFFLE.get()),
+            () -> new Item.Properties().food(GeneralRegistrar.WAFFLE.get()),
             SQUISHED_WAFFLE.defaultBlockState());
 
     /**
@@ -113,7 +113,7 @@ public class BlockRegistrar {
      * @return the object instance being registered
      */
     private static <T extends Block, I extends Item> T registerBlockWithItem(final String name, final T obj, final Function<T, I> itemFactory) {
-        var block = Registry.register(Registry.BLOCK, new ResourceLocation(MultilingualExamples.ID, name), obj);
+        var block = Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(MultilingualExamples.ID, name), obj);
         BLOCK_ITEM_FACTORIES.add(Pair.of(name, () -> itemFactory.apply(block)));
         return block;
     }
