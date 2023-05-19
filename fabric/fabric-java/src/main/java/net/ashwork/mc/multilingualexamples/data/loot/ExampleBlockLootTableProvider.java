@@ -41,7 +41,7 @@ public class ExampleBlockLootTableProvider extends FabricBlockLootTableProvider 
         Fabric has a weird bug that requires this implementation. Essentially,
         #accept is #generate in Yarn mappings. The provider implemented a
         consumer, meaning that #accept in Yarn mappings was properly overridden.
-        However, in Mojmaps, this is not the case and the method needs to be
+        However, in MojMaps, this is not the case and the method needs to be
         manually delegated.
 
         This would probably never come about during testing in a normal situation.
