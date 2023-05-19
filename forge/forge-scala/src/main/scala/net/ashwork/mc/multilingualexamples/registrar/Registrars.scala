@@ -74,5 +74,6 @@ object Registrars {
                 event.accept(ItemRegistrar.WAFFLE_CONE)
                 event.accept(ItemRegistrar.SNOW_CONE)
                 event.accept(ItemRegistrar.ICE_CREAM_SANDWICH)
+            case _ =>
     }
 }
