@@ -2,13 +2,13 @@ package net.ashwork.mc.multilingualexamples.data.attachment
 
 import com.google.gson.JsonObject
 import com.mojang.serialization.JsonOps
-import net.minecraft.data.DataGenerator.{PathProvider, Target}
-import net.minecraft.data.{CachedOutput, DataGenerator, DataProvider}
+import net.minecraft.data.PackOutput.{PathProvider, Target}
+import net.minecraft.data.{CachedOutput, DataProvider, PackOutput}
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import org.quiltmc.qsl.registry.attachment.api.RegistryEntryAttachment
 
-import java.io.IOException
+import java.util.concurrent.CompletableFuture
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -16,7 +16,7 @@ import scala.collection.mutable.ListBuffer
  * A [[DataProvider]] for [[RegistryEntryAttachment]]s.
  *
  * To use this provider, extend this class and implement [[addAttachments]].
- * Then, register an instance using [[DataGenerator.addProvider]]
+ * Then, register an instance using [[net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack.addProvider]]
  * through a [[net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint]].
  *
  * An attachment can be added using [[attach]].
@@ -43,15 +43,14 @@ import scala.collection.mutable.ListBuffer
  * }
  * }}}
  *
- * @param generator the generator being written to
+ * @param output the output of the data generator
  *
  * @see RegistryEntryAttachment
  * @see DataProvider
- * @see DataGenerator
  */
-abstract class RegistryEntryAttachmentProvider(generator: DataGenerator) extends DataProvider {
+abstract class RegistryEntryAttachmentProvider(output: PackOutput) extends DataProvider {
 
-    private val attachmentPathProvider: PathProvider = generator.createPathProvider(Target.DATA_PACK, "attachments")
+    private val attachmentPathProvider: PathProvider = output.createPathProvider(Target.DATA_PACK, "attachments")
     private val attachments: ListBuffer[AttachmentData[?, ?]] = ListBuffer()
 
     /**
@@ -59,12 +58,15 @@ abstract class RegistryEntryAttachmentProvider(generator: DataGenerator) extends
      */
     def addAttachments(): Unit
 
-    @throws(classOf[IOException])
-    override def run(cachedOutput: CachedOutput): Unit = {
+    override def run(cachedOutput: CachedOutput): CompletableFuture[_] = {
         this.addAttachments()
 
         // Write the attachments to a file
-        this.attachments.foreach(_.generate(cachedOutput, this.attachmentPathProvider))
+        CompletableFuture.allOf(
+            this.attachments
+                    .map(_.generate(cachedOutput, this.attachmentPathProvider))
+                    .toArray*
+        )
     }
 
     override def getName: String = "Registry Entry Attachments"
@@ -160,10 +162,9 @@ class AttachmentData[R, V](private val attachment: RegistryEntryAttachment[R, V]
      *
      * @param output                 the output cache to notify changes for
      * @param attachmentPathProvider the path provider to the [[attachments]] directory
-     * @throws IOException if an error occurs when writing the file
+     * @return a future generating and writing the file
      */
-    @throws(classOf[IOException])
-    def generate(output: CachedOutput, attachmentPathProvider: PathProvider): Unit = {
+    def generate(output: CachedOutput, attachmentPathProvider: PathProvider): CompletableFuture[_] = {
         val obj = JsonObject()
         obj.addProperty("replace", this._replace)
 
