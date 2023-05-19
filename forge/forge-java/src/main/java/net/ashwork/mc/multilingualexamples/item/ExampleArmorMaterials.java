@@ -19,6 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -33,8 +34,8 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
         map.put(ArmorItem.Type.BOOTS, 1);
     }), 0, new ResourceLocation("item.armor.equip_leather"), 0.0F, 0.0F, () -> Ingredient.EMPTY);
     private final String name;
-    private final EnumMap<ArmorItem.Type, Integer> durabilities;
-    private final EnumMap<ArmorItem.Type, Integer> typeDefenses;
+    private final Map<ArmorItem.Type, Integer> durabilities;
+    private final Map<ArmorItem.Type, Integer> typeDefenses;
     private final int enchantmentValue;
     private final Supplier<? extends SoundEvent> sound;
     private final float toughness;
@@ -55,7 +56,7 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, int durabilityMultiplier, EnumMap<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
+    ExampleArmorMaterials(String name, int durabilityMultiplier, Map<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, ResourceLocation soundName, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
         this(name, durabilityMultiplier, typeDefenses, enchantmentValue, () -> ForgeRegistries.SOUND_EVENTS.getValue(soundName), toughness, knockbackResistance, repairIngredient);
     }
 
@@ -73,7 +74,7 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, int durabilityMultiplier, EnumMap<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, Supplier<? extends SoundEvent> sound, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
+    ExampleArmorMaterials(String name, int durabilityMultiplier, Map<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, Supplier<? extends SoundEvent> sound, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
         this(name, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
             map.put(ArmorItem.Type.HELMET, 11 * durabilityMultiplier);
             map.put(ArmorItem.Type.CHESTPLATE, 16 * durabilityMultiplier);
@@ -94,7 +95,7 @@ public enum ExampleArmorMaterials implements ArmorMaterial {
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    ExampleArmorMaterials(String name, EnumMap<ArmorItem.Type, Integer> durabilities, EnumMap<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, Supplier<? extends SoundEvent> sound, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
+    ExampleArmorMaterials(String name, Map<ArmorItem.Type, Integer> durabilities, Map<ArmorItem.Type, Integer> typeDefenses, int enchantmentValue, Supplier<? extends SoundEvent> sound, float toughness, float knockbackResistance, Supplier<? extends Ingredient> repairIngredient) {
         /*
         All names must have their mod id prefixed. This is used as the default
         armor texture prefix for '*_layer_(1/2)'.

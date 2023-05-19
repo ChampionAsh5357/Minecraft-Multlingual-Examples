@@ -13,7 +13,6 @@ import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraftforge.registries.ForgeRegistries
-import java.util.*
 
 /**
  * An enum containing the armor materials for this mod.
@@ -27,16 +26,16 @@ import java.util.*
  * @param sound the armor material equip sound
  * @param repairIngredient a supplied ingredient of what items can repair this armor
  */
-enum class ExampleArmorMaterials(name: String, private val durabilities: EnumMap<ArmorItem.Type, Int>,
-                                 private val typeDefenses: EnumMap<ArmorItem.Type, Int>, private val enchantmentValue: Int,
+enum class ExampleArmorMaterials(name: String, private val durabilities: Map<ArmorItem.Type, Int>,
+                                 private val typeDefenses: Map<ArmorItem.Type, Int>, private val enchantmentValue: Int,
                                  private val toughness: Float, private val knockbackResistance: Float,
                                  sound: () -> SoundEvent, repairIngredient: () -> Ingredient): ArmorMaterial {
-    COLLAGE("collage", 1, EnumMap<ArmorItem.Type, Int>(ArmorItem.Type::class.java).also {
-        it[ArmorItem.Type.HELMET] = 1
-        it[ArmorItem.Type.CHESTPLATE] = 2
-        it[ArmorItem.Type.LEGGINGS] = 1
-        it[ArmorItem.Type.BOOTS] = 1
-    }, 0, ResourceLocation("item.armor.equip_leather"), 0F, 0F, Ingredient::EMPTY);
+    COLLAGE("collage", 1, mapOf(
+        ArmorItem.Type.HELMET to 1,
+        ArmorItem.Type.CHESTPLATE to 2,
+        ArmorItem.Type.LEGGINGS to 1,
+        ArmorItem.Type.BOOTS to 1
+    ), 0, ResourceLocation("item.armor.equip_leather"), 0F, 0F, Ingredient::EMPTY);
 
     /**
      * Default constructor. Provides a durability multiplier to the standard
@@ -52,7 +51,7 @@ enum class ExampleArmorMaterials(name: String, private val durabilities: EnumMap
      * @param knockbackResistance the additive knockback resistance attribute modifier
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    constructor(name: String, durabilityMultiplier: Int, typeDefenses: EnumMap<ArmorItem.Type, Int>, enchantmentValue: Int,
+    constructor(name: String, durabilityMultiplier: Int, typeDefenses: Map<ArmorItem.Type, Int>, enchantmentValue: Int,
                 soundName: ResourceLocation, toughness: Float, knockbackResistance: Float, repairIngredient: () -> Ingredient):
             this(name, durabilityMultiplier, typeDefenses, enchantmentValue, toughness, knockbackResistance,
                 { ForgeRegistries.SOUND_EVENTS.getValue(soundName)!! }, repairIngredient)
@@ -71,15 +70,15 @@ enum class ExampleArmorMaterials(name: String, private val durabilities: EnumMap
      * @param sound the armor material equip sound
      * @param repairIngredient a supplied ingredient of what items can repair this armor
      */
-    constructor(name: String, durabilityMultiplier: Int, typeDefenses: EnumMap<ArmorItem.Type, Int>,
+    constructor(name: String, durabilityMultiplier: Int, typeDefenses: Map<ArmorItem.Type, Int>,
                 enchantmentValue: Int, toughness: Float, knockbackResistance: Float,
                 sound: () -> SoundEvent, repairIngredient: () -> Ingredient):
-        this(name, EnumMap<ArmorItem.Type, Int>(ArmorItem.Type::class.java).also {
-            it[ArmorItem.Type.HELMET] = 11 * durabilityMultiplier
-            it[ArmorItem.Type.CHESTPLATE] = 16 * durabilityMultiplier
-            it[ArmorItem.Type.LEGGINGS] = 15 * durabilityMultiplier
-            it[ArmorItem.Type.BOOTS] = 13 * durabilityMultiplier
-        }, typeDefenses, enchantmentValue, toughness, knockbackResistance, sound, repairIngredient)
+        this(name, mapOf(
+            ArmorItem.Type.HELMET to 11 * durabilityMultiplier,
+            ArmorItem.Type.CHESTPLATE to 16 * durabilityMultiplier,
+            ArmorItem.Type.LEGGINGS to 15 * durabilityMultiplier,
+            ArmorItem.Type.BOOTS to 13 * durabilityMultiplier
+        ), typeDefenses, enchantmentValue, toughness, knockbackResistance, sound, repairIngredient)
 
     /*
     All names must have their mod id prefixed. This is used as the default
