@@ -118,12 +118,12 @@ class ArmorModelManager {
 
         // Register the renderer used for the custom armor models for each supported armor item
         val textureProvider = TextureProvider { texture, entity, stack, slot, useSecondLayer, suffix ->
-            val handler = this.getHandler((stack.item as ArmorItem).material, entity)
-            return@TextureProvider handler.getArmorTexture(texture, entity, stack, slot, useSecondLayer, suffix)
+            return@TextureProvider this.getHandler((stack.item as ArmorItem).material, entity)
+                .getArmorTexture(texture, entity, stack, slot, useSecondLayer, suffix)
         }
-        val renderTypeProvider = RenderLayerProvider { layer, entity, stack, slot, texture ->
-            val handler = this.getHandler((stack.item as ArmorItem).material, entity)
-            return@RenderLayerProvider handler.getArmorRenderLayer(layer, entity, stack, slot, texture)
+        val renderTypeProvider = RenderLayerProvider { type, entity, stack, slot, texture ->
+            return@RenderLayerProvider this.getHandler((stack.item as ArmorItem).material, entity)
+                .getArmorRenderLayer(type, entity, stack, slot, texture)
         }
         registerRenderers {
             // Add armor item to list for model logic

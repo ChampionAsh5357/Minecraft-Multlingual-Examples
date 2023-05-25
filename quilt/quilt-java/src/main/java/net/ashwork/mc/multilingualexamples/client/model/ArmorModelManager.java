@@ -151,14 +151,12 @@ public class ArmorModelManager {
          */
 
         // Register the renderer used for the custom armor models for each supported armor item
-        ArmorRenderingRegistry.TextureProvider textureProvider = (texture, entity, stack, slot, useSecondLayer, suffix) -> {
-            var handler = this.getHandler(((ArmorItem) stack.getItem()).getMaterial(), entity);
-            return handler.getArmorTexture(texture, entity, stack, slot, useSecondLayer, suffix);
-        };
-        ArmorRenderingRegistry.RenderLayerProvider renderTypeProvider = (type, entity, stack, slot, texture) -> {
-            var handler = this.getHandler(((ArmorItem) stack.getItem()).getMaterial(), entity);
-            return handler.getArmorRenderLayer(type, entity, stack, slot, texture);
-        };
+        ArmorRenderingRegistry.TextureProvider textureProvider = (texture, entity, stack, slot, useSecondLayer, suffix) ->
+                this.getHandler(((ArmorItem) stack.getItem()).getMaterial(), entity)
+                        .getArmorTexture(texture, entity, stack, slot, useSecondLayer, suffix);
+        ArmorRenderingRegistry.RenderLayerProvider renderTypeProvider = (type, entity, stack, slot, texture) ->
+                this.getHandler(((ArmorItem) stack.getItem()).getMaterial(), entity)
+                        .getArmorRenderLayer(type, entity, stack, slot, texture);
         ItemRegistrar.registerRenderers(item -> {
             // Add armor item to list for model logic
             this.customArmorItems.add(item);
