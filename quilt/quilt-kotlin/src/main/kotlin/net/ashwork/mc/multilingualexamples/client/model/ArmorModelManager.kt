@@ -10,7 +10,6 @@ import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 import net.ashwork.mc.multilingualexamples.item.ExampleArmorMaterials
 import net.ashwork.mc.multilingualexamples.registrar.registerRenderers
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.minecraft.client.model.HumanoidModel
 import net.minecraft.client.model.Model
@@ -20,6 +19,7 @@ import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.player.AbstractClientPlayer
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
@@ -29,6 +29,9 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.ItemStack
+import org.quiltmc.qsl.rendering.entity.api.client.ArmorRenderingRegistry
+import org.quiltmc.qsl.rendering.entity.api.client.ArmorRenderingRegistry.RenderLayerProvider
+import org.quiltmc.qsl.rendering.entity.api.client.ArmorRenderingRegistry.TextureProvider
 
 /**
  * A manager used for handling armor models on any given entity.
@@ -37,6 +40,7 @@ class ArmorModelManager {
 
     private val entityArmorModels: Table<EntityType<*>, ArmorMaterial, ModelHandler> = HashBasedTable.create()
     private val playerArmorModels: Table<String, ArmorMaterial, ModelHandler> = HashBasedTable.create()
+    private val customArmorItems: MutableSet<ArmorItem> = mutableSetOf()
 
     /**
      * Registers a single handler for an armor model for use with the
@@ -104,14 +108,31 @@ class ArmorModelManager {
      * A method used to initialize the custom armor model handlers.
      */
     fun init() {
+        /*
+        Quilt's armor rendering logic only encompasses humanoid models, which
+        limits the extension of this manager to handle any Model logic. As such,
+        while we register texture and RenderType providers, we don't make use
+        of them, opting instead to use our own mixin to handle the armor model
+        rendering.
+         */
+
         // Register the renderer used for the custom armor models for each supported armor item
-        val renderer = ArmorRenderer { poseStack, bufferSource, stack, entity, slot, light, context ->
-            if (stack.item is ArmorItem) {
-                val handler = this.getHandler((stack.item as ArmorItem).material, entity)
-                ArmorRenderer.renderPart(poseStack, bufferSource, light, stack, handler.getAndSetup(entity, stack, slot, context), handler.getTexture(stack, entity, slot))
-            }
+        val textureProvider = TextureProvider { texture, entity, stack, slot, useSecondLayer, suffix ->
+            return@TextureProvider this.getHandler((stack.item as ArmorItem).material, entity)
+                .getArmorTexture(texture, entity, stack, slot, useSecondLayer, suffix)
         }
-        registerRenderers { ArmorRenderer.register(renderer, it) }
+        val renderTypeProvider = RenderLayerProvider { type, entity, stack, slot, texture ->
+            return@RenderLayerProvider this.getHandler((stack.item as ArmorItem).material, entity)
+                .getArmorRenderLayer(type, entity, stack, slot, texture)
+        }
+        registerRenderers {
+            // Add armor item to list for model logic
+            this.customArmorItems += it
+
+            // Add providers
+            ArmorRenderingRegistry.registerTextureProvider(textureProvider, it)
+            ArmorRenderingRegistry.registerRenderLayerProvider(renderTypeProvider, it)
+        }
 
         /*
         This registers the definitions that allow us to create the models for
@@ -225,12 +246,20 @@ class ArmorModelManager {
      * @return the model handler
      * @throws NullPointerException if there is no default player armor model handler
      */
-    private fun getHandler(material: ArmorMaterial, entity: Entity): ModelHandler {
+    fun getHandler(material: ArmorMaterial, entity: Entity): ModelHandler {
         val handler = if (entity is AbstractClientPlayer) this.playerArmorModels.get(entity.modelName, material)
             else this.entityArmorModels.get(entity.type, material)
 
         return handler ?: this.playerArmorModels.get("default", material)!!
     }
+
+    /**
+     * Returns whether the item should use a custom armor model renderer.
+     *
+     * @param item the armor item being checked
+     * @return whether the item should use a custom armor model renderer
+     */
+    fun hasHandler(item: ArmorItem): Boolean = this.customArmorItems.contains(item)
 }
 
 /**
@@ -256,7 +285,7 @@ private inline fun <T: Model> createSingleModel(material: ArmorMaterial, crossin
 /**
  * A handler for managing models not attached to any entity renderer.
  */
-interface ModelHandler {
+interface ModelHandler: TextureProvider, RenderLayerProvider {
 
     /**
      * Constructs the model anytime the assets are reloaded.
@@ -276,16 +305,6 @@ interface ModelHandler {
      * @return the model to be rendered
      */
     fun getAndSetup(entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, context: HumanoidModel<*>): Model
-
-    /**
-     * Gets the texture to apply to the model.
-     *
-     * @param stack the armor currently being worn
-     * @param entity the entity wearing the armor
-     * @param slot the slot the armor is in
-     * @return the full path and extension of the texture
-     */
-    fun getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot): ResourceLocation
 }
 
 /**
@@ -310,5 +329,7 @@ class SingleModelHandler<out T: Model>(private val texture: ResourceLocation, pr
         return this.model
     }
 
-    override fun getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot): ResourceLocation = this.texture
+    override fun getArmorTexture(texture: ResourceLocation, entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, useSecondLayer: Boolean, suffix: String?): ResourceLocation = this.texture
+
+    override fun getArmorRenderLayer(layer: RenderType, entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, texture: ResourceLocation): RenderType = this.model.renderType(texture)
 }

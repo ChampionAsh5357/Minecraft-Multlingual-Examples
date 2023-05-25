@@ -14,12 +14,16 @@ import net.minecraft.client.model.geom.builders.{CubeDeformation, LayerDefinitio
 import net.minecraft.client.model.geom.{EntityModelSet, ModelLayerLocation, ModelPart}
 import net.minecraft.client.model.{HumanoidModel, Model}
 import net.minecraft.client.player.AbstractClientPlayer
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.{Entity, EntityType, EquipmentSlot, LivingEntity}
 import net.minecraft.world.item.{ArmorItem, ArmorMaterial, ArmorMaterials, ItemStack}
+import org.quiltmc.qsl.rendering.entity.api.client.ArmorRenderingRegistry
+import org.quiltmc.qsl.rendering.entity.api.client.ArmorRenderingRegistry.{RenderLayerProvider, TextureProvider}
 
 import scala.Option
+import scala.collection.mutable
 import scala.jdk.javaapi.CollectionConverters
 
 /**
@@ -29,6 +33,7 @@ class ArmorModelManager {
 
     private val entityArmorModels: Table[EntityType[_], ArmorMaterial, ModelHandler] = HashBasedTable.create()
     private val playerArmorModels: Table[String, ArmorMaterial, ModelHandler] = HashBasedTable.create()
+    private val customArmorItems: mutable.Set[ArmorItem] = mutable.Set()
 
     /**
      * Registers a single handler for an armor model for use with the
@@ -96,16 +101,29 @@ class ArmorModelManager {
      * A method used to initialize the custom armor model handlers.
      */
     def init(): Unit = {
+        /*
+        Quilt's armor rendering logic only encompasses humanoid models, which
+        limits the extension of this manager to handle any Model logic. As such,
+        while we register texture and RenderType providers, we don't make use
+        of them, opting instead to use our own mixin to handle the armor model
+        rendering.
+          */
+
         // Register the renderer used for the custom armor models for each supported armor item
-        val renderer: ArmorRenderer = (poseStack, bufferSource, stack, entity, slot, light, context) => {
-            stack.getItem match {
-                case item: ArmorItem =>
-                    val handler = getHandler(item.getMaterial, entity)
-                    ArmorRenderer.renderPart(poseStack, bufferSource, light, stack, handler.getAndSetup(entity, stack, slot, context), handler.getTexture(stack, entity, slot))
-                case _ =>
-            }
-        }
-        ItemRegistrar.registerRenderers(ArmorRenderer.register(renderer, _))
+        val textureProvider: TextureProvider = (texture, entity, stack, slot, useSecondLayer, suffix) =>
+            this.getHandler(stack.getItem.asInstanceOf[ArmorItem].getMaterial, entity)
+                    .getArmorTexture(texture, entity, stack, slot, useSecondLayer, suffix)
+        val renderTypeProvider: RenderLayerProvider = (`type`, entity, stack, slot, texture) =>
+            this.getHandler(stack.getItem.asInstanceOf[ArmorItem].getMaterial, entity)
+                    .getArmorRenderLayer(`type`, entity, stack, slot, texture)
+        ItemRegistrar.registerRenderers(item => {
+            // Add armor item to list for model logic
+            this.customArmorItems += item
+
+            // Add providers
+            ArmorRenderingRegistry.registerTextureProvider(textureProvider, item)
+            ArmorRenderingRegistry.registerRenderLayerProvider(renderTypeProvider, item)
+        })
 
         /*
         This registers the definitions that allow us to create the models for
@@ -217,7 +235,7 @@ class ArmorModelManager {
      * @return the model handler
      * @throws NullPointerException if there is no default player armor model handler
      */
-    private def getHandler(material: ArmorMaterial, entity: Entity): ModelHandler = {
+    def getHandler(material: ArmorMaterial, entity: Entity): ModelHandler = {
         val handler = Option(entity match {
             case p: AbstractClientPlayer => playerArmorModels.get(p.getModelName, material)
             case _ => entityArmorModels.get(entity.getType, material)
@@ -228,6 +246,14 @@ class ArmorModelManager {
             case None => playerArmorModels.get("default", material)
         }
     }
+
+    /**
+     * Returns whether the item should use a custom armor model renderer.
+     *
+     * @param item the armor item being checked
+     * @return whether the item should use a custom armor model renderer
+     */
+    def hasHandler(item: ArmorItem): Boolean = this.customArmorItems.contains(item)
 }
 
 /**
@@ -257,7 +283,7 @@ object ArmorModelManager {
 /**
  * A handler for managing models not attached to any entity renderer.
  */
-trait ModelHandler {
+trait ModelHandler extends TextureProvider, RenderLayerProvider {
 
     /**
      * Constructs the model anytime the assets are reloaded.
@@ -277,16 +303,6 @@ trait ModelHandler {
      * @return the model to be rendered
      */
     def getAndSetup(entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, context: HumanoidModel[_]): Model
-
-    /**
-     * Gets the texture to apply to the model.
-     *
-     * @param stack the armor currently being worn
-     * @param entity the entity wearing the armor
-     * @param slot the slot the armor is in
-     * @return the full path and extension of the texture
-     */
-    def getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot): ResourceLocation
 }
 
 /**
@@ -310,5 +326,7 @@ class SingleModelHandler[T <: Model](private val texture: ResourceLocation, priv
         _model
     }
 
-    override def getTexture(stack: ItemStack, entity: Entity, slot: EquipmentSlot): ResourceLocation = this.texture
+    override def getArmorTexture(texture: ResourceLocation, entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, useSecondLayer: Boolean, suffix: String): ResourceLocation = this.texture
+
+    override def getArmorRenderLayer(`type`: RenderType, entity: LivingEntity, stack: ItemStack, slot: EquipmentSlot, texture: ResourceLocation): RenderType = this.model.map(_.renderType(texture)).get
 }
